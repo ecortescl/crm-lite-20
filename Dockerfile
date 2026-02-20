@@ -1,5 +1,5 @@
 # Imagen base con PHP y Node.js
-FROM php:8.2-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 # Instalar dependencias del sistema, extensiones de PHP y Node.js
 RUN apk add --no-cache \

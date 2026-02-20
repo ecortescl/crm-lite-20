@@ -35,7 +35,7 @@ if [ ! -f .env ]; then
     
     echo -e "${BLUE}🔑 Generando APP_KEY...${NC}"
     # Generar APP_KEY
-    APP_KEY=$(docker run --rm -v $(pwd):/app -w /app php:8.2-cli php -r "echo 'base64:' . base64_encode(random_bytes(32));")
+    APP_KEY=$(docker run --rm -v $(pwd):/app -w /app php:8.4-cli php -r "echo 'base64:' . base64_encode(random_bytes(32));")
     
     # Reemplazar APP_KEY en .env
     if [[ "$OSTYPE" == "darwin"* ]]; then

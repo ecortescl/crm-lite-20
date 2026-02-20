@@ -53,7 +53,7 @@ DB_PASSWORD=TU_PASSWORD_SEGURA
 Ejecuta localmente:
 
 ```bash
-docker run --rm php:8.2-cli php -r "echo 'base64:' . base64_encode(random_bytes(32)) . PHP_EOL;"
+docker run --rm php:8.4-cli php -r "echo 'base64:' . base64_encode(random_bytes(32)) . PHP_EOL;"
 ```
 
 Copia el resultado y úsalo como `APP_KEY`.

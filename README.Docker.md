@@ -4,7 +4,7 @@ Este proyecto está configurado para ejecutarse en Docker con PostgreSQL, optimi
 
 ## 📋 Características
 
-- ✅ PHP 8.2 con FPM
+- ✅ PHP 8.4 con FPM
 - ✅ PostgreSQL 16
 - ✅ Nginx como servidor web
 - ✅ Supervisor para gestión de procesos

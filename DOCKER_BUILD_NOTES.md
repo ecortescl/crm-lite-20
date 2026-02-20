@@ -198,4 +198,5 @@ Agregar métricas para:
 
 **Última actualización**: 2026-02-20  
 **Versión de Wayfinder**: 0.1.9  
-**Versión de Vite**: 7.0.4
+**Versión de Vite**: 7.0.4  
+**Versión de PHP**: 8.4

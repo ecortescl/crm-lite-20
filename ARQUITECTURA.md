@@ -227,7 +227,7 @@ Usuario → Dokploy (SSL/Dominio) → Docker (Puerto 80)
 │                        Backend                               │
 │                                                              │
 │  Laravel 12 (Framework)                                     │
-│  PHP 8.2 (Lenguaje)                                         │
+│  PHP 8.4 (Lenguaje)                                         │
 │  Laravel Fortify (Autenticación)                            │
 │  Laravel Sanctum (API Tokens)                               │
 │  Inertia.js (SSR/SPA Híbrido)                              │

@@ -19,7 +19,7 @@ Sistema CRM moderno construido con Laravel 12, Vue.js 3, Inertia.js y TailwindCS
 
 ### Backend
 - Laravel 12
-- PHP 8.2+
+- PHP 8.4+
 - PostgreSQL 16
 - Laravel Fortify (Autenticación)
 - Laravel Sanctum (API)
@@ -36,7 +36,7 @@ Sistema CRM moderno construido con Laravel 12, Vue.js 3, Inertia.js y TailwindCS
 ## 📋 Requisitos
 
 ### Desarrollo Local
-- PHP 8.2 o superior
+- PHP 8.4 o superior
 - Composer
 - Node.js 20 o superior
 - PostgreSQL 16 o SQLite
@@ -104,7 +104,7 @@ Este proyecto incluye configuración completa de Docker optimizada para producci
 ### Características de Docker
 
 - ✅ Multi-stage build optimizado
-- ✅ PHP 8.2 FPM + Nginx
+- ✅ PHP 8.4 FPM + Nginx
 - ✅ PostgreSQL 16
 - ✅ Supervisor para gestión de procesos
 - ✅ Queue workers automáticos
