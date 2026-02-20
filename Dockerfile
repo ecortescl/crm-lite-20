@@ -68,7 +68,7 @@ RUN mkdir -p /var/www/html/storage/app/public \
     && mkdir -p /var/lib/nginx/tmp/uwsgi \
     && mkdir -p /var/lib/nginx/tmp/scgi \
     && chown -R www-data:www-data /var/www/html/storage/app/public \
-    && chown -R nginx:nginx /var/lib/nginx/tmp \
+    && chown -R www-data:www-data /var/lib/nginx/tmp \
     && chmod -R 755 /var/lib/nginx/tmp
 
 # Configuración de Nginx

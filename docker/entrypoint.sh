@@ -52,7 +52,7 @@ chmod -R 775 /var/www/html/bootstrap/cache
 # Asegurar permisos de nginx para uploads
 echo "🔐 Configurando permisos de Nginx..."
 mkdir -p /var/lib/nginx/tmp/client_body
-chown -R nginx:nginx /var/lib/nginx/tmp
+chown -R www-data:www-data /var/lib/nginx/tmp
 chmod -R 755 /var/lib/nginx/tmp
 
 echo "✨ Aplicación lista!"
