@@ -8,8 +8,8 @@ services:
     container_name: ${APP_NAME:-laravel-app}
     restart: unless-stopped
     working_dir: /var/www/html
-    ports:
-      - "${APP_PORT:-80}:80"
+    expose:
+      - "80"
     environment:
       - APP_NAME=${APP_NAME:-Laravel}
       - APP_ENV=${APP_ENV:-production}
