@@ -1,24 +1,7 @@
-# Multi-stage build para optimizar el tamaño de la imagen
-FROM node:20-alpine AS node-builder
-
-WORKDIR /app
-
-# Copiar archivos de dependencias
-COPY package*.json ./
-
-# Instalar dependencias de Node
-RUN npm ci
-
-# Copiar código fuente
-COPY . .
-
-# Build de assets
-RUN npm run build
-
-# Imagen final
+# Imagen base con PHP y Node.js
 FROM php:8.2-fpm-alpine
 
-# Instalar dependencias del sistema y extensiones de PHP
+# Instalar dependencias del sistema, extensiones de PHP y Node.js
 RUN apk add --no-cache \
     postgresql-dev \
     postgresql-client \
@@ -33,6 +16,8 @@ RUN apk add --no-cache \
     freetype-dev \
     oniguruma-dev \
     libzip-dev \
+    nodejs \
+    npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
     pdo \
@@ -53,11 +38,22 @@ WORKDIR /var/www/html
 # Copiar archivos del proyecto
 COPY . .
 
-# Copiar assets compilados desde el builder
-COPY --from=node-builder /app/public/build ./public/build
+# Crear .env temporal para el build
+RUN cp .env.docker .env && \
+    sed -i 's/APP_KEY=/APP_KEY=base64:dGVtcG9yYXJ5a2V5Zm9yYnVpbGRvbmx5MTIzNDU2Nzg5MA==/' .env
 
-# Instalar dependencias de PHP
+# Instalar dependencias de PHP primero
 RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Instalar dependencias de Node.js (incluyendo devDependencies para el build)
+RUN npm ci
+
+# Build de assets (con variable para deshabilitar Wayfinder durante build)
+ENV DOCKER_BUILD=true
+RUN npm run build
+
+# Limpiar archivos temporales y node_modules
+RUN rm -rf node_modules .env
 
 # Configurar permisos
 RUN chown -R www-data:www-data /var/www/html \

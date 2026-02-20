@@ -14,6 +14,7 @@ Este proyecto está configurado para ejecutarse en Docker con PostgreSQL, optimi
 - ✅ Volúmenes persistentes para base de datos y archivos
 - ✅ Health checks para PostgreSQL
 - ✅ Optimización de cache y assets
+- ✅ Build optimizado sin Wayfinder durante construcción (se genera en runtime)
 
 ## 🚀 Despliegue Local
 

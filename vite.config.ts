@@ -4,6 +4,9 @@ import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 
+// Deshabilitar Wayfinder durante build de Docker
+const isDockerBuild = process.env.DOCKER_BUILD === 'true';
+
 export default defineConfig({
     plugins: [
         laravel({
@@ -12,9 +15,10 @@ export default defineConfig({
             refresh: true,
         }),
         tailwindcss(),
-        wayfinder({
+        // Solo incluir Wayfinder si no es build de Docker
+        ...(!isDockerBuild ? [wayfinder({
             formVariants: true,
-        }),
+        })] : []),
         vue({
             template: {
                 transformAssetUrls: {

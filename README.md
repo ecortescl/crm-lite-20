@@ -112,6 +112,7 @@ Este proyecto incluye configuración completa de Docker optimizada para producci
 - ✅ Volúmenes persistentes
 - ✅ Health checks
 - ✅ Configuración dinámica de dominio/puerto
+- ✅ Build optimizado (Wayfinder se genera en runtime)
 
 ### Comandos Docker Útiles
 
@@ -273,6 +274,9 @@ make backup-db         # Backup de base de datos
 
 - [README.Docker.md](README.Docker.md) - Documentación completa de Docker
 - [DEPLOYMENT.md](DEPLOYMENT.md) - Guía de despliegue en Dokploy
+- [DOCKER_BUILD_NOTES.md](DOCKER_BUILD_NOTES.md) - Notas técnicas del build
+- [INICIO_RAPIDO.md](INICIO_RAPIDO.md) - Guía de inicio rápido
+- [ARQUITECTURA.md](ARQUITECTURA.md) - Arquitectura del sistema
 - [API_DOCUMENTATION.md](API_DOCUMENTATION.md) - Documentación de API
 - [CRM_README.md](CRM_README.md) - Funcionalidades del CRM
 

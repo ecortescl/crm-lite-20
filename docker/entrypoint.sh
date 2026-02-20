@@ -20,6 +20,10 @@ fi
 echo "📦 Ejecutando migraciones..."
 php artisan migrate --force
 
+# Generar rutas de Wayfinder
+echo "🗺️  Generando rutas de Wayfinder..."
+php artisan wayfinder:generate || echo "⚠️  Wayfinder generation skipped"
+
 # Limpiar y optimizar cache
 echo "🧹 Optimizando aplicación..."
 php artisan config:cache
