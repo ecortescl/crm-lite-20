@@ -60,9 +60,16 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
     && chmod -R 755 /var/www/html/bootstrap/cache
 
-# Crear directorio para uploads
+# Crear directorios para uploads y nginx temp
 RUN mkdir -p /var/www/html/storage/app/public \
-    && chown -R www-data:www-data /var/www/html/storage/app/public
+    && mkdir -p /var/lib/nginx/tmp/client_body \
+    && mkdir -p /var/lib/nginx/tmp/proxy \
+    && mkdir -p /var/lib/nginx/tmp/fastcgi \
+    && mkdir -p /var/lib/nginx/tmp/uwsgi \
+    && mkdir -p /var/lib/nginx/tmp/scgi \
+    && chown -R www-data:www-data /var/www/html/storage/app/public \
+    && chown -R nginx:nginx /var/lib/nginx/tmp \
+    && chmod -R 755 /var/lib/nginx/tmp
 
 # Configuración de Nginx
 COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
