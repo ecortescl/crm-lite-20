@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { X, AlertCircle } from 'lucide-vue-next';
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const props = defineProps<{
@@ -19,6 +19,14 @@ const props = defineProps<{
 
 const page = usePage();
 const errorMessage = computed(() => page.props.flash?.error as string | undefined);
+const debugInfo = computed(() => page.props.flash?.debug as any);
+
+// Mostrar debug info en consola cuando cambie
+watch(debugInfo, (newDebug) => {
+    if (newDebug) {
+        console.log('🔍 DEBUG INFO:', newDebug);
+    }
+});
 
 const form = useForm({
     platform_name: props.platformName,
@@ -40,14 +48,26 @@ const handleFileChange = (event: Event) => {
 };
 
 const submit = () => {
+    console.log('=== DEBUG FRONTEND ===');
+    console.log('Form data:', {
+        platform_name: form.platform_name,
+        platform_logo: form.platform_logo,
+        has_file: form.platform_logo !== null,
+    });
+    
     form.post(route('platform.update'), {
         preserveScroll: true,
         forceFormData: true,
-        onSuccess: () => {
+        onSuccess: (response) => {
+            console.log('✅ Success:', response);
             form.reset('platform_logo');
         },
         onError: (errors) => {
-            console.error('Error al subir:', errors);
+            console.error('❌ Validation errors:', errors);
+            alert('Errores de validación: ' + JSON.stringify(errors, null, 2));
+        },
+        onFinish: () => {
+            console.log('Request finished');
         },
     });
 };
@@ -82,6 +102,16 @@ const deleteLogo = () => {
                     </CardHeader>
                     <CardContent>
                         <form @submit.prevent="submit" class="space-y-6">
+                            <!-- Debug info -->
+                            <Alert v-if="debugInfo" variant="default" class="bg-blue-50 border-blue-200">
+                                <AlertDescription>
+                                    <details>
+                                        <summary class="cursor-pointer font-semibold">🔍 Debug Info (click para ver)</summary>
+                                        <pre class="mt-2 text-xs overflow-auto">{{ JSON.stringify(debugInfo, null, 2) }}</pre>
+                                    </details>
+                                </AlertDescription>
+                            </Alert>
+
                             <!-- Mensaje de error general -->
                             <Alert v-if="errorMessage" variant="destructive">
                                 <AlertCircle class="h-4 w-4" />
