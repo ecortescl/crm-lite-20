@@ -1,0 +1,64 @@
+{
+  "name": "Laravel CRM",
+  "description": "Sistema CRM con Laravel, Vue.js e Inertia",
+  "type": "application",
+  "buildType": "dockerfile",
+  "dockerfile": "Dockerfile",
+  "env": {
+    "APP_NAME": "Laravel CRM",
+    "APP_ENV": "production",
+    "APP_DEBUG": "false",
+    "DB_CONNECTION": "pgsql",
+    "DB_HOST": "db",
+    "DB_PORT": "5432",
+    "DB_DATABASE": "laravel",
+    "DB_USERNAME": "laravel",
+    "SESSION_DRIVER": "database",
+    "CACHE_STORE": "database",
+    "QUEUE_CONNECTION": "database",
+    "FILESYSTEM_DISK": "local"
+  },
+  "ports": [
+    {
+      "published": 80,
+      "target": 80,
+      "protocol": "tcp"
+    }
+  ],
+  "volumes": [
+    {
+      "type": "volume",
+      "source": "storage-data",
+      "target": "/var/www/html/storage/app"
+    }
+  ],
+  "healthcheck": {
+    "test": ["CMD", "curl", "-f", "http://localhost/"],
+    "interval": "30s",
+    "timeout": "10s",
+    "retries": 3,
+    "start_period": "40s"
+  },
+  "services": {
+    "db": {
+      "image": "postgres:16-alpine",
+      "env": {
+        "POSTGRES_DB": "laravel",
+        "POSTGRES_USER": "laravel"
+      },
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "db-data",
+          "target": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthcheck": {
+        "test": ["CMD-SHELL", "pg_isready -U laravel"],
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5
+      }
+    }
+  }
+}

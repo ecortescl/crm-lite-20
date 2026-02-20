@@ -1,0 +1,54 @@
+name: Docker Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile
+        push: false
+        tags: laravel-crm:test
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Create .env file
+      run: |
+        cp .env.docker .env
+        sed -i 's/APP_KEY=/APP_KEY=base64:test_key_for_ci_only_not_secure/' .env
+
+    - name: Start containers
+      run: docker-compose up -d
+
+    - name: Wait for services
+      run: sleep 30
+
+    - name: Check containers are running
+      run: docker-compose ps
+
+    - name: Check application health
+      run: |
+        curl -f http://localhost || exit 1
+
+    - name: Show logs on failure
+      if: failure()
+      run: docker-compose logs
+
+    - name: Stop containers
+      if: always()
+      run: docker-compose down -v
