@@ -10,6 +10,12 @@ until pg_isready -h db -U ${DB_USERNAME:-laravel} > /dev/null 2>&1; do
 done
 echo "✅ PostgreSQL está listo"
 
+# Crear directorios necesarios para uploads
+echo "📁 Creando directorios de storage..."
+mkdir -p /var/www/html/storage/app/public/logos
+mkdir -p /var/www/html/storage/framework/{cache,sessions,views}
+mkdir -p /var/www/html/storage/logs
+
 # Crear enlace simbólico para storage si no existe
 if [ ! -L /var/www/html/public/storage ]; then
     echo "🔗 Creando enlace simbólico para storage..."

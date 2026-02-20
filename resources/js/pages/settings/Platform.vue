@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import { route } from '@/lib/route';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,13 +8,17 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
-import { X } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { X, AlertCircle } from 'lucide-vue-next';
+import { ref, computed } from 'vue';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const props = defineProps<{
     platformName: string;
     platformLogo: string;
 }>();
+
+const page = usePage();
+const errorMessage = computed(() => page.props.flash?.error as string | undefined);
 
 const form = useForm({
     platform_name: props.platformName,
@@ -75,6 +79,14 @@ const deleteLogo = () => {
                     </CardHeader>
                     <CardContent>
                         <form @submit.prevent="submit" class="space-y-6">
+                            <!-- Mensaje de error general -->
+                            <Alert v-if="errorMessage" variant="destructive">
+                                <AlertCircle class="h-4 w-4" />
+                                <AlertDescription>
+                                    {{ errorMessage }}
+                                </AlertDescription>
+                            </Alert>
+
                             <div>
                                 <Label for="platform_name">Nombre de la Plataforma</Label>
                                 <Input
@@ -82,8 +94,12 @@ const deleteLogo = () => {
                                     v-model="form.platform_name"
                                     type="text"
                                     required
+                                    :class="{ 'border-destructive': form.errors.platform_name }"
                                 />
-                                <p class="text-xs text-muted-foreground mt-1">
+                                <p v-if="form.errors.platform_name" class="text-xs text-destructive mt-1">
+                                    {{ form.errors.platform_name }}
+                                </p>
+                                <p v-else class="text-xs text-muted-foreground mt-1">
                                     Este nombre aparecerá en el título y en el sidebar
                                 </p>
                             </div>
@@ -115,14 +131,18 @@ const deleteLogo = () => {
                                     type="file"
                                     accept="image/*"
                                     @change="handleFileChange"
+                                    :class="{ 'border-destructive': form.errors.platform_logo }"
                                 />
-                                <p class="text-xs text-muted-foreground mt-1">
+                                <p v-if="form.errors.platform_logo" class="text-xs text-destructive mt-1">
+                                    {{ form.errors.platform_logo }}
+                                </p>
+                                <p v-else class="text-xs text-muted-foreground mt-1">
                                     Formatos: JPG, PNG, GIF, SVG. Máximo 2MB
                                 </p>
                             </div>
 
                             <Button type="submit" :disabled="form.processing">
-                                Guardar Cambios
+                                {{ form.processing ? 'Guardando...' : 'Guardar Cambios' }}
                             </Button>
                         </form>
                     </CardContent>
