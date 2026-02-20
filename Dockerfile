@@ -48,7 +48,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Instalar dependencias de Node.js (incluyendo devDependencies para el build)
 RUN npm ci
 
-# Build de assets (con variable para deshabilitar Wayfinder durante build)
+# Build de assets SIN Wayfinder (se generará en runtime)
 ENV DOCKER_BUILD=true
 RUN npm run build
 

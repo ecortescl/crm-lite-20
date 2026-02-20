@@ -48,12 +48,14 @@ Las rutas de Wayfinder se generan cuando el contenedor inicia, después de que:
 ### Durante la Construcción de la Imagen
 
 1. **Instalar dependencias del sistema** (PHP, Node.js, PostgreSQL client, etc.)
-2. **Copiar código fuente**
+2. **Copiar código fuente** (incluyendo rutas pre-generadas de Wayfinder)
 3. **Crear .env temporal** (con APP_KEY temporal)
 4. **Instalar dependencias de Composer**
 5. **Instalar dependencias de npm** (incluyendo devDependencies)
-6. **Build de assets con Vite** (con `DOCKER_BUILD=true`, sin Wayfinder)
+6. **Build de assets con Vite** (con `DOCKER_BUILD=true`, sin plugin Wayfinder)
 7. **Limpiar archivos temporales** (node_modules, .env temporal)
+
+**Nota**: Las rutas de Wayfinder están pre-generadas y commiteadas al repositorio para que estén disponibles durante el build de Docker.
 
 ### Durante el Inicio del Contenedor
 
