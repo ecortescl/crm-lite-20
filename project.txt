@@ -1,0 +1,13 @@
+quiero construir un crm simplificado, que permita gestionar usuarios, permiso y roles 
+
+Tenga un dashboard resumen de los registros leads, recuentos segun sus estados (Nuevo registro, contactado, descartado, reunion, negocion, concretado)
+
+La idea es que estos estados de leads este por defecto pero se puedan modificar y personalizar
+
+luego la idea es tener debajo del dashboard un Kanban con los registros y sus estados nombrados para poder moverlos
+
+Luego una pagina CRUD para gestionar leads 
+
+Luego una pagina CRUD para Usuarios, Permisos y roles
+
+La idea es usar los recursos de shandcn y vue laravel

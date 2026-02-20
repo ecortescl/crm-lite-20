@@ -1,0 +1,75 @@
+/* SweetAlert2 Custom Styles - shadcn-vue theme */
+
+.swal-toast-popup {
+  border-radius: calc(var(--radius) - 2px) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+  padding: 0.75rem 1rem !important;
+  min-width: 320px !important;
+}
+
+.swal-toast-content {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.swal-toast-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.swal-toast-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swal-toast-message {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  color: hsl(var(--popover-foreground));
+}
+
+.swal-toast-progress {
+  background: hsl(var(--primary)) !important;
+  height: 3px !important;
+}
+
+/* Remove default SweetAlert2 icon styles */
+.swal2-icon {
+  display: none !important;
+}
+
+/* Animations */
+.swal2-show {
+  animation: swal2-show 0.2s !important;
+}
+
+.swal2-hide {
+  animation: swal2-hide 0.2s !important;
+}
+
+@keyframes swal2-show {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes swal2-hide {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
