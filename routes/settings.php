@@ -29,7 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('appearance.edit');
 
     Route::get('settings/platform', [PlatformController::class, 'edit'])->name('platform.edit');
-    Route::patch('settings/platform', [PlatformController::class, 'update'])->name('platform.update');
+    Route::match(['post', 'patch'], 'settings/platform', [PlatformController::class, 'update'])->name('platform.update');
     Route::delete('settings/platform/logo', [PlatformController::class, 'deleteLogo'])->name('platform.logo.delete');
 
     Route::get('settings/two-factor', [TwoFactorAuthenticationController::class, 'show'])

@@ -40,11 +40,14 @@ const handleFileChange = (event: Event) => {
 };
 
 const submit = () => {
-    form.patch(route('platform.update'), {
+    form.post(route('platform.update'), {
         preserveScroll: true,
         forceFormData: true,
         onSuccess: () => {
             form.reset('platform_logo');
+        },
+        onError: (errors) => {
+            console.error('Error al subir:', errors);
         },
     });
 };
