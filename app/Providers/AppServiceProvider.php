@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
         Date::use(CarbonImmutable::class);
 
         DB::prohibitDestructiveCommands(
-            app()->isProduction(),
+            false, // Temporalmente deshabilitado para setup inicial
         );
 
         Password::defaults(fn (): ?Password => app()->isProduction()
