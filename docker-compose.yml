@@ -37,7 +37,7 @@ services:
 
   db:
     image: postgres:16-alpine
-    container_name: ${APP_NAME:-laravel}-db
+    container_name: ${APP_NAME:-laravel-app}-db
     restart: unless-stopped
     environment:
       - POSTGRES_DB=${DB_DATABASE:-laravel}
