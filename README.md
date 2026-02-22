@@ -1,314 +1,421 @@
-# 🚀 Laravel CRM - Sistema de Gestión de Clientes
+# CRM Lite
 
-Sistema CRM moderno construido con Laravel 12, Vue.js 3, Inertia.js y TailwindCSS.
+Sistema CRM simplificado para gestión de prospectos (leads), empresas, cotizaciones y equipos de venta. Construido con **Laravel 12**, **Vue.js 3** e **Inertia.js** como SPA de servidor, con soporte completo para Docker y despliegue en Dokploy.
 
-## ✨ Características
+---
 
-- 🔐 Autenticación completa con Laravel Fortify
-- 👥 Gestión de usuarios y roles
-- 🏢 Gestión de empresas
-- 📊 Gestión de leads/prospectos
-- 🎨 Interfaz moderna con Vue 3 + Inertia.js
-- 🎨 Componentes UI con Radix Vue
-- 📱 Diseño responsive con TailwindCSS 4
-- 🔔 Notificaciones con SweetAlert2
-- 🐳 Configuración Docker completa
-- 📦 Listo para desplegar en Dokploy
+## Tabla de Contenidos
 
-## 🛠️ Stack Tecnológico
+- [Características](#características)
+- [Stack Tecnológico](#stack-tecnológico)
+- [Arquitectura](#arquitectura)
+- [Módulos del Sistema](#módulos-del-sistema)
+- [Requisitos](#requisitos)
+- [Instalación](#instalación)
+- [Variables de Entorno](#variables-de-entorno)
+- [Docker](#docker)
+- [Despliegue en Dokploy](#despliegue-en-dokploy)
+- [Scripts Disponibles](#scripts-disponibles)
+- [Testing](#testing)
+- [Seguridad](#seguridad)
+
+---
+
+## Características
+
+| Módulo | Descripción |
+|---|---|
+| 🔐 Autenticación | Login, registro, recuperación de contraseña y 2FA (TOTP) con Laravel Fortify |
+| 👥 Usuarios, Roles y Permisos | Sistema RBAC con roles personalizables (`jefatura`, `vendedor`) y permisos por recurso |
+| 🏢 Empresas | CRUD de empresas con RUT chileno, giro, industria, tamaño y relación con leads |
+| 📊 Leads (Prospectos) | Gestión completa con tracking UTM, estados configurables, reuniones y seguimiento |
+| 📋 Kanban | Vista Kanban de leads con paginación por columna y filtro de fechas |
+| 📄 Cotizaciones | Creación de cotizaciones con ítems, subtotal, IVA, validez y exportación a PDF |
+| 📅 Calendario | Vista de leads con reuniones agendadas |
+| 📈 Dashboard | Métricas de conversión, embudo de ventas y resumen de cotizaciones |
+| ⚙️ Configuración | Ajustes del sistema (nombre de empresa, logo, moneda) |
+| 🐳 Docker | Imagen multi-stage optimizada con PHP-FPM, Nginx, Supervisor y PostgreSQL |
+
+---
+
+## Stack Tecnológico
 
 ### Backend
-- Laravel 12
-- PHP 8.4+
-- PostgreSQL 16
-- Laravel Fortify (Autenticación)
-- Laravel Sanctum (API)
+| Paquete | Versión | Rol |
+|---|---|---|
+| PHP | 8.4+ | Lenguaje principal |
+| Laravel | 12 | Framework |
+| Inertia.js (Laravel) | 2 | Adaptador SPA sin API REST |
+| Laravel Fortify | 1 | Autenticación headless |
+| Laravel Sanctum | 4 | Tokens de API |
+| Laravel Wayfinder | 0 | Rutas tipadas en TypeScript |
+| barryvdh/laravel-dompdf | 3 | Exportación de cotizaciones a PDF |
+| Pest | 4 | Framework de testing |
+| PostgreSQL | 16 | Base de datos principal |
 
 ### Frontend
-- Vue.js 3
-- Inertia.js
-- TailwindCSS 4
-- Radix Vue (Componentes UI)
-- Lucide Icons
-- SweetAlert2
-- Vite
+| Paquete | Versión | Rol |
+|---|---|---|
+| Vue.js | 3 | Framework reactivo |
+| Inertia.js (Vue) | 2 | Routing SPA con SSR |
+| TailwindCSS | 4 | Estilos utilitarios |
+| Radix Vue / Reka UI | 1 / 2 | Componentes UI accesibles (shadcn/ui) |
+| @tanstack/vue-table | 8 | Tablas con filtros, ordenamiento y paginación |
+| Lucide Vue | — | Íconos |
+| SweetAlert2 | 11 | Notificaciones y modales |
+| VueUse | 12 | Composables utilitarios |
+| vue-sonner | 2 | Toasts/notificaciones |
+| Vite | 7 | Bundler y dev server |
 
-## 📋 Requisitos
+---
+
+## Arquitectura
+
+```
+crm-lite-20/
+├── app/
+│   ├── Actions/            # Acciones de Fortify (auth flows)
+│   ├── Concerns/           # Traits compartidos
+│   ├── Http/
+│   │   ├── Controllers/    # Controladores de la aplicación
+│   │   │   ├── Api/        # Endpoints de API REST
+│   │   │   └── Settings/   # Controladores de configuración
+│   │   ├── Middleware/     # Middleware personalizados
+│   │   └── Requests/       # Form Requests con validación
+│   ├── Models/             # Modelos Eloquent
+│   └── Providers/          # Service Providers
+├── database/
+│   ├── migrations/         # Migraciones de base de datos
+│   ├── seeders/            # Seeders (estados, roles, permisos)
+│   └── factories/          # Factories para testing
+├── resources/
+│   ├── css/                # Estilos globales (app.css)
+│   ├── js/
+│   │   ├── pages/          # Páginas Inertia (Vue SFC)
+│   │   ├── components/     # Componentes reutilizables
+│   │   ├── layouts/        # Layouts de la aplicación
+│   │   ├── composables/    # Composables Vue
+│   │   ├── types/          # Definiciones TypeScript
+│   │   ├── lib/            # Utilidades (cn, etc.)
+│   │   └── routes/         # Rutas Wayfinder (auto-generadas)
+│   └── views/              # Blade (solo app.blade.php)
+├── routes/
+│   ├── web.php             # Rutas web principales
+│   ├── auth.php            # Rutas de autenticación
+│   └── api.php             # Rutas de API
+├── docker/                 # Configuración de contenedores
+│   ├── nginx/              # Nginx config
+│   ├── php/                # php.ini y pools FPM
+│   └── supervisor/         # Supervisord (queue workers)
+├── tests/                  # Tests (Pest)
+├── Dockerfile              # Imagen multi-stage
+├── docker-compose.yml      # Orquestación local
+└── Makefile                # Comandos Make para Docker
+```
+
+---
+
+## Módulos del Sistema
+
+### 📊 Dashboard
+Vista de resumen con métricas clave calculadas en tiempo real:
+- **Conteo por estado**: número de leads en cada etapa del embudo.
+- **Tasa de conversión**: leads concretados vs. descartados.
+- **Tasa de negociación**: leads en etapa de negociación.
+- **Reuniones agendadas**: porcentaje de leads con reunión programada.
+- **Total cotizado**: suma de todas las cotizaciones activas.
+- **Mini-Kanban**: vista rápida de los últimos 5 leads por estado.
+
+Los usuarios con rol `jefatura` ven métricas globales; los demás solo ven sus leads asignados.
+
+### 📊 Leads
+Gestión completa del ciclo de vida del prospecto:
+- Información de contacto: nombre, email, teléfono, empresa.
+- **Tracking UTM** completo: `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`.
+- **Reuniones**: fecha, link (videollamada), notas y registro del agendador.
+- **Información comercial**: presupuesto, ítems del presupuesto, monto final, estado de pago (`pending`, `partial`, `paid`).
+- **Vista tabla**: búsqueda en tiempo real, filtros por estado, origen y agente asignado. Paginación de 15 registros.
+- **Vista Kanban**: tablero arrastrable con paginación por columna (5 por columna) y filtro de rango de fechas.
+
+### 📄 Cotizaciones
+Módulo completo de presupuestos con:
+- Numeración automática (`COT-YYYY-XXXX`).
+- Datos del cliente: nombre, RUT, email, teléfono, dirección.
+- Ítems con descripción, cantidad, precio unitario y subtotal.
+- Cálculo automático de subtotal, IVA (tasa configurable) y total.
+- Estados: `borrador`, `enviada`, `aceptada`, `rechazada`.
+- Fechas de emisión y vencimiento.
+- Exportación a **PDF** con DomPDF.
+- Vinculación a un lead específico.
+
+### 🏢 Empresas
+- Razón social, RUT chileno (con formato automático `XX.XXX.XXX-X`), nombre de fantasía, giro.
+- Categorización por industria y tamaño.
+- Información de contacto: email, teléfono, sitio web, dirección (comuna, ciudad, región).
+- Relación con múltiples leads.
+
+### 👥 Usuarios, Roles y Permisos
+- **RBAC** (Role-Based Access Control): roles con múltiples permisos, usuarios con múltiples roles.
+- Rol `jefatura` (equivalente a admin): acceso total a todos los registros.
+- Rol `vendedor`: acceso restringido a sus propios leads asignados.
+- 2FA opcional por usuario (TOTP compatible con Google Authenticator).
+
+### ⚙️ Estados de Lead
+- Estados por defecto: Nuevo Registro, Contactado, Descartado, Reunión, Negociación, Concretado.
+- Configurables desde la interfaz: nombre, color (badge) e ícono.
+- El orden determina la secuencia en el Kanban.
+
+---
+
+## Requisitos
 
 ### Desarrollo Local
-- PHP 8.4 o superior
-- Composer
-- Node.js 20 o superior
-- PostgreSQL 16 o SQLite
+- PHP **8.4** o superior con extensiones: `pdo`, `pdo_sqlite`/`pdo_pgsql`, `gd`, `mbstring`, `xml`
+- Composer **2.x**
+- Node.js **20** o superior
+- SQLite (por defecto) o PostgreSQL 16
 
 ### Con Docker
-- Docker
-- Docker Compose
+- Docker **24+**
+- Docker Compose **2.x**
 
-## 🚀 Instalación
+---
 
-### Opción 1: Desarrollo Local (Sin Docker)
+## Instalación
+
+### Opción 1 — Desarrollo Local (SQLite, recomendado para desarrollo)
 
 ```bash
-# Clonar el repositorio
-git clone <tu-repositorio>
+# 1. Clonar repositorio
+git clone <url-del-repositorio> crm-lite-20
 cd crm-lite-20
 
-# Instalar dependencias de PHP
+# 2. Instalar dependencias PHP y Node
 composer install
-
-# Instalar dependencias de Node
 npm install
 
-# Configurar entorno
+# 3. Configurar entorno
 cp .env.example .env
 php artisan key:generate
 
-# Configurar base de datos en .env
-# Luego ejecutar migraciones
+# 4. Migraciones y datos iniciales
 php artisan migrate --seed
 
-# Compilar assets
-npm run build
-
-# Iniciar servidor de desarrollo
+# 5. Iniciar servidor de desarrollo (PHP + Queue + Logs + Vite en paralelo)
 composer run dev
 ```
 
-### Opción 2: Con Docker (Recomendado)
+La aplicación estará disponible en `http://localhost:8000`.
+
+> **Nota:** El comando `composer run dev` levanta simultáneamente el servidor PHP, el queue worker, el log viewer (Pail) y el dev server de Vite con hot-reload.
+
+### Opción 2 — Con Docker (PostgreSQL, recomendado para staging/producción)
 
 ```bash
-# Clonar el repositorio
-git clone <tu-repositorio>
+# 1. Clonar repositorio
+git clone <url-del-repositorio> crm-lite-20
 cd crm-lite-20
 
-# Verificar configuración
+# 2. Verificar que el entorno Docker es compatible
 ./docker-verify.sh
 
-# Iniciar con Docker
+# 3. Iniciar con el script automatizado
 ./docker-start.sh
 
-# O manualmente
+# — O manualmente —
 cp .env.docker .env
-# Edita .env con tus configuraciones
+# Edita .env con tus credenciales de base de datos
 docker-compose build
 docker-compose up -d
 ```
 
-La aplicación estará disponible en `http://localhost`
+La aplicación estará disponible en `http://localhost`.
 
-## 🐳 Docker
-
-Este proyecto incluye configuración completa de Docker optimizada para producción y Dokploy.
-
-### Características de Docker
-
-- ✅ Multi-stage build optimizado
-- ✅ PHP 8.4 FPM + Nginx
-- ✅ PostgreSQL 16
-- ✅ Supervisor para gestión de procesos
-- ✅ Queue workers automáticos
-- ✅ Soporte para uploads hasta 100MB
-- ✅ Volúmenes persistentes
-- ✅ Health checks
-- ✅ Configuración dinámica de dominio/puerto
-- ✅ Build optimizado (Wayfinder se genera en runtime)
-
-### Comandos Docker Útiles
+### Instalación Completa con Make
 
 ```bash
-# Ver todos los comandos disponibles
-make help
-
-# Instalación completa
-make install
-
-# Ver logs
-make logs
-
-# Ejecutar migraciones
-make migrate
-
-# Acceder al contenedor
-make shell
-
-# Backup de base de datos
-make backup-db
-
-# Detener contenedores
-make down
+make install   # Build + Up + Migrate en un solo comando
 ```
-
-Ver [README.Docker.md](README.Docker.md) para documentación completa de Docker.
-
-## 🌐 Despliegue en Dokploy
-
-Este proyecto está optimizado para despliegue en Dokploy con configuración automática.
-
-### Pasos Rápidos
-
-1. Crea un nuevo proyecto en Dokploy
-2. Conecta tu repositorio Git
-3. Configura las variables de entorno (ver DEPLOYMENT.md)
-4. Haz clic en "Deploy"
-
-Dokploy automáticamente:
-- Construirá la imagen Docker
-- Creará la base de datos PostgreSQL
-- Ejecutará las migraciones
-- Configurará el dominio
-- Gestionará los volúmenes persistentes
-
-Ver [DEPLOYMENT.md](DEPLOYMENT.md) para guía completa de despliegue.
-
-## 📁 Estructura del Proyecto
-
-```
-.
-├── app/                    # Código de la aplicación Laravel
-│   ├── Http/Controllers/   # Controladores
-│   ├── Models/            # Modelos Eloquent
-│   └── Providers/         # Service Providers
-├── resources/
-│   ├── js/                # Código Vue.js
-│   │   ├── components/    # Componentes Vue
-│   │   ├── layouts/       # Layouts de Inertia
-│   │   └── pages/         # Páginas de Inertia
-│   └── css/               # Estilos
-├── docker/                # Configuración Docker
-│   ├── nginx/            # Configuración Nginx
-│   ├── php/              # Configuración PHP
-│   └── supervisor/       # Configuración Supervisor
-├── database/
-│   ├── migrations/       # Migraciones
-│   └── seeders/          # Seeders
-├── Dockerfile            # Imagen Docker
-├── docker-compose.yml    # Orquestación Docker
-└── Makefile             # Comandos útiles
-```
-
-## 🔧 Configuración
-
-### Variables de Entorno Importantes
-
-```env
-# Aplicación
-APP_NAME=Laravel
-APP_ENV=production
-APP_KEY=base64:...
-APP_DEBUG=false
-APP_URL=https://tu-dominio.com
-
-# Base de Datos
-DB_CONNECTION=pgsql
-DB_HOST=db
-DB_PORT=5432
-DB_DATABASE=laravel
-DB_USERNAME=laravel
-DB_PASSWORD=tu_password_segura
-```
-
-### Configuración de Uploads
-
-El proyecto soporta uploads de archivos hasta 100MB. Los archivos se almacenan en:
-- Local: `storage/app/public`
-- Docker: Volumen persistente `storage-data`
-
-## 🧪 Testing
-
-```bash
-# Ejecutar tests
-php artisan test
-
-# Con Docker
-docker-compose exec app php artisan test
-# O
-make test
-```
-
-## 📝 Scripts Disponibles
-
-### Composer Scripts
-
-```bash
-composer run dev        # Servidor de desarrollo con hot reload
-composer run build      # Compilar assets para producción
-composer run lint       # Ejecutar PHP Pint
-composer run test       # Ejecutar tests
-```
-
-### NPM Scripts
-
-```bash
-npm run dev            # Vite dev server
-npm run build          # Build de producción
-npm run format         # Formatear código con Prettier
-npm run lint           # Linter ESLint
-```
-
-### Make Commands (Docker)
-
-```bash
-make help              # Ver todos los comandos
-make install           # Instalación completa
-make up                # Levantar contenedores
-make down              # Detener contenedores
-make logs              # Ver logs
-make shell             # Acceder al contenedor
-make migrate           # Ejecutar migraciones
-make seed              # Ejecutar seeders
-make backup-db         # Backup de base de datos
-```
-
-## 🔐 Seguridad
-
-- Autenticación con Laravel Fortify
-- Protección CSRF
-- Validación de entrada
-- Sanitización de datos
-- Rate limiting
-- Passwords hasheados con bcrypt
-- Sesiones seguras
-
-## 📚 Documentación Adicional
-
-- [README.Docker.md](README.Docker.md) - Documentación completa de Docker
-- [DEPLOYMENT.md](DEPLOYMENT.md) - Guía de despliegue en Dokploy
-- [DOCKER_BUILD_NOTES.md](DOCKER_BUILD_NOTES.md) - Notas técnicas del build
-- [INICIO_RAPIDO.md](INICIO_RAPIDO.md) - Guía de inicio rápido
-- [ARQUITECTURA.md](ARQUITECTURA.md) - Arquitectura del sistema
-- [API_DOCUMENTATION.md](API_DOCUMENTATION.md) - Documentación de API
-- [CRM_README.md](CRM_README.md) - Funcionalidades del CRM
-
-## 🤝 Contribuir
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia MIT.
-
-## 🆘 Soporte
-
-Para problemas o preguntas:
-
-1. Revisa la documentación en los archivos README
-2. Verifica los logs: `make logs` (Docker) o `php artisan pail`
-3. Ejecuta el verificador: `./docker-verify.sh`
-
-## 🎯 Roadmap
-
-- [ ] API REST completa
-- [ ] Integración con servicios de email
-- [ ] Dashboard con métricas
-- [ ] Exportación de datos
-- [ ] Notificaciones en tiempo real
-- [ ] Aplicación móvil
 
 ---
 
-Hecho con ❤️ usando Laravel, Vue.js e Inertia.js
+## Variables de Entorno
+
+Copia `.env.example` y ajusta los valores según tu entorno:
+
+```env
+# ── Aplicación ──────────────────────────────────────
+APP_NAME="CRM Lite"
+APP_ENV=local            # local | production
+APP_KEY=                 # Generada con: php artisan key:generate
+APP_DEBUG=true           # false en producción
+APP_URL=http://localhost
+
+# ── Base de Datos ────────────────────────────────────
+# SQLite (desarrollo local, por defecto)
+DB_CONNECTION=sqlite
+
+# PostgreSQL (Docker / producción)
+# DB_CONNECTION=pgsql
+# DB_HOST=db
+# DB_PORT=5432
+# DB_DATABASE=laravel
+# DB_USERNAME=laravel
+# DB_PASSWORD=secret
+
+# ── Colas y Caché ────────────────────────────────────
+QUEUE_CONNECTION=database
+CACHE_STORE=database
+SESSION_DRIVER=database
+
+# ── Email ─────────────────────────────────────────────
+MAIL_MAILER=log          # Cambia a smtp en producción
+MAIL_HOST=smtp.ejemplo.com
+MAIL_PORT=587
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_FROM_ADDRESS="no-reply@tu-dominio.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+---
+
+## Docker
+
+La imagen Docker está optimizada para producción con un build multi-stage:
+
+| Etapa | Descripción |
+|---|---|
+| `builder` | Instala dependencias Composer y compila assets con Node |
+| `production` | Imagen final PHP 8.4 FPM + Nginx + Supervisor |
+
+### Servicios
+
+| Servicio | Imagen | Puerto |
+|---|---|---|
+| `app` | Dockerfile (custom) | 80 |
+| `db` | postgres:16-alpine | 5432 (interno) |
+
+### Comandos Make
+
+```bash
+make help           # Listar todos los comandos disponibles
+make install        # Instalación completa (build + up + migrate)
+make up             # Levantar contenedores
+make down           # Detener contenedores
+make restart        # Reiniciar contenedores
+make logs           # Ver logs de todos los servicios en tiempo real
+make logs-app       # Ver logs solo de la aplicación
+make logs-db        # Ver logs de PostgreSQL
+make shell          # Acceder al shell del contenedor app
+make artisan CMD="..." # Ejecutar comando Artisan (ej: make artisan CMD="route:list")
+make migrate        # Ejecutar migraciones
+make migrate-fresh  # Recrear base de datos y migrar
+make seed           # Ejecutar seeders
+make fresh          # migrate:fresh --seed
+make cache-clear    # Limpiar todos los caches
+make cache-optimize # Optimizar caches para producción
+make backup-db      # Backup de PostgreSQL a archivo .sql
+make restore-db FILE=backup.sql  # Restaurar backup
+make backup-storage # Backup del volumen de archivos
+make test           # Ejecutar suite de tests
+make tinker         # Abrir Laravel Tinker
+make ps             # Ver estado de contenedores
+make stats          # Ver métricas de recursos (CPU/RAM)
+make clean          # ⚠️ Elimina contenedores Y volúmenes (incluye DB)
+```
+
+### Volúmenes Persistentes
+
+| Volumen | Contenido |
+|---|---|
+| `db-data` | Datos de PostgreSQL |
+| `storage-data` | Archivos subidos por los usuarios |
+| `./storage/logs` | Logs de la aplicación (bind mount) |
+
+---
+
+## Despliegue en Dokploy
+
+Este proyecto incluye `dokploy.json` con configuración automática para Dokploy.
+
+### Pasos
+
+1. Crear un nuevo proyecto en [Dokploy](https://dokploy.com).
+2. Conectar el repositorio Git.
+3. Configurar las variables de entorno (usar los valores de producción de la sección anterior).
+4. Hacer clic en **Deploy**.
+
+Dokploy ejecutará automáticamente:
+- Build de la imagen Docker (multi-stage).
+- Creación del servicio PostgreSQL.
+- Ejecución de migraciones.
+- Configuración del dominio con SSL.
+- Gestión de volúmenes persistentes.
+
+---
+
+## Scripts Disponibles
+
+### Composer
+
+```bash
+composer run dev        # Servidor de desarrollo completo (PHP + Queue + Pail + Vite)
+composer run dev:ssr    # Igual que dev pero con SSR de Inertia
+composer run lint       # Formatear PHP con Laravel Pint
+composer run test       # Lint + Tests con Pest
+composer run setup      # Instalación completa desde cero (CI)
+```
+
+### NPM
+
+```bash
+npm run dev             # Vite dev server con hot-reload
+npm run build           # Build de producción (assets en public/build/)
+npm run build:ssr       # Build de producción + SSR
+npm run format          # Formatear código Vue/TS/CSS con Prettier
+npm run format:check    # Verificar formato sin modificar archivos
+npm run lint            # ESLint con auto-fix
+```
+
+---
+
+## Testing
+
+El proyecto usa **Pest 4** para testing con integración en Laravel.
+
+```bash
+# Ejecutar todos los tests
+php artisan test --compact
+
+# Filtrar por nombre de test
+php artisan test --compact --filter=LeadTest
+
+# Con cobertura
+php artisan test --coverage
+
+# Con Docker
+make test
+# o
+docker-compose exec app php artisan test
+```
+
+Los tests se encuentran en `tests/Feature/` y `tests/Unit/`.
+
+---
+
+## Seguridad
+
+- **Autenticación**: Laravel Fortify con soporte para 2FA (TOTP).
+- **Autorización**: RBAC basado en roles y permisos; los agentes no pueden ver ni modificar leads ajenos.
+- **CSRF**: Protección automática en todas las solicitudes de formulario vía Inertia.
+- **Validación**: Form Requests en todos los endpoints de escritura.
+- **Contraseñas**: Hash con bcrypt (12 rounds).
+- **Sesiones**: Almacenadas en base de datos con cifrado opcional.
+- **Rate limiting**: Aplicado en rutas de autenticación.
+- **Tokens de API**: Gestionados con Laravel Sanctum.
+
+
+---
+
+Desarrollado con ❤️ usando **Laravel 12**, **Vue 3** e **Inertia.js**.
