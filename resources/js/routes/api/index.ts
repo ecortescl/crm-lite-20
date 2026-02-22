@@ -1,6 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 import companies from './companies'
 import leads from './leads'
+import documentation6f9654 from './documentation'
 /**
 * @see \App\Http\Controllers\Api\LeadApiController::leadStatuses
 * @see app/Http/Controllers/Api/LeadApiController.php:346
@@ -83,7 +84,8 @@ leadStatusesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'
 leadStatuses.form = leadStatusesForm
 
 /**
-* @see routes/web.php:19
+* @see \App\Http\Controllers\ApiDocumentationController::documentation
+* @see app/Http/Controllers/ApiDocumentationController.php:9
 * @route '/api/documentation'
 */
 export const documentation = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +99,8 @@ documentation.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:19
+* @see \App\Http\Controllers\ApiDocumentationController::documentation
+* @see app/Http/Controllers/ApiDocumentationController.php:9
 * @route '/api/documentation'
 */
 documentation.url = (options?: RouteQueryOptions) => {
@@ -105,7 +108,8 @@ documentation.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/web.php:19
+* @see \App\Http\Controllers\ApiDocumentationController::documentation
+* @see app/Http/Controllers/ApiDocumentationController.php:9
 * @route '/api/documentation'
 */
 documentation.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -114,7 +118,8 @@ documentation.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:19
+* @see \App\Http\Controllers\ApiDocumentationController::documentation
+* @see app/Http/Controllers/ApiDocumentationController.php:9
 * @route '/api/documentation'
 */
 documentation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -123,7 +128,8 @@ documentation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 })
 
 /**
-* @see routes/web.php:19
+* @see \App\Http\Controllers\ApiDocumentationController::documentation
+* @see app/Http/Controllers/ApiDocumentationController.php:9
 * @route '/api/documentation'
 */
 const documentationForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -132,7 +138,8 @@ const documentationForm = (options?: RouteQueryOptions): RouteFormDefinition<'ge
 })
 
 /**
-* @see routes/web.php:19
+* @see \App\Http\Controllers\ApiDocumentationController::documentation
+* @see app/Http/Controllers/ApiDocumentationController.php:9
 * @route '/api/documentation'
 */
 documentationForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -141,7 +148,8 @@ documentationForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'
 })
 
 /**
-* @see routes/web.php:19
+* @see \App\Http\Controllers\ApiDocumentationController::documentation
+* @see app/Http/Controllers/ApiDocumentationController.php:9
 * @route '/api/documentation'
 */
 documentationForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -160,7 +168,7 @@ const api = {
     companies: Object.assign(companies, companies),
     leads: Object.assign(leads, leads),
     leadStatuses: Object.assign(leadStatuses, leadStatuses),
-    documentation: Object.assign(documentation, documentation),
+    documentation: Object.assign(documentation, documentation6f9654),
 }
 
 export default api

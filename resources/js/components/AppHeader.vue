@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-vue-next';
+import { BookOpen, Folder, LayoutGrid, Menu, Search, Bell } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
@@ -48,6 +48,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const page = usePage();
 const auth = computed(() => page.props.auth);
+const upcomingMeetings = computed(() => page.props.upcomingMeetings || []);
 const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
 
 const activeItemStyles =
@@ -73,6 +74,13 @@ const rightNavItems: NavItem[] = [
         icon: BookOpen,
     },
 ];
+
+const formatDateTime = (value: string) => {
+    const date = new Date(value);
+    const dateText = new Intl.DateTimeFormat('es-CL', { dateStyle: 'short' }).format(date);
+    const timeText = new Intl.DateTimeFormat('es-CL', { timeStyle: 'short' }).format(date);
+    return `${dateText} ${timeText}`;
+};
 </script>
 
 <template>
@@ -199,6 +207,54 @@ const rightNavItems: NavItem[] = [
                                 class="size-5 opacity-80 group-hover:opacity-100"
                             />
                         </Button>
+
+                        <DropdownMenu>
+                            <DropdownMenuTrigger :as-child="true">
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    class="relative h-9 w-9"
+                                >
+                                    <Bell class="size-5 opacity-80" />
+                                    <span
+                                        v-if="upcomingMeetings.length"
+                                        class="absolute -right-0.5 -top-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground"
+                                    >
+                                        {{ upcomingMeetings.length }}
+                                    </span>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" class="w-72">
+                                <div class="px-3 py-2 text-xs font-semibold text-muted-foreground">
+                                    Próximas reuniones
+                                </div>
+                                <div class="max-h-64 overflow-auto">
+                                    <div
+                                        v-if="upcomingMeetings.length === 0"
+                                        class="px-3 py-6 text-center text-xs text-muted-foreground"
+                                    >
+                                        Sin reuniones agendadas
+                                    </div>
+                                    <div
+                                        v-for="meeting in upcomingMeetings"
+                                        :key="meeting.id"
+                                        class="px-3 py-2 hover:bg-muted/50"
+                                    >
+                                        <div class="text-sm font-medium truncate">
+                                            {{ meeting.name }}
+                                        </div>
+                                        <div class="text-xs text-muted-foreground">
+                                            {{ formatDateTime(meeting.scheduled_at) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-t px-3 py-2">
+                                    <Link href="/calendar" class="text-xs text-primary">
+                                        Ver calendario
+                                    </Link>
+                                </div>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
 
                         <div class="hidden space-x-1 lg:flex">
                             <template

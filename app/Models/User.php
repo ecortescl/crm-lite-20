@@ -35,6 +35,17 @@ class User extends Authenticatable
         return $this->roles()->where('name', $role)->exists();
     }
 
+    public function hasAnyRole(array $roles): bool
+    {
+        return $this->roles()->whereIn('name', $roles)->exists();
+    }
+
+    public function isJefatura(): bool
+    {
+        // Compatibilidad temporal con el nombre antiguo "admin"
+        return $this->hasAnyRole(['jefatura', 'admin']);
+    }
+
     public function hasPermission($permission)
     {
         return $this->roles()->whereHas('permissions', function ($query) use ($permission) {

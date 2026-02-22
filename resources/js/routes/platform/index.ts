@@ -83,7 +83,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::update
-* @see app/Http/Controllers/Settings/PlatformController.php:24
+* @see app/Http/Controllers/Settings/PlatformController.php:35
 * @route '/settings/platform'
 */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -98,7 +98,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::update
-* @see app/Http/Controllers/Settings/PlatformController.php:24
+* @see app/Http/Controllers/Settings/PlatformController.php:35
 * @route '/settings/platform'
 */
 update.url = (options?: RouteQueryOptions) => {
@@ -107,7 +107,7 @@ update.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::update
-* @see app/Http/Controllers/Settings/PlatformController.php:24
+* @see app/Http/Controllers/Settings/PlatformController.php:35
 * @route '/settings/platform'
 */
 update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -117,7 +117,7 @@ update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::update
-* @see app/Http/Controllers/Settings/PlatformController.php:24
+* @see app/Http/Controllers/Settings/PlatformController.php:35
 * @route '/settings/platform'
 */
 update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -127,7 +127,7 @@ update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::update
-* @see app/Http/Controllers/Settings/PlatformController.php:24
+* @see app/Http/Controllers/Settings/PlatformController.php:35
 * @route '/settings/platform'
 */
 const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -137,7 +137,7 @@ const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::update
-* @see app/Http/Controllers/Settings/PlatformController.php:24
+* @see app/Http/Controllers/Settings/PlatformController.php:35
 * @route '/settings/platform'
 */
 updateForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -147,7 +147,7 @@ updateForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::update
-* @see app/Http/Controllers/Settings/PlatformController.php:24
+* @see app/Http/Controllers/Settings/PlatformController.php:35
 * @route '/settings/platform'
 */
 updateForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

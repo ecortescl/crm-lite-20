@@ -35,6 +35,7 @@
             <TableRow>
               <TableHead>Orden</TableHead>
               <TableHead>Nombre</TableHead>
+              <TableHead>Icono</TableHead>
               <TableHead>Color</TableHead>
               <TableHead>Leads</TableHead>
               <TableHead class="text-right">Acciones</TableHead>
@@ -42,13 +43,28 @@
           </TableHeader>
           <TableBody>
             <TableRow v-if="statuses.length === 0">
-              <TableCell colspan="5" class="text-center py-8 text-muted-foreground">
+              <TableCell colspan="6" class="text-center py-8 text-muted-foreground">
                 No se encontraron estados
               </TableCell>
             </TableRow>
             <TableRow v-for="status in statuses" :key="status.id">
               <TableCell>{{ status.order }}</TableCell>
               <TableCell class="font-medium">{{ status.name }}</TableCell>
+              <TableCell>
+                <div class="flex items-center gap-2">
+                  <div
+                    class="h-8 w-8 rounded-md flex items-center justify-center border bg-muted/40"
+                    :style="{ borderColor: status.color }"
+                  >
+                    <component
+                      :is="getIcon(status.icon, status.name)"
+                      class="h-4 w-4"
+                      :style="{ color: status.color }"
+                    />
+                  </div>
+                  <span class="text-xs text-muted-foreground">{{ status.icon || 'Auto' }}</span>
+                </div>
+              </TableCell>
               <TableCell>
                 <div class="flex items-center gap-2">
                   <div
@@ -111,6 +127,27 @@
               <Label for="order">Orden *</Label>
               <Input id="order" v-model.number="form.order" type="number" required min="1" class="mt-2" />
             </div>
+            <div>
+              <Label for="icon">Icono</Label>
+              <Select v-model="form.icon">
+                <SelectTrigger class="mt-2">
+                  <SelectValue placeholder="Selecciona un icono" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem :value="null">
+                    <div class="flex items-center gap-2">
+                      <span class="text-xs text-muted-foreground">Auto (por nombre)</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem v-for="option in iconOptions" :key="option.value" :value="option.value">
+                    <div class="flex items-center gap-2">
+                      <component :is="option.icon" class="h-4 w-4" />
+                      <span class="text-sm">{{ option.label }}</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <DialogFooter>
               <Button type="button" variant="outline" @click="dialogOpen = false">Cancelar</Button>
               <Button type="submit" :disabled="processing">{{ editingStatus ? 'Actualizar' : 'Crear' }}</Button>
@@ -172,7 +209,26 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Plus, Search, MoreVertical, Pencil, Trash2 } from 'lucide-vue-next'
+import { 
+  Plus, 
+  Search, 
+  MoreVertical, 
+  Pencil, 
+  Trash2,
+  FileText,
+  Phone,
+  XCircle,
+  Calendar,
+  TrendingUp,
+  CheckCircle2,
+  Users,
+  Mail,
+  MessageCircle,
+  Target,
+  Zap,
+  Star
+} from 'lucide-vue-next'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 const props = defineProps<{
   statuses: Array<any>
@@ -194,6 +250,7 @@ const form = reactive({
   name: '',
   color: '#6b7280',
   order: 0,
+  icon: null as string | null,
 })
 
 let searchTimeout: ReturnType<typeof setTimeout>
@@ -215,6 +272,7 @@ const openCreateDialog = () => {
   form.name = ''
   form.color = '#6b7280'
   form.order = props.statuses.length + 1
+  form.icon = null
   dialogOpen.value = true
 }
 
@@ -223,6 +281,7 @@ const openEditDialog = (status: any) => {
   form.name = status.name
   form.color = status.color
   form.order = status.order
+  form.icon = status.icon ?? null
   dialogOpen.value = true
 }
 
@@ -284,7 +343,50 @@ watch(dialogOpen, (newValue) => {
     form.name = ''
     form.color = '#6b7280'
     form.order = 0
+    form.icon = null
     editingStatus.value = null
   }
 })
+
+const iconOptions = [
+  { value: 'FileText', label: 'Documento', icon: FileText },
+  { value: 'Phone', label: 'Teléfono', icon: Phone },
+  { value: 'XCircle', label: 'Descartado', icon: XCircle },
+  { value: 'Calendar', label: 'Calendario', icon: Calendar },
+  { value: 'TrendingUp', label: 'Tendencia', icon: TrendingUp },
+  { value: 'CheckCircle2', label: 'Confirmado', icon: CheckCircle2 },
+  { value: 'Users', label: 'Usuarios', icon: Users },
+  { value: 'Mail', label: 'Email', icon: Mail },
+  { value: 'MessageCircle', label: 'Mensajes', icon: MessageCircle },
+  { value: 'Target', label: 'Objetivo', icon: Target },
+  { value: 'Zap', label: 'Rápido', icon: Zap },
+  { value: 'Star', label: 'Favorito', icon: Star },
+]
+
+const iconMap: Record<string, any> = {
+  FileText,
+  Phone,
+  XCircle,
+  Calendar,
+  TrendingUp,
+  CheckCircle2,
+  Users,
+  Mail,
+  MessageCircle,
+  Target,
+  Zap,
+  Star,
+}
+
+const getIcon = (iconName?: string | null, fallbackName?: string) => {
+  if (iconName && iconMap[iconName]) return iconMap[iconName]
+  const name = (fallbackName || '').toLowerCase()
+  if (name.includes('nuevo')) return FileText
+  if (name.includes('contactado')) return Phone
+  if (name.includes('descartado')) return XCircle
+  if (name.includes('reunión') || name.includes('reunion')) return Calendar
+  if (name.includes('negociación') || name.includes('negociacion')) return TrendingUp
+  if (name.includes('concretado')) return CheckCircle2
+  return FileText
+}
 </script>

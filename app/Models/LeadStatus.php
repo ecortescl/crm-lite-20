@@ -10,6 +10,7 @@ class LeadStatus extends Model
     protected $fillable = [
         'name',
         'color',
+        'icon',
         'order',
         'is_default',
     ];

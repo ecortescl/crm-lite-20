@@ -49,7 +49,15 @@
               :style="{ borderTopColor: status.color, borderTopWidth: '3px', borderTopLeftRadius: '0.5rem', borderTopRightRadius: '0.5rem' }"
             >
               <div class="flex items-center justify-between">
-                <h3 class="font-semibold text-sm">{{ status.name }}</h3>
+                <div class="flex items-center gap-2 min-w-0">
+                  <div
+                    class="h-7 w-7 rounded-md flex items-center justify-center shrink-0"
+                    :style="{ backgroundColor: status.color + '20' }"
+                  >
+                    <component :is="getStatusIcon(status.icon, status.name)" class="h-4 w-4" :style="{ color: status.color }" />
+                  </div>
+                  <h3 class="font-semibold text-sm truncate">{{ status.name }}</h3>
+                </div>
                 <Badge variant="secondary" class="text-xs">{{ status.pagination.total }}</Badge>
               </div>
             </div>
@@ -207,29 +215,39 @@
           <Separator v-if="hasMarketingData(selectedLead)" />
 
           <!-- Agendamiento (si está en Reunión) -->
-          <div v-if="isSchedulingStatus(selectedLead.lead_status_id)" class="space-y-4">
+          <div v-if="selectedLead.scheduled_at" class="space-y-4">
             <h3 class="font-semibold text-sm flex items-center gap-2">
               <Calendar class="h-4 w-4" />
-              Agendamiento
+              Reunión Agendada
             </h3>
-            <div class="grid gap-4">
-              <div>
-                <Label for="scheduled_at">Fecha y Hora</Label>
-                <Input
-                  id="scheduled_at"
-                  type="datetime-local"
-                  v-model="editForm.scheduled_at"
-                />
+            <div class="p-4 border rounded-lg bg-muted/50 space-y-2">
+              <div class="text-sm">
+                <span class="font-medium">Fecha:</span>
+                {{ formatDateTime(selectedLead.scheduled_at) }}
               </div>
-              <div>
-                <Label for="meeting_notes">Notas de la Reunión</Label>
-                <Textarea
-                  id="meeting_notes"
-                  v-model="editForm.meeting_notes"
-                  placeholder="Agenda, temas a tratar..."
-                  rows="3"
-                />
+              <div v-if="selectedLead.meeting_link" class="text-sm truncate">
+                <span class="font-medium">Link:</span>
+                {{ selectedLead.meeting_link }}
               </div>
+              <div v-if="selectedLead.meeting_notes" class="text-sm">
+                <span class="font-medium">Notas:</span>
+                {{ selectedLead.meeting_notes }}
+              </div>
+              <Button size="sm" variant="outline" @click="openSchedulePrompt(selectedLead, selectedLead.lead_status_id)">
+                Editar agendamiento
+              </Button>
+            </div>
+          </div>
+          <div v-else-if="isSchedulingStatus(selectedLead.lead_status_id)" class="space-y-4">
+            <h3 class="font-semibold text-sm flex items-center gap-2">
+              <Calendar class="h-4 w-4" />
+              Reunión
+            </h3>
+            <div class="p-4 border border-dashed rounded-lg text-center">
+              <p class="text-sm text-muted-foreground mb-3">No hay reunión agendada</p>
+              <Button size="sm" @click="openSchedulePrompt(selectedLead, selectedLead.lead_status_id)">
+                Agendar reunión
+              </Button>
             </div>
           </div>
 
@@ -239,25 +257,66 @@
               <DollarSign class="h-4 w-4" />
               Negociación
             </h3>
-            <div class="grid gap-4">
-              <div>
-                <Label for="budget">Presupuesto</Label>
-                <Input
-                  id="budget"
-                  type="number"
-                  step="0.01"
-                  v-model="editForm.budget"
-                  placeholder="0.00"
-                />
+            
+            <div class="space-y-3">
+              <div v-if="selectedLead.quotation" class="p-4 border rounded-lg bg-muted/50">
+                <div class="flex items-center justify-between mb-2">
+                  <Label class="text-sm font-semibold">Cotización Asociada</Label>
+                  <div class="flex items-center gap-2">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      @click="router.visit(route('quotations.show', selectedLead.quotation.id))"
+                    >
+                      Ver
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      @click="router.visit(route('quotations.edit', selectedLead.quotation.id))"
+                    >
+                      Editar
+                    </Button>
+                  </div>
+                </div>
+                <div class="text-sm space-y-1">
+                  <p><span class="font-medium">Número:</span> {{ selectedLead.quotation.quotation_number }}</p>
+                  <p><span class="font-medium">Total:</span> ${{ formatNumber(selectedLead.quotation.total) }}</p>
+                  <p><span class="font-medium">Estado:</span> {{ getQuotationStatusLabel(selectedLead.quotation.status) }}</p>
+                </div>
               </div>
-              <div>
-                <Label for="quote_items">Items Cotizados</Label>
-                <Textarea
-                  id="quote_items"
-                  v-model="quoteItemsText"
-                  placeholder="Describe los productos/servicios cotizados..."
-                  rows="4"
-                />
+
+              <div v-else class="p-4 border border-dashed rounded-lg text-center">
+                <p class="text-sm text-muted-foreground mb-3">No hay cotización asociada</p>
+                <Button 
+                  size="sm"
+                  @click="router.get(route('quotations.create'), { lead_id: selectedLead.id })"
+                >
+                  Crear Cotización
+                </Button>
+              </div>
+
+              <div class="grid gap-2">
+                <Label for="quotation_id">Cambiar o asociar cotización</Label>
+                <Select v-model="editForm.quotation_id">
+                  <SelectTrigger class="mt-1">
+                    <SelectValue placeholder="Selecciona una cotización" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem :value="null">Sin cotización</SelectItem>
+                    <SelectItem
+                      v-for="quotation in quotations"
+                      :key="quotation.id"
+                      :value="quotation.id.toString()"
+                      :disabled="quotation.lead_id && quotation.lead_id !== selectedLead.id"
+                    >
+                      {{ quotation.quotation_number }} · {{ quotation.client_name }} · ${{ formatNumber(quotation.total) }}
+                      <span v-if="quotation.lead_id && quotation.lead_id !== selectedLead.id" class="text-muted-foreground">
+                        (asignada)
+                      </span>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
@@ -337,10 +396,29 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
-import { User, Building2, DollarSign, Calendar, FileCheck, TrendingUp } from 'lucide-vue-next'
+import { getSwal } from '@/lib/swal'
+import { 
+  User, 
+  Building2, 
+  DollarSign, 
+  Calendar, 
+  FileCheck, 
+  TrendingUp,
+  FileText,
+  Phone,
+  XCircle,
+  CheckCircle2,
+  Users,
+  Mail,
+  MessageCircle,
+  Target,
+  Zap,
+  Star
+} from 'lucide-vue-next'
 
 const props = defineProps<{
   statuses: Array<any>
+  quotations: Array<any>
   filters: {
     start_date: string
     end_date: string
@@ -358,7 +436,6 @@ const showModal = ref(false)
 const selectedLead = ref<any>(null)
 const processing = ref(false)
 const editForm = ref<any>({})
-const quoteItemsText = ref('')
 
 const applyFilters = () => {
   router.get(route('leads.kanban'), filters, {
@@ -428,13 +505,49 @@ const handleDragEnd = () => {
   isDragOver.value = null
 }
 
-const handleDrop = (event: DragEvent, statusId: number) => {
+const handleDrop = async (event: DragEvent, statusId: number) => {
   event.preventDefault()
   isDragOver.value = null
-  
-  if (draggedLead.value && draggedLead.value.lead_status_id !== statusId) {
+
+  const lead = draggedLead.value
+  if (!lead) {
+    return
+  }
+
+  if (lead.lead_status_id !== statusId) {
+    // Verificar si el nuevo estado es "Negociación" y no tiene cotización
+    const targetStatus = props.statuses.find(s => s.id === statusId)
+    const isMovingToNegotiation = targetStatus?.name.toLowerCase().includes('negociación') || 
+                                   targetStatus?.name.toLowerCase().includes('negociacion')
+    const isMovingToMeeting = isMeetingStatusName(targetStatus?.name)
+
+    if (isMovingToMeeting) {
+      await openSchedulePrompt(lead, statusId)
+      draggedLead.value = null
+      return
+    }
+
+    if (isMovingToNegotiation && !lead.quotation_id) {
+      const result = await getSwal().fire({
+        title: 'Crear cotización',
+        text: 'Este lead no tiene una cotización asociada. ¿Deseas crear una ahora?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Crear',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true,
+      })
+
+      if (result.isConfirmed) {
+        router.get(route('quotations.create'), { lead_id: lead.id })
+      }
+
+      draggedLead.value = null
+      return
+    }
+    
     router.patch(
-      route('leads.update-status', draggedLead.value.id),
+      route('leads.update-status', lead.id),
       { lead_status_id: statusId },
       { 
         preserveScroll: true,
@@ -449,32 +562,20 @@ const handleDrop = (event: DragEvent, statusId: number) => {
 const openLeadModal = (lead: any) => {
   selectedLead.value = lead
   editForm.value = {
-    scheduled_at: lead.scheduled_at ? formatDateTimeLocal(lead.scheduled_at) : '',
-    meeting_notes: lead.meeting_notes || '',
-    budget: lead.budget || '',
+    quotation_id: lead.quotation_id ? lead.quotation_id.toString() : null,
     invoice_number: lead.invoice_number || '',
     final_amount: lead.final_amount || '',
     payment_status: lead.payment_status || 'pending',
     closed_at: lead.closed_at ? formatDateTimeLocal(lead.closed_at) : '',
   }
-  quoteItemsText.value = lead.quote_items ? JSON.stringify(lead.quote_items, null, 2) : ''
   showModal.value = true
 }
 
 const saveLeadDetails = () => {
   processing.value = true
-  
+
   const data = { ...editForm.value }
-  
-  // Convertir quote_items de texto a objeto si es necesario
-  if (quoteItemsText.value) {
-    try {
-      data.quote_items = JSON.parse(quoteItemsText.value)
-    } catch {
-      data.quote_items = quoteItemsText.value
-    }
-  }
-  
+  data.quotation_id = data.quotation_id ? Number(data.quotation_id) : null
   router.patch(
     route('leads.update', selectedLead.value.id),
     data,
@@ -491,9 +592,69 @@ const saveLeadDetails = () => {
   )
 }
 
+const isMeetingStatusName = (name?: string) => {
+  const value = (name || '').toLowerCase()
+  return value.includes('reunión') || value.includes('reunion') || value.includes('agend')
+}
+
+const openSchedulePrompt = async (lead: any, statusId: number) => {
+  const currentDate = lead.scheduled_at ? formatDateTimeLocal(lead.scheduled_at) : ''
+  const currentLink = lead.meeting_link || ''
+  const currentNotes = lead.meeting_notes || ''
+
+  const result = await getSwal().fire({
+    title: 'Agendar reunión',
+    html: `
+      <div style="text-align:left">
+        <label for="swal-scheduled" style="display:block;font-size:12px;margin-bottom:4px;">Fecha y hora *</label>
+        <input id="swal-scheduled" type="datetime-local" class="swal2-input" style="margin:0 0 12px 0;" value="${currentDate}" />
+        <label for="swal-link" style="display:block;font-size:12px;margin-bottom:4px;">Link de reunión</label>
+        <input id="swal-link" type="url" class="swal2-input" style="margin:0 0 12px 0;" value="${currentLink}" placeholder="https://meet.google.com/..." />
+        <label for="swal-notes" style="display:block;font-size:12px;margin-bottom:4px;">Notas</label>
+        <textarea id="swal-notes" class="swal2-textarea" style="margin:0;">${currentNotes}</textarea>
+      </div>
+    `,
+    showCancelButton: true,
+    confirmButtonText: 'Guardar',
+    cancelButtonText: 'Cancelar',
+    focusConfirm: false,
+    preConfirm: () => {
+      const scheduled = (document.getElementById('swal-scheduled') as HTMLInputElement)?.value
+      const link = (document.getElementById('swal-link') as HTMLInputElement)?.value
+      const notes = (document.getElementById('swal-notes') as HTMLTextAreaElement)?.value
+
+      if (!scheduled) {
+        getSwal().showValidationMessage('Debes seleccionar fecha y hora.')
+        return null
+      }
+
+      return { scheduled, link, notes }
+    },
+  })
+
+  if (!result.isConfirmed || !result.value) return
+
+  processing.value = true
+  router.patch(
+    route('leads.update', lead.id),
+    {
+      lead_status_id: statusId,
+      scheduled_at: result.value.scheduled,
+      meeting_link: result.value.link || null,
+      meeting_notes: result.value.notes || null,
+    },
+    {
+      preserveScroll: true,
+      onFinish: () => {
+        processing.value = false
+      },
+    }
+  )
+}
+
 const isSchedulingStatus = (statusId: number) => {
   const status = props.statuses.find(s => s.id === statusId)
-  return status?.name.toLowerCase().includes('reunión') || status?.name.toLowerCase().includes('reunion')
+  return isMeetingStatusName(status?.name)
 }
 
 const isNegotiationStatus = (statusId: number) => {
@@ -510,6 +671,33 @@ const formatNumber = (value: number) => {
   return new Intl.NumberFormat('es-CL').format(value)
 }
 
+const iconMap: Record<string, any> = {
+  FileText,
+  Phone,
+  XCircle,
+  Calendar,
+  TrendingUp,
+  CheckCircle2,
+  Users,
+  Mail,
+  MessageCircle,
+  Target,
+  Zap,
+  Star,
+}
+
+const getStatusIcon = (iconName?: string | null, fallbackName?: string) => {
+  if (iconName && iconMap[iconName]) return iconMap[iconName]
+  const name = (fallbackName || '').toLowerCase()
+  if (name.includes('nuevo')) return FileText
+  if (name.includes('contactado')) return Phone
+  if (name.includes('descartado')) return XCircle
+  if (name.includes('reunión') || name.includes('reunion')) return Calendar
+  if (name.includes('negociación') || name.includes('negociacion')) return TrendingUp
+  if (name.includes('concretado')) return CheckCircle2
+  return FileText
+}
+
 const formatDateTimeLocal = (dateString: string) => {
   const date = new Date(dateString)
   const year = date.getFullYear()
@@ -520,8 +708,26 @@ const formatDateTimeLocal = (dateString: string) => {
   return `${year}-${month}-${day}T${hours}:${minutes}`
 }
 
+const formatDateTime = (dateString: string) => {
+  const date = new Date(dateString)
+  const dateText = new Intl.DateTimeFormat('es-CL', { dateStyle: 'medium' }).format(date)
+  const timeText = new Intl.DateTimeFormat('es-CL', { timeStyle: 'short' }).format(date)
+  return `${dateText} ${timeText}`
+}
+
 const hasMarketingData = (lead: any) => {
   return lead.utm_source || lead.utm_medium || lead.utm_campaign || lead.utm_term || lead.utm_content
+}
+
+const getQuotationStatusLabel = (status: string) => {
+  const labels: Record<string, string> = {
+    draft: 'Borrador',
+    sent: 'Enviada',
+    accepted: 'Aceptada',
+    rejected: 'Rechazada',
+    expired: 'Expirada',
+  }
+  return labels[status] || status
 }
 
 // Limpiar el formulario cuando el modal se cierra
@@ -530,7 +736,6 @@ watch(showModal, (newValue) => {
     // Limpiar inmediatamente
     selectedLead.value = null
     editForm.value = {}
-    quoteItemsText.value = ''
   }
 })
 </script>

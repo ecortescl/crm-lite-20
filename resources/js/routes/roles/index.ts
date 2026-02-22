@@ -218,105 +218,6 @@ storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 store.form = storeForm
 
 /**
-* @see \App\Http\Controllers\RoleController::show
-* @see app/Http/Controllers/RoleController.php:0
-* @route '/roles/{role}'
-*/
-export const show = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: show.url(args, options),
-    method: 'get',
-})
-
-show.definition = {
-    methods: ["get","head"],
-    url: '/roles/{role}',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\RoleController::show
-* @see app/Http/Controllers/RoleController.php:0
-* @route '/roles/{role}'
-*/
-show.url = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { role: args }
-    }
-
-    if (Array.isArray(args)) {
-        args = {
-            role: args[0],
-        }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-        role: args.role,
-    }
-
-    return show.definition.url
-            .replace('{role}', parsedArgs.role.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\RoleController::show
-* @see app/Http/Controllers/RoleController.php:0
-* @route '/roles/{role}'
-*/
-show.get = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\RoleController::show
-* @see app/Http/Controllers/RoleController.php:0
-* @route '/roles/{role}'
-*/
-show.head = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: show.url(args, options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\RoleController::show
-* @see app/Http/Controllers/RoleController.php:0
-* @route '/roles/{role}'
-*/
-const showForm = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\RoleController::show
-* @see app/Http/Controllers/RoleController.php:0
-* @route '/roles/{role}'
-*/
-showForm.get = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\RoleController::show
-* @see app/Http/Controllers/RoleController.php:0
-* @route '/roles/{role}'
-*/
-showForm.head = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
-
-/**
 * @see \App\Http\Controllers\RoleController::edit
 * @see app/Http/Controllers/RoleController.php:0
 * @route '/roles/{role}/edit'
@@ -624,7 +525,6 @@ const roles = {
     index: Object.assign(index, index),
     create: Object.assign(create, create),
     store: Object.assign(store, store),
-    show: Object.assign(show, show),
     edit: Object.assign(edit, edit),
     update: Object.assign(update, update),
     destroy: Object.assign(destroy, destroy),

@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import type { CollapsibleContentProps } from "reka-ui"
-import { CollapsibleContent } from "reka-ui"
+import { inject, computed } from 'vue'
 
-const props = defineProps<CollapsibleContentProps>()
+const collapsible = inject<any>('collapsible')
+const isOpen = computed(() => collapsible?.isOpen.value)
 </script>
 
 <template>
-  <CollapsibleContent
-    data-slot="collapsible-content"
-    v-bind="props"
-  >
+  <div v-if="isOpen" class="overflow-hidden">
     <slot />
-  </CollapsibleContent>
+  </div>
 </template>

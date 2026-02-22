@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import type { CollapsibleTriggerProps } from "reka-ui"
-import { CollapsibleTrigger } from "reka-ui"
+import { inject } from 'vue'
 
-const props = defineProps<CollapsibleTriggerProps>()
+const collapsible = inject<any>('collapsible')
 </script>
 
 <template>
-  <CollapsibleTrigger
-    data-slot="collapsible-trigger"
-    v-bind="props"
-  >
+  <div @click="collapsible?.toggle">
     <slot />
-  </CollapsibleTrigger>
+  </div>
 </template>

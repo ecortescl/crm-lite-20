@@ -8,6 +8,21 @@ use Inertia\Inertia;
 
 class LeadStatusController extends Controller
 {
+    private const ICON_OPTIONS = [
+        'FileText',
+        'Phone',
+        'XCircle',
+        'Calendar',
+        'TrendingUp',
+        'CheckCircle2',
+        'Users',
+        'Mail',
+        'MessageCircle',
+        'Target',
+        'Zap',
+        'Star',
+    ];
+
     public function index(Request $request)
     {
         $query = LeadStatus::query()->withCount('leads');
@@ -32,8 +47,10 @@ class LeadStatusController extends Controller
             'name' => 'required|string|max:255',
             'color' => 'required|string|max:7',
             'order' => 'required|integer',
+            'icon' => 'nullable|string|in:' . implode(',', self::ICON_OPTIONS),
         ]);
 
+        $validated['icon'] = $validated['icon'] ?? null;
         LeadStatus::create($validated);
 
         return redirect()->back()->with('success', 'Estado creado exitosamente');
@@ -45,8 +62,10 @@ class LeadStatusController extends Controller
             'name' => 'required|string|max:255',
             'color' => 'required|string|max:7',
             'order' => 'required|integer',
+            'icon' => 'nullable|string|in:' . implode(',', self::ICON_OPTIONS),
         ]);
 
+        $validated['icon'] = $validated['icon'] ?? null;
         $leadStatus->update($validated);
 
         return redirect()->back()->with('success', 'Estado actualizado exitosamente');

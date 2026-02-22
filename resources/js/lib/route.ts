@@ -1,6 +1,7 @@
 export function route(name: string, params?: any): string {
   const routes: Record<string, string> = {
     'dashboard': '/dashboard',
+    'calendar.index': '/calendar',
     'leads.index': '/leads',
     'leads.kanban': '/leads/kanban',
     'leads.store': '/leads',
@@ -27,6 +28,15 @@ export function route(name: string, params?: any): string {
     'companies.store': '/companies',
     'companies.update': '/companies/:id',
     'companies.destroy': '/companies/:id',
+    'quotations.index': '/quotations',
+    'quotations.create': '/quotations/create',
+    'quotations.store': '/quotations',
+    'quotations.show': '/quotations/:id',
+    'quotations.edit': '/quotations/:id/edit',
+    'quotations.update': '/quotations/:id',
+    'quotations.destroy': '/quotations/:id',
+    'quotations.pdf': '/quotations/:id/pdf',
+    'quotations.update-status': '/quotations/:id/status',
     'platform.edit': '/settings/platform',
     'platform.update': '/settings/platform',
     'platform.logo.delete': '/settings/platform/logo',

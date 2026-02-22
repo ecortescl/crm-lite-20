@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Plus, Key, Copy, Check, Trash2, AlertCircle, FileText } from 'lucide-vue-next'
-import Swal from 'sweetalert2'
+import { getSwal } from '@/lib/swal'
 
 const props = defineProps<{
   tokens: Array<any>
@@ -70,7 +70,7 @@ const copyToken = async () => {
 }
 
 const deleteToken = (tokenId: number) => {
-  Swal.fire({
+  getSwal().fire({
     title: '¿Eliminar token?',
     text: 'Las aplicaciones que usen este token dejarán de funcionar',
     icon: 'warning',
@@ -115,7 +115,7 @@ const formatDate = (dateString: string) => {
           <CardHeader>
             <CardTitle>Documentación de la API</CardTitle>
             <CardDescription>
-              Accede a la documentación completa de la API en Swagger
+              Accede a la documentación completa de la API
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -123,7 +123,7 @@ const formatDate = (dateString: string) => {
               <Button as-child variant="outline">
                 <a :href="apiDocsUrl" target="_blank" class="flex items-center gap-2">
                   <FileText class="h-4 w-4" />
-                  Ver Documentación Swagger
+                  Ver Docs API
                 </a>
               </Button>
               <div class="text-sm text-muted-foreground">

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('color')->default('#6b7280');
+            $table->string('icon', 50)->nullable();
             $table->integer('order')->default(0);
             $table->boolean('is_default')->default(false);
             $table->timestamps();

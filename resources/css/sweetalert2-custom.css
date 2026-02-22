@@ -1,5 +1,85 @@
 /* SweetAlert2 Custom Styles - shadcn-vue theme */
 
+.swal2-container {
+  background: hsl(var(--background) / 0.6) !important;
+  backdrop-filter: blur(2px);
+}
+
+.swal2-popup,
+.swal2-modal,
+.swal-shadcn-popup {
+  border-radius: calc(var(--radius) - 2px) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  background: hsl(var(--popover)) !important;
+  background-color: hsl(var(--popover)) !important;
+  color: hsl(var(--popover-foreground)) !important;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.15), 0 10px 10px -5px rgb(0 0 0 / 0.1) !important;
+  padding: 1.25rem !important;
+  opacity: 1 !important;
+}
+
+.swal2-html-container {
+  background-color: transparent !important;
+}
+
+.swal2-title {
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  color: hsl(var(--popover-foreground)) !important;
+  margin: 0 0 0.5rem 0 !important;
+}
+
+.swal2-html-container {
+  font-size: 0.875rem !important;
+  color: hsl(var(--muted-foreground)) !important;
+  margin: 0 !important;
+}
+
+.swal2-input,
+.swal2-textarea {
+  width: 100% !important;
+  border-radius: calc(var(--radius) - 2px) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  background: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+  padding: 0.5rem 0.75rem !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.swal2-input:focus,
+.swal2-textarea:focus {
+  border-color: hsl(var(--ring)) !important;
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2) !important;
+}
+
+.swal2-actions {
+  margin-top: 1rem !important;
+  gap: 0.5rem !important;
+}
+
+.swal2-confirm {
+  border-radius: calc(var(--radius) - 2px) !important;
+  background: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  padding: 0.45rem 0.9rem !important;
+  font-weight: 600 !important;
+}
+
+.swal2-cancel {
+  border-radius: calc(var(--radius) - 2px) !important;
+  background: hsl(var(--secondary)) !important;
+  color: hsl(var(--secondary-foreground)) !important;
+  padding: 0.45rem 0.9rem !important;
+  font-weight: 600 !important;
+}
+
+.swal2-validation-message {
+  background: hsl(var(--muted)) !important;
+  color: hsl(var(--muted-foreground)) !important;
+  border-radius: calc(var(--radius) - 2px) !important;
+}
+
 .swal-toast-popup {
   border-radius: calc(var(--radius) - 2px) !important;
   border: 1px solid hsl(var(--border)) !important;
@@ -72,4 +152,60 @@
     transform: translateX(100%);
     opacity: 0;
   }
+}
+.swal-shadcn-title {
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  color: hsl(var(--popover-foreground)) !important;
+}
+
+.swal-shadcn-html {
+  font-size: 0.875rem !important;
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+.swal-shadcn-actions {
+  margin-top: 1rem !important;
+  gap: 0.5rem !important;
+}
+
+.swal-shadcn-confirm {
+  border-radius: calc(var(--radius) - 2px) !important;
+  background: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  border: 1px solid hsl(var(--primary)) !important;
+  padding: 0.45rem 0.9rem !important;
+  font-weight: 600 !important;
+  min-width: 104px !important;
+  transition: all 0.15s ease !important;
+}
+
+.swal-shadcn-confirm:hover {
+  filter: brightness(0.95) !important;
+}
+
+.swal-shadcn-confirm:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.3) !important;
+}
+
+.swal-shadcn-cancel {
+  border-radius: calc(var(--radius) - 2px) !important;
+  background: transparent !important;
+  color: hsl(var(--foreground)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  padding: 0.45rem 0.9rem !important;
+  font-weight: 600 !important;
+  min-width: 104px !important;
+  transition: all 0.15s ease !important;
+}
+
+.swal-shadcn-cancel:hover {
+  background: hsl(var(--accent)) !important;
+  color: hsl(var(--accent-foreground)) !important;
+}
+
+.swal-shadcn-cancel:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.25) !important;
 }

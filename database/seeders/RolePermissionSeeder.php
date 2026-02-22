@@ -19,23 +19,62 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'manage_roles', 'description' => 'Gestionar roles'],
             ['name' => 'manage_permissions', 'description' => 'Gestionar permisos'],
             ['name' => 'manage_lead_statuses', 'description' => 'Gestionar estados de leads'],
+            ['name' => 'manage_api_tokens', 'description' => 'Gestionar tokens de API'],
+            ['name' => 'manage_platform_settings', 'description' => 'Gestionar configuracion de plataforma'],
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create($permission);
+            Permission::updateOrCreate(
+                ['name' => $permission['name']],
+                ['description' => $permission['description']],
+            );
         }
 
-        $adminRole = Role::create([
-            'name' => 'admin',
-            'description' => 'Administrador con acceso completo',
-        ]);
+        $legacyAdminRole = Role::where('name', 'admin')->first();
+        $legacyUserRole = Role::where('name', 'user')->first();
 
-        $userRole = Role::create([
-            'name' => 'user',
-            'description' => 'Usuario estándar',
-        ]);
+        $jefaturaRole = Role::where('name', 'jefatura')->first();
+        $empleadoRole = Role::where('name', 'empleado')->first();
 
-        $adminRole->permissions()->attach(Permission::all());
-        $userRole->permissions()->attach(Permission::whereIn('name', ['view_leads', 'create_leads', 'edit_leads'])->get());
+        if (! $jefaturaRole && $legacyAdminRole) {
+            $legacyAdminRole->update([
+                'name' => 'jefatura',
+                'description' => 'Jefatura con acceso completo',
+            ]);
+            $jefaturaRole = $legacyAdminRole;
+        }
+
+        if (! $empleadoRole && $legacyUserRole) {
+            $legacyUserRole->update([
+                'name' => 'empleado',
+                'description' => 'Empleado estándar',
+            ]);
+            $empleadoRole = $legacyUserRole;
+        }
+
+        $jefaturaRole = $jefaturaRole ?? Role::updateOrCreate(
+            ['name' => 'jefatura'],
+            ['description' => 'Jefatura con acceso completo'],
+        );
+
+        $empleadoRole = $empleadoRole ?? Role::updateOrCreate(
+            ['name' => 'empleado'],
+            ['description' => 'Empleado estándar'],
+        );
+
+        if ($legacyAdminRole && $legacyAdminRole->id !== $jefaturaRole->id) {
+            $jefaturaRole->users()->syncWithoutDetaching($legacyAdminRole->users()->pluck('users.id')->all());
+            $legacyAdminRole->delete();
+        }
+
+        if ($legacyUserRole && $legacyUserRole->id !== $empleadoRole->id) {
+            $empleadoRole->users()->syncWithoutDetaching($legacyUserRole->users()->pluck('users.id')->all());
+            $legacyUserRole->delete();
+        }
+
+        $jefaturaRole->permissions()->sync(Permission::query()->pluck('id')->all());
+        $empleadoRole->permissions()->sync(
+            Permission::whereIn('name', ['view_leads', 'create_leads', 'edit_leads'])->pluck('id')->all()
+        );
     }
 }

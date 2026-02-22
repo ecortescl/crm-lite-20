@@ -4,6 +4,9 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use App\Models\Lead;
+use App\Models\LeadStatus;
+use App\Models\Permission;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -37,13 +40,54 @@ class HandleInertiaRequests extends Middleware
     {
         $logoPath = \App\Models\Setting::get('platform_logo', '');
         $logoUrl = $logoPath ? asset('storage/' . $logoPath) : '';
+        $user = $request->user();
+        $isAdmin = $user?->isJefatura() ?? false;
+        $permissionNames = $user
+            ? Permission::query()
+                ->whereHas('roles.users', function ($query) use ($user) {
+                    $query->where('users.id', $user->id);
+                })
+                ->pluck('name')
+                ->unique()
+                ->values()
+                ->all()
+            : [];
+
+        $upcomingMeetings = [];
+        if ($user) {
+            $meetingStatusId = LeadStatus::whereRaw('LOWER(name) like ?', ['%reuni%'])
+                ->orderBy('order')
+                ->value('id');
+
+            $meetingsQuery = Lead::with(['assignedUser', 'company', 'status'])
+                ->whereNotNull('scheduled_at')
+                ->where('scheduled_at', '>=', now())
+                ->orderBy('scheduled_at')
+                ->limit(5);
+
+            if ($meetingStatusId) {
+                $meetingsQuery->where('lead_status_id', $meetingStatusId);
+            }
+
+            if (! $isAdmin) {
+                $meetingsQuery->where(function ($query) use ($user) {
+                    $query->where('assigned_to', $user->id)
+                        ->orWhere('scheduled_by', $user->id);
+                });
+            }
+
+            $upcomingMeetings = $meetingsQuery->get();
+        }
 
         return [
             ...parent::share($request),
             'name' => \App\Models\Setting::get('platform_name', config('app.name')),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
+                'isAdmin' => $isAdmin,
+                'permissions' => $permissionNames,
             ],
+            'upcomingMeetings' => $upcomingMeetings,
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'platformLogo' => $logoUrl,
             'flash' => [

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -11,7 +12,10 @@ import { edit as editProfile } from '@/routes/profile';
 import { show } from '@/routes/two-factor';
 import { edit as editPassword } from '@/routes/user-password';
 
-const sidebarNavItems: NavItem[] = [
+const page = usePage();
+const isAdmin = computed(() => !!page.props.auth?.isAdmin);
+
+const sidebarNavItems = computed<NavItem[]>(() => [
     {
         title: 'Perfil',
         href: editProfile(),
@@ -24,15 +28,14 @@ const sidebarNavItems: NavItem[] = [
         title: 'Apariencia',
         href: editAppearance(),
     },
-    {
+    ...(isAdmin.value ? [{
         title: 'Plataforma',
         href: '/settings/platform',
-    },
-    {
+    }, {
         title: 'API Tokens',
         href: '/settings/api-tokens',
-    },
-];
+    }] : []),
+]);
 
 const { isCurrentUrl } = useCurrentUrl();
 </script>

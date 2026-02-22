@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->foreignId('lead_status_id')->constrained()->onDelete('cascade');
             $table->foreignId('assigned_to')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('quotation_id')->nullable()->constrained()->nullOnDelete();
             
             // Campos de marketing
             $table->string('source')->nullable(); // Origen: Web, Referido, Redes Sociales, etc.
@@ -32,6 +33,8 @@ return new class extends Migration
             // Campos para agendamiento
             $table->dateTime('scheduled_at')->nullable();
             $table->text('meeting_notes')->nullable();
+            $table->string('meeting_link')->nullable();
+            $table->foreignId('scheduled_by')->nullable()->constrained('users')->nullOnDelete();
             
             // Campos para negociación
             $table->decimal('budget', 12, 2)->nullable();

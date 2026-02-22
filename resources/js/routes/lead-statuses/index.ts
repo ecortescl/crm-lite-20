@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\LeadStatusController::index
-* @see app/Http/Controllers/LeadStatusController.php:11
+* @see app/Http/Controllers/LeadStatusController.php:26
 * @route '/lead-statuses'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::index
-* @see app/Http/Controllers/LeadStatusController.php:11
+* @see app/Http/Controllers/LeadStatusController.php:26
 * @route '/lead-statuses'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::index
-* @see app/Http/Controllers/LeadStatusController.php:11
+* @see app/Http/Controllers/LeadStatusController.php:26
 * @route '/lead-statuses'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::index
-* @see app/Http/Controllers/LeadStatusController.php:11
+* @see app/Http/Controllers/LeadStatusController.php:26
 * @route '/lead-statuses'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::index
-* @see app/Http/Controllers/LeadStatusController.php:11
+* @see app/Http/Controllers/LeadStatusController.php:26
 * @route '/lead-statuses'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::index
-* @see app/Http/Controllers/LeadStatusController.php:11
+* @see app/Http/Controllers/LeadStatusController.php:26
 * @route '/lead-statuses'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::index
-* @see app/Http/Controllers/LeadStatusController.php:11
+* @see app/Http/Controllers/LeadStatusController.php:26
 * @route '/lead-statuses'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -163,7 +163,7 @@ create.form = createForm
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::store
-* @see app/Http/Controllers/LeadStatusController.php:29
+* @see app/Http/Controllers/LeadStatusController.php:44
 * @route '/lead-statuses'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -178,7 +178,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::store
-* @see app/Http/Controllers/LeadStatusController.php:29
+* @see app/Http/Controllers/LeadStatusController.php:44
 * @route '/lead-statuses'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -187,7 +187,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::store
-* @see app/Http/Controllers/LeadStatusController.php:29
+* @see app/Http/Controllers/LeadStatusController.php:44
 * @route '/lead-statuses'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -197,7 +197,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::store
-* @see app/Http/Controllers/LeadStatusController.php:29
+* @see app/Http/Controllers/LeadStatusController.php:44
 * @route '/lead-statuses'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -207,7 +207,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::store
-* @see app/Http/Controllers/LeadStatusController.php:29
+* @see app/Http/Controllers/LeadStatusController.php:44
 * @route '/lead-statuses'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -216,105 +216,6 @@ storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 })
 
 store.form = storeForm
-
-/**
-* @see \App\Http\Controllers\LeadStatusController::show
-* @see app/Http/Controllers/LeadStatusController.php:0
-* @route '/lead-statuses/{lead_status}'
-*/
-export const show = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: show.url(args, options),
-    method: 'get',
-})
-
-show.definition = {
-    methods: ["get","head"],
-    url: '/lead-statuses/{lead_status}',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\LeadStatusController::show
-* @see app/Http/Controllers/LeadStatusController.php:0
-* @route '/lead-statuses/{lead_status}'
-*/
-show.url = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { lead_status: args }
-    }
-
-    if (Array.isArray(args)) {
-        args = {
-            lead_status: args[0],
-        }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-        lead_status: args.lead_status,
-    }
-
-    return show.definition.url
-            .replace('{lead_status}', parsedArgs.lead_status.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\LeadStatusController::show
-* @see app/Http/Controllers/LeadStatusController.php:0
-* @route '/lead-statuses/{lead_status}'
-*/
-show.get = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\LeadStatusController::show
-* @see app/Http/Controllers/LeadStatusController.php:0
-* @route '/lead-statuses/{lead_status}'
-*/
-show.head = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: show.url(args, options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\LeadStatusController::show
-* @see app/Http/Controllers/LeadStatusController.php:0
-* @route '/lead-statuses/{lead_status}'
-*/
-const showForm = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\LeadStatusController::show
-* @see app/Http/Controllers/LeadStatusController.php:0
-* @route '/lead-statuses/{lead_status}'
-*/
-showForm.get = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\LeadStatusController::show
-* @see app/Http/Controllers/LeadStatusController.php:0
-* @route '/lead-statuses/{lead_status}'
-*/
-showForm.head = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::edit
@@ -417,7 +318,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:42
+* @see app/Http/Controllers/LeadStatusController.php:59
 * @route '/lead-statuses/{lead_status}'
 */
 export const update = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -432,7 +333,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:42
+* @see app/Http/Controllers/LeadStatusController.php:59
 * @route '/lead-statuses/{lead_status}'
 */
 update.url = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -459,7 +360,7 @@ update.url = (args: { lead_status: string | number } | [lead_status: string | nu
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:42
+* @see app/Http/Controllers/LeadStatusController.php:59
 * @route '/lead-statuses/{lead_status}'
 */
 update.put = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -469,7 +370,7 @@ update.put = (args: { lead_status: string | number } | [lead_status: string | nu
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:42
+* @see app/Http/Controllers/LeadStatusController.php:59
 * @route '/lead-statuses/{lead_status}'
 */
 update.patch = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -479,7 +380,7 @@ update.patch = (args: { lead_status: string | number } | [lead_status: string | 
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:42
+* @see app/Http/Controllers/LeadStatusController.php:59
 * @route '/lead-statuses/{lead_status}'
 */
 const updateForm = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -494,7 +395,7 @@ const updateForm = (args: { lead_status: string | number } | [lead_status: strin
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:42
+* @see app/Http/Controllers/LeadStatusController.php:59
 * @route '/lead-statuses/{lead_status}'
 */
 updateForm.put = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -509,7 +410,7 @@ updateForm.put = (args: { lead_status: string | number } | [lead_status: string 
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:42
+* @see app/Http/Controllers/LeadStatusController.php:59
 * @route '/lead-statuses/{lead_status}'
 */
 updateForm.patch = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -526,7 +427,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::destroy
-* @see app/Http/Controllers/LeadStatusController.php:55
+* @see app/Http/Controllers/LeadStatusController.php:74
 * @route '/lead-statuses/{lead_status}'
 */
 export const destroy = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -541,7 +442,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::destroy
-* @see app/Http/Controllers/LeadStatusController.php:55
+* @see app/Http/Controllers/LeadStatusController.php:74
 * @route '/lead-statuses/{lead_status}'
 */
 destroy.url = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -568,7 +469,7 @@ destroy.url = (args: { lead_status: string | number } | [lead_status: string | n
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::destroy
-* @see app/Http/Controllers/LeadStatusController.php:55
+* @see app/Http/Controllers/LeadStatusController.php:74
 * @route '/lead-statuses/{lead_status}'
 */
 destroy.delete = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -578,7 +479,7 @@ destroy.delete = (args: { lead_status: string | number } | [lead_status: string 
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::destroy
-* @see app/Http/Controllers/LeadStatusController.php:55
+* @see app/Http/Controllers/LeadStatusController.php:74
 * @route '/lead-statuses/{lead_status}'
 */
 const destroyForm = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -593,7 +494,7 @@ const destroyForm = (args: { lead_status: string | number } | [lead_status: stri
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::destroy
-* @see app/Http/Controllers/LeadStatusController.php:55
+* @see app/Http/Controllers/LeadStatusController.php:74
 * @route '/lead-statuses/{lead_status}'
 */
 destroyForm.delete = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -612,7 +513,6 @@ const leadStatuses = {
     index: Object.assign(index, index),
     create: Object.assign(create, create),
     store: Object.assign(store, store),
-    show: Object.assign(show, show),
     edit: Object.assign(edit, edit),
     update: Object.assign(update, update),
     destroy: Object.assign(destroy, destroy),

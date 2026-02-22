@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ApiDocumentationController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\LeadStatusController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -15,23 +18,40 @@ Route::get('/', function () {
     return redirect()->route('login');
 })->name('home');
 
-// Documentación de la API
-Route::get('/api/documentation', function () {
-    return view('api-docs');
-})->name('api.documentation');
-
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/api/documentation', [ApiDocumentationController::class, 'show'])
+        ->middleware('can:manage_api_tokens')
+        ->name('api.documentation');
+    Route::get('/api/documentation/postman', [ApiDocumentationController::class, 'downloadPostmanCollection'])
+        ->middleware('can:manage_api_tokens')
+        ->name('api.documentation.postman');
+
+    Route::get('dashboard', [DashboardController::class, 'index'])
+        ->middleware('can:view_leads')
+        ->name('dashboard');
+    Route::get('calendar', [CalendarController::class, 'index'])
+        ->middleware('can:view_leads')
+        ->name('calendar.index');
     
-    Route::get('leads/kanban', [LeadController::class, 'kanban'])->name('leads.kanban');
-    Route::patch('leads/{lead}/status', [LeadController::class, 'updateStatus'])->name('leads.update-status');
-    Route::resource('leads', LeadController::class);
+    Route::get('leads/kanban', [LeadController::class, 'kanban'])
+        ->middleware('can:view_leads')
+        ->name('leads.kanban');
+    Route::patch('leads/{lead}/status', [LeadController::class, 'updateStatus'])
+        ->middleware('can:edit_leads')
+        ->name('leads.update-status');
+    Route::get('leads', [LeadController::class, 'index'])->middleware('can:view_leads')->name('leads.index');
+    Route::post('leads', [LeadController::class, 'store'])->middleware('can:create_leads')->name('leads.store');
+    Route::match(['put', 'patch'], 'leads/{lead}', [LeadController::class, 'update'])->middleware('can:edit_leads')->name('leads.update');
+    Route::delete('leads/{lead}', [LeadController::class, 'destroy'])->middleware('can:delete_leads')->name('leads.destroy');
     
     Route::resource('companies', CompanyController::class);
-    Route::resource('users', UserController::class);
-    Route::resource('roles', RoleController::class);
-    Route::resource('permissions', PermissionController::class);
-    Route::resource('lead-statuses', LeadStatusController::class);
+    Route::resource('quotations', QuotationController::class);
+    Route::get('quotations/{quotation}/pdf', [QuotationController::class, 'pdf'])->name('quotations.pdf');
+    Route::patch('quotations/{quotation}/status', [QuotationController::class, 'updateStatus'])->name('quotations.update-status');
+    Route::resource('users', UserController::class)->except(['show'])->middleware('can:manage_users');
+    Route::resource('roles', RoleController::class)->except(['show'])->middleware('can:manage_roles');
+    Route::resource('permissions', PermissionController::class)->except(['show'])->middleware('can:manage_permissions');
+    Route::resource('lead-statuses', LeadStatusController::class)->except(['show'])->middleware('can:manage_lead_statuses');
 });
 
 require __DIR__.'/settings.php';

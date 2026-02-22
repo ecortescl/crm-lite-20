@@ -218,105 +218,6 @@ storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 store.form = storeForm
 
 /**
-* @see \App\Http\Controllers\PermissionController::show
-* @see app/Http/Controllers/PermissionController.php:0
-* @route '/permissions/{permission}'
-*/
-export const show = (args: { permission: string | number } | [permission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: show.url(args, options),
-    method: 'get',
-})
-
-show.definition = {
-    methods: ["get","head"],
-    url: '/permissions/{permission}',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\PermissionController::show
-* @see app/Http/Controllers/PermissionController.php:0
-* @route '/permissions/{permission}'
-*/
-show.url = (args: { permission: string | number } | [permission: string | number ] | string | number, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { permission: args }
-    }
-
-    if (Array.isArray(args)) {
-        args = {
-            permission: args[0],
-        }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-        permission: args.permission,
-    }
-
-    return show.definition.url
-            .replace('{permission}', parsedArgs.permission.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\PermissionController::show
-* @see app/Http/Controllers/PermissionController.php:0
-* @route '/permissions/{permission}'
-*/
-show.get = (args: { permission: string | number } | [permission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PermissionController::show
-* @see app/Http/Controllers/PermissionController.php:0
-* @route '/permissions/{permission}'
-*/
-show.head = (args: { permission: string | number } | [permission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: show.url(args, options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\PermissionController::show
-* @see app/Http/Controllers/PermissionController.php:0
-* @route '/permissions/{permission}'
-*/
-const showForm = (args: { permission: string | number } | [permission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PermissionController::show
-* @see app/Http/Controllers/PermissionController.php:0
-* @route '/permissions/{permission}'
-*/
-showForm.get = (args: { permission: string | number } | [permission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PermissionController::show
-* @see app/Http/Controllers/PermissionController.php:0
-* @route '/permissions/{permission}'
-*/
-showForm.head = (args: { permission: string | number } | [permission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
-
-/**
 * @see \App\Http\Controllers\PermissionController::edit
 * @see app/Http/Controllers/PermissionController.php:0
 * @route '/permissions/{permission}/edit'
@@ -624,7 +525,6 @@ const permissions = {
     index: Object.assign(index, index),
     create: Object.assign(create, create),
     store: Object.assign(store, store),
-    show: Object.assign(show, show),
     edit: Object.assign(edit, edit),
     update: Object.assign(update, update),
     destroy: Object.assign(destroy, destroy),

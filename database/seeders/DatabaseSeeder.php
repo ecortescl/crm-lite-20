@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,16 +22,20 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $admin = User::create([
-            'name' => 'Admin User',
+            'name' => 'Jefatura User',
             'email' => 'admin@example.com',
             'password' => bcrypt('password'),
             'email_verified_at' => now(),
         ]);
 
-        $admin->roles()->attach(1); // Admin role
+        $jefaturaRoleId = Role::whereIn('name', ['jefatura', 'admin'])->value('id');
+        if ($jefaturaRoleId) {
+            $admin->roles()->attach($jefaturaRoleId);
+        }
 
         $this->call([
             LeadSeeder::class,
+            DemoEmployeeSeeder::class,
         ]);
     }
 }

@@ -13,8 +13,26 @@
 <body class="bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 py-8">
         <div class="bg-white rounded-lg shadow-lg p-8">
-            <h1 class="text-4xl font-bold mb-4">API Documentation</h1>
-            <p class="text-gray-600 mb-8">Documentación completa de la API del CRM</p>
+            <div class="flex items-center justify-between gap-4 mb-8">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">API Documentation</h1>
+                    <p class="text-gray-600">Documentación completa de la API del CRM</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a
+                        href="{{ route('api.documentation.postman') }}"
+                        class="px-4 py-2 rounded-md bg-black text-white hover:opacity-90 transition"
+                    >
+                        Descargar Postman JSON
+                    </a>
+                    <a
+                        href="{{ route('api-tokens.index') }}"
+                        class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50 transition"
+                    >
+                        Volver
+                    </a>
+                </div>
+            </div>
 
             <!-- Autenticación -->
             <section class="mb-12">

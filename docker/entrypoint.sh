@@ -3,9 +3,19 @@ set -e
 
 echo "🚀 Iniciando aplicación Laravel..."
 
+# Validaciones mínimas para producción
+if [ -z "${APP_KEY}" ]; then
+    echo "❌ APP_KEY no está configurada. Define APP_KEY en Dokploy."
+    exit 1
+fi
+
+DB_HOST="${DB_HOST:-db}"
+DB_PORT="${DB_PORT:-5432}"
+DB_USER="${DB_USERNAME:-laravel}"
+
 # Esperar a que la base de datos esté lista
 echo "⏳ Esperando PostgreSQL..."
-until pg_isready -h db -U ${DB_USERNAME:-laravel} > /dev/null 2>&1; do
+until pg_isready -h "${DB_HOST}" -p "${DB_PORT}" -U "${DB_USER}" > /dev/null 2>&1; do
     sleep 1
 done
 echo "✅ PostgreSQL está listo"
@@ -32,8 +42,11 @@ php artisan wayfinder:generate || echo "⚠️  Wayfinder generation skipped"
 
 # Limpiar y optimizar cache
 echo "🧹 Optimizando aplicación..."
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
 php artisan config:cache
-php artisan route:cache
+php artisan route:cache || echo "⚠️  route:cache omitido (revisa rutas con closures)"
 php artisan view:cache
 
 # Ejecutar seeders si es primera vez (opcional)

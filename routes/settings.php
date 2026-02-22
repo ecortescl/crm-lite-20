@@ -28,15 +28,27 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('settings/Appearance');
     })->name('appearance.edit');
 
-    Route::get('settings/platform', [PlatformController::class, 'edit'])->name('platform.edit');
-    Route::match(['post', 'patch'], 'settings/platform', [PlatformController::class, 'update'])->name('platform.update');
-    Route::delete('settings/platform/logo', [PlatformController::class, 'deleteLogo'])->name('platform.logo.delete');
+    Route::get('settings/platform', [PlatformController::class, 'edit'])
+        ->middleware('can:manage_platform_settings')
+        ->name('platform.edit');
+    Route::match(['post', 'patch'], 'settings/platform', [PlatformController::class, 'update'])
+        ->middleware('can:manage_platform_settings')
+        ->name('platform.update');
+    Route::delete('settings/platform/logo', [PlatformController::class, 'deleteLogo'])
+        ->middleware('can:manage_platform_settings')
+        ->name('platform.logo.delete');
 
     Route::get('settings/two-factor', [TwoFactorAuthenticationController::class, 'show'])
         ->name('two-factor.show');
 
     // API Tokens
-    Route::get('settings/api-tokens', [ApiTokenController::class, 'index'])->name('api-tokens.index');
-    Route::post('settings/api-tokens', [ApiTokenController::class, 'store'])->name('api-tokens.store');
-    Route::delete('settings/api-tokens/{token}', [ApiTokenController::class, 'destroy'])->name('api-tokens.destroy');
+    Route::get('settings/api-tokens', [ApiTokenController::class, 'index'])
+        ->middleware('can:manage_api_tokens')
+        ->name('api-tokens.index');
+    Route::post('settings/api-tokens', [ApiTokenController::class, 'store'])
+        ->middleware('can:manage_api_tokens')
+        ->name('api-tokens.store');
+    Route::delete('settings/api-tokens/{token}', [ApiTokenController::class, 'destroy'])
+        ->middleware('can:manage_api_tokens')
+        ->name('api-tokens.destroy');
 });

@@ -15,6 +15,7 @@ class Lead extends Model
         'company_id',
         'notes',
         'lead_status_id',
+        'quotation_id',
         'assigned_to',
         'source',
         'utm_source',
@@ -24,6 +25,8 @@ class Lead extends Model
         'utm_content',
         'scheduled_at',
         'meeting_notes',
+        'meeting_link',
+        'scheduled_by',
         'budget',
         'quote_items',
         'invoice_number',
@@ -50,9 +53,19 @@ class Lead extends Model
         return $this->belongsTo(User::class, 'assigned_to');
     }
 
+    public function scheduledBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'scheduled_by');
+    }
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function quotation(): BelongsTo
+    {
+        return $this->belongsTo(Quotation::class);
     }
 
     /**

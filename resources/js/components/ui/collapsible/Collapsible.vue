@@ -1,19 +1,33 @@
 <script setup lang="ts">
-import type { CollapsibleRootEmits, CollapsibleRootProps } from "reka-ui"
-import { CollapsibleRoot, useForwardPropsEmits } from "reka-ui"
+import { ref, provide } from 'vue'
 
-const props = defineProps<CollapsibleRootProps>()
-const emits = defineEmits<CollapsibleRootEmits>()
+const props = withDefaults(
+  defineProps<{
+    defaultOpen?: boolean
+    disabled?: boolean
+  }>(),
+  {
+    defaultOpen: false,
+    disabled: false,
+  }
+)
 
-const forwarded = useForwardPropsEmits(props, emits)
+const isOpen = ref(props.defaultOpen)
+
+const toggle = () => {
+  if (!props.disabled) {
+    isOpen.value = !isOpen.value
+  }
+}
+
+provide('collapsible', {
+  isOpen,
+  toggle,
+})
 </script>
 
 <template>
-  <CollapsibleRoot
-    v-slot="slotProps"
-    data-slot="collapsible"
-    v-bind="forwarded"
-  >
-    <slot v-bind="slotProps" />
-  </CollapsibleRoot>
+  <div :data-state="isOpen ? 'open' : 'closed'" :data-disabled="disabled ? '' : undefined">
+    <slot />
+  </div>
 </template>

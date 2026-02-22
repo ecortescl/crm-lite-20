@@ -15,9 +15,20 @@ class PlatformController extends Controller
         $logoPath = Setting::get('platform_logo', '');
         $logoUrl = $logoPath ? asset('storage/' . $logoPath) : '';
         
+        $companyLogoPath = Setting::get('company_logo', '');
+        $companyLogoUrl = $companyLogoPath ? asset('storage/' . $companyLogoPath) : '';
+        
         return Inertia::render('settings/Platform', [
             'platformName' => Setting::get('platform_name', 'CRM landings.cl'),
             'platformLogo' => $logoUrl,
+            'companyName' => Setting::get('company_name', ''),
+            'companyRut' => Setting::get('company_rut', ''),
+            'companyGiro' => Setting::get('company_giro', ''),
+            'companyAddress' => Setting::get('company_address', ''),
+            'companyEmail' => Setting::get('company_email', ''),
+            'companyPhone' => Setting::get('company_phone', ''),
+            'companyLogo' => $companyLogoUrl,
+            'taxRate' => Setting::get('tax_rate', 19),
         ]);
     }
 
@@ -27,9 +38,40 @@ class PlatformController extends Controller
             $validated = $request->validate([
                 'platform_name' => 'required|string|max:255',
                 'platform_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'company_name' => 'nullable|string|max:255',
+                'company_rut' => 'nullable|string|max:20',
+                'company_giro' => 'nullable|string|max:255',
+                'company_address' => 'nullable|string|max:500',
+                'company_email' => 'nullable|email|max:255',
+                'company_phone' => 'nullable|string|max:20',
+                'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'tax_rate' => 'nullable|numeric|min:0|max:100',
             ]);
 
             Setting::set('platform_name', $validated['platform_name']);
+            
+            // Guardar datos de la empresa
+            if (isset($validated['company_name'])) {
+                Setting::set('company_name', $validated['company_name']);
+            }
+            if (isset($validated['company_rut'])) {
+                Setting::set('company_rut', $validated['company_rut']);
+            }
+            if (isset($validated['company_giro'])) {
+                Setting::set('company_giro', $validated['company_giro']);
+            }
+            if (isset($validated['company_address'])) {
+                Setting::set('company_address', $validated['company_address']);
+            }
+            if (isset($validated['company_email'])) {
+                Setting::set('company_email', $validated['company_email']);
+            }
+            if (isset($validated['company_phone'])) {
+                Setting::set('company_phone', $validated['company_phone']);
+            }
+            if (isset($validated['tax_rate'])) {
+                Setting::set('tax_rate', $validated['tax_rate']);
+            }
             
             if ($request->hasFile('platform_logo')) {
                 // Verificar que el directorio existe
@@ -51,6 +93,28 @@ class PlatformController extends Controller
                 }
                 
                 Setting::set('platform_logo', $path);
+            }
+            
+            if ($request->hasFile('company_logo')) {
+                // Verificar que el directorio existe
+                if (!Storage::disk('public')->exists('logos')) {
+                    Storage::disk('public')->makeDirectory('logos');
+                }
+
+                // Eliminar logo anterior si existe
+                $oldLogo = Setting::get('company_logo');
+                if ($oldLogo && Storage::disk('public')->exists($oldLogo)) {
+                    Storage::disk('public')->delete($oldLogo);
+                }
+
+                // Guardar nuevo logo
+                $path = $request->file('company_logo')->store('logos', 'public');
+                
+                if (!$path) {
+                    throw new \Exception('No se pudo guardar el logo de la empresa');
+                }
+                
+                Setting::set('company_logo', $path);
             }
 
             return redirect()->back()->with('success', 'Configuración actualizada exitosamente');

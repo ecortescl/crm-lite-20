@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { LayoutGrid, Users, UserCog, Shield, Tag, Kanban, Building2 } from 'lucide-vue-next';
+import { Link, usePage } from '@inertiajs/vue3';
+import { LayoutGrid, Users, UserCog, Shield, Tag, Kanban, Building2, FileText, Settings, Calendar } from 'lucide-vue-next';
+import { computed } from 'vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -17,7 +18,11 @@ import { type NavItem } from '@/types';
 import AppLogo from './AppLogo.vue';
 import { dashboard } from '@/routes';
 
-const mainNavItems: NavItem[] = [
+const page = usePage();
+const permissions = computed<string[]>(() => page.props.auth?.permissions ?? []);
+const can = (permission: string) => permissions.value.includes(permission);
+
+const mainNavItems = computed<NavItem[]>(() => [
     {
         title: 'Dashboard',
         href: dashboard(),
@@ -34,31 +39,47 @@ const mainNavItems: NavItem[] = [
         icon: Kanban,
     },
     {
+        title: 'Calendario',
+        href: '/calendar',
+        icon: Calendar,
+    },
+    {
         title: 'Empresas',
         href: '/companies',
         icon: Building2,
     },
     {
-        title: 'Usuarios',
-        href: '/users',
-        icon: UserCog,
+        title: 'Cotizaciones',
+        href: '/quotations',
+        icon: FileText,
     },
-    {
-        title: 'Roles',
-        href: '/roles',
-        icon: Shield,
-    },
-    {
-        title: 'Permisos',
-        href: '/permissions',
-        icon: Shield,
-    },
-    {
-        title: 'Estados',
-        href: '/lead-statuses',
-        icon: Tag,
-    },
-];
+    ...(can('manage_users') || can('manage_roles') || can('manage_permissions') || can('manage_lead_statuses') ? [{
+        title: 'Administración',
+        icon: Settings,
+        items: [
+            ...(can('manage_users') ? [{
+                title: 'Usuarios',
+                href: '/users',
+                icon: UserCog,
+            }] : []),
+            ...(can('manage_roles') ? [{
+                title: 'Roles',
+                href: '/roles',
+                icon: Shield,
+            }] : []),
+            ...(can('manage_permissions') ? [{
+                title: 'Permisos',
+                href: '/permissions',
+                icon: Shield,
+            }] : []),
+            ...(can('manage_lead_statuses') ? [{
+                title: 'Estados',
+                href: '/lead-statuses',
+                icon: Tag,
+            }] : []),
+        ],
+    }] : []),
+]);
 
 const footerNavItems: NavItem[] = [];
 </script>
