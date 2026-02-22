@@ -83,22 +83,22 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::update
-* @see app/Http/Controllers/Settings/PlatformController.php:21
+* @see app/Http/Controllers/Settings/PlatformController.php:24
 * @route '/settings/platform'
 */
-export const update = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+export const update = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: update.url(options),
-    method: 'patch',
+    method: 'post',
 })
 
 update.definition = {
-    methods: ["patch"],
+    methods: ["post","patch"],
     url: '/settings/platform',
-} satisfies RouteDefinition<["patch"]>
+} satisfies RouteDefinition<["post","patch"]>
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::update
-* @see app/Http/Controllers/Settings/PlatformController.php:21
+* @see app/Http/Controllers/Settings/PlatformController.php:24
 * @route '/settings/platform'
 */
 update.url = (options?: RouteQueryOptions) => {
@@ -107,7 +107,17 @@ update.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::update
-* @see app/Http/Controllers/Settings/PlatformController.php:21
+* @see app/Http/Controllers/Settings/PlatformController.php:24
+* @route '/settings/platform'
+*/
+update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: update.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Settings\PlatformController::update
+* @see app/Http/Controllers/Settings/PlatformController.php:24
 * @route '/settings/platform'
 */
 update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -117,22 +127,27 @@ update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::update
-* @see app/Http/Controllers/Settings/PlatformController.php:21
+* @see app/Http/Controllers/Settings/PlatformController.php:24
 * @route '/settings/platform'
 */
 const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
+    action: update.url(options),
     method: 'post',
 })
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::update
-* @see app/Http/Controllers/Settings/PlatformController.php:21
+* @see app/Http/Controllers/Settings/PlatformController.php:24
+* @route '/settings/platform'
+*/
+updateForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Settings\PlatformController::update
+* @see app/Http/Controllers/Settings/PlatformController.php:24
 * @route '/settings/platform'
 */
 updateForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

@@ -256,7 +256,7 @@
                       <SelectValue placeholder="Selecciona una región" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="unspecified">Sin especificar</SelectItem>
+                      <SelectItem :value="null">Sin especificar</SelectItem>
                       <SelectItem value="Región de Arica y Parinacota">Región de Arica y Parinacota</SelectItem>
                       <SelectItem value="Región de Tarapacá">Región de Tarapacá</SelectItem>
                       <SelectItem value="Región de Antofagasta">Región de Antofagasta</SelectItem>
@@ -292,7 +292,7 @@
                       <SelectValue placeholder="Selecciona el tamaño" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="unspecified">Sin especificar</SelectItem>
+                      <SelectItem :value="null">Sin especificar</SelectItem>
                       <SelectItem value="micro">Microempresa (1-9 trabajadores)</SelectItem>
                       <SelectItem value="small">Pequeña (10-49 trabajadores)</SelectItem>
                       <SelectItem value="medium">Mediana (50-199 trabajadores)</SelectItem>
@@ -394,9 +394,9 @@ const form = reactive({
   address: '',
   commune: '',
   city: '',
-  region: 'unspecified',
+  region: null,
   notes: '',
-  size: 'unspecified',
+  size: null,
   industry: '',
 })
 
@@ -448,7 +448,7 @@ const openCreateDialog = () => {
 const openEditDialog = (company: any) => {
   editingCompany.value = company
   form.business_name = company.business_name
-  form.rut = company.formatted_rut
+  form.rut = company.rut // Usar el RUT sin formato para edición
   form.fantasy_name = company.fantasy_name || ''
   form.giro = company.giro || ''
   form.email = company.email || ''
@@ -457,9 +457,9 @@ const openEditDialog = (company: any) => {
   form.address = company.address || ''
   form.commune = company.commune || ''
   form.city = company.city || ''
-  form.region = company.region || 'unspecified'
+  form.region = company.region || null
   form.notes = company.notes || ''
-  form.size = company.size || 'unspecified'
+  form.size = company.size || null
   form.industry = company.industry || ''
   dialogOpen.value = true
 }
@@ -475,9 +475,9 @@ const resetForm = () => {
   form.address = ''
   form.commune = ''
   form.city = ''
-  form.region = 'unspecified'
+  form.region = null
   form.notes = ''
-  form.size = 'unspecified'
+  form.size = null
   form.industry = ''
 }
 
@@ -495,9 +495,9 @@ const submitForm = () => {
     address: form.address || null,
     commune: form.commune || null,
     city: form.city || null,
-    region: (form.region && form.region !== 'unspecified') ? form.region : null,
+    region: form.region || null,
     notes: form.notes || null,
-    size: (form.size && form.size !== 'unspecified') ? form.size : null,
+    size: form.size || null,
     industry: form.industry || null,
   }
 
@@ -508,9 +508,10 @@ const submitForm = () => {
         processing.value = false
         success('Empresa actualizada exitosamente')
       },
-      onError: () => {
+      onError: (errors) => {
         processing.value = false
-        error('Error al actualizar la empresa')
+        const errorMessage = Object.values(errors).flat().join(', ') || 'Error al actualizar la empresa'
+        error(errorMessage)
       },
       preserveScroll: true,
     })
@@ -521,9 +522,10 @@ const submitForm = () => {
         processing.value = false
         success('Empresa creada exitosamente')
       },
-      onError: () => {
+      onError: (errors) => {
         processing.value = false
-        error('Error al crear la empresa')
+        const errorMessage = Object.values(errors).flat().join(', ') || 'Error al crear la empresa'
+        error(errorMessage)
       },
       preserveScroll: true,
     })
@@ -544,8 +546,9 @@ const deleteCompany = () => {
       companyToDelete.value = null
       success('Empresa eliminada exitosamente')
     },
-    onError: () => {
-      error('Error al eliminar la empresa')
+    onError: (errors) => {
+      const errorMessage = Object.values(errors).flat().join(', ') || 'Error al eliminar la empresa'
+      error(errorMessage)
     },
     preserveScroll: true,
   })

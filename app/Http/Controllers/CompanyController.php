@@ -45,7 +45,7 @@ class CompanyController extends Controller
     {
         $validated = $request->validate([
             'business_name' => 'required|string|max:255',
-            'rut' => 'required|string|max:12|unique:companies,rut',
+            'rut' => 'required|string|max:20|unique:companies,rut',
             'fantasy_name' => 'nullable|string|max:255',
             'giro' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
@@ -61,7 +61,9 @@ class CompanyController extends Controller
         ]);
 
         // Limpiar el RUT antes de guardar
-        $validated['rut'] = preg_replace('/[^0-9kK]/', '', $validated['rut']);
+        if (isset($validated['rut'])) {
+            $validated['rut'] = preg_replace('/[^0-9kK]/', '', $validated['rut']);
+        }
 
         Company::create($validated);
 
@@ -72,7 +74,7 @@ class CompanyController extends Controller
     {
         $validated = $request->validate([
             'business_name' => 'required|string|max:255',
-            'rut' => 'required|string|max:12|unique:companies,rut,' . $company->id,
+            'rut' => 'required|string|max:20|unique:companies,rut,' . $company->id,
             'fantasy_name' => 'nullable|string|max:255',
             'giro' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
@@ -88,7 +90,9 @@ class CompanyController extends Controller
         ]);
 
         // Limpiar el RUT antes de guardar
-        $validated['rut'] = preg_replace('/[^0-9kK]/', '', $validated['rut']);
+        if (isset($validated['rut'])) {
+            $validated['rut'] = preg_replace('/[^0-9kK]/', '', $validated['rut']);
+        }
 
         $company->update($validated);
 

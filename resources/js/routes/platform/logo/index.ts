@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::deleteMethod
-* @see app/Http/Controllers/Settings/PlatformController.php:45
+* @see app/Http/Controllers/Settings/PlatformController.php:91
 * @route '/settings/platform/logo'
 */
 export const deleteMethod = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -16,7 +16,7 @@ deleteMethod.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::deleteMethod
-* @see app/Http/Controllers/Settings/PlatformController.php:45
+* @see app/Http/Controllers/Settings/PlatformController.php:91
 * @route '/settings/platform/logo'
 */
 deleteMethod.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ deleteMethod.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::deleteMethod
-* @see app/Http/Controllers/Settings/PlatformController.php:45
+* @see app/Http/Controllers/Settings/PlatformController.php:91
 * @route '/settings/platform/logo'
 */
 deleteMethod.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -35,7 +35,7 @@ deleteMethod.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> =
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::deleteMethod
-* @see app/Http/Controllers/Settings/PlatformController.php:45
+* @see app/Http/Controllers/Settings/PlatformController.php:91
 * @route '/settings/platform/logo'
 */
 const deleteMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -50,7 +50,7 @@ const deleteMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'pos
 
 /**
 * @see \App\Http\Controllers\Settings\PlatformController::deleteMethod
-* @see app/Http/Controllers/Settings/PlatformController.php:45
+* @see app/Http/Controllers/Settings/PlatformController.php:91
 * @route '/settings/platform/logo'
 */
 deleteMethodForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
