@@ -20,7 +20,9 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->foreignId('lead_status_id')->constrained()->onDelete('cascade');
             $table->foreignId('assigned_to')->nullable()->constrained('users')->onDelete('set null');
-            $table->foreignId('quotation_id')->nullable()->constrained()->nullOnDelete();
+            // Se declara la columna aquí y la FK se agrega en la migración de quotations
+            // para respetar el orden de creación de tablas.
+            $table->foreignId('quotation_id')->nullable();
             
             // Campos de marketing
             $table->string('source')->nullable(); // Origen: Web, Referido, Redes Sociales, etc.

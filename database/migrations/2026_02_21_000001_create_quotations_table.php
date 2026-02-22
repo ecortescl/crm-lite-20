@@ -45,10 +45,21 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::table('leads', function (Blueprint $table) {
+            $table->foreign('quotation_id')
+                ->references('id')
+                ->on('quotations')
+                ->nullOnDelete();
+        });
     }
 
     public function down(): void
     {
+        Schema::table('leads', function (Blueprint $table) {
+            $table->dropForeign(['quotation_id']);
+        });
+
         Schema::dropIfExists('quotations');
     }
 };
