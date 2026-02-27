@@ -2,29 +2,45 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToTenant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
 class Setting extends Model
 {
-    protected $fillable = ['key', 'value'];
+    use BelongsToTenant;
 
-    public static function get($key, $default = null)
+    protected $fillable = ['tenant_id', 'key', 'value'];
+
+    public static function get($key, $default = null, ?int $tenantId = null)
     {
-        return Cache::rememberForever("setting.{$key}", function () use ($key, $default) {
-            $setting = static::where('key', $key)->first();
+        $resolvedTenantId = $tenantId ?? auth()->user()?->tenant_id;
+        $cacheTenantPart = $resolvedTenantId ?? 'public';
+
+        return Cache::rememberForever("setting.{$cacheTenantPart}.{$key}", function () use ($key, $default, $resolvedTenantId) {
+            $setting = static::withoutGlobalScope('tenant')
+                ->where('tenant_id', $resolvedTenantId)
+                ->where('key', $key)
+                ->first();
+
             return $setting ? $setting->value : $default;
         });
     }
 
-    public static function set($key, $value)
+    public static function set($key, $value, ?int $tenantId = null)
     {
-        $setting = static::updateOrCreate(
-            ['key' => $key],
+        $resolvedTenantId = $tenantId ?? auth()->user()?->tenant_id;
+
+        if (! $resolvedTenantId) {
+            return null;
+        }
+
+        $setting = static::withoutGlobalScope('tenant')->updateOrCreate(
+            ['tenant_id' => $resolvedTenantId, 'key' => $key],
             ['value' => $value]
         );
 
-        Cache::forget("setting.{$key}");
+        Cache::forget("setting.{$resolvedTenantId}.{$key}");
 
         return $setting;
     }

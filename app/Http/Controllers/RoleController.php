@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class RoleController extends Controller
 {
     public function index(Request $request)
     {
+        $tenantId = $request->user()?->tenant_id;
         $query = Role::query()->with('permissions')->withCount('users');
 
         // Búsqueda
@@ -23,7 +25,7 @@ class RoleController extends Controller
         }
 
         $roles = $query->latest()->paginate(15)->withQueryString();
-        $permissions = Permission::all();
+        $permissions = Permission::query()->where('tenant_id', $tenantId)->get();
 
         return Inertia::render('Roles/Index', [
             'roles' => $roles,
@@ -34,14 +36,17 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
-            'name' => 'required|string|unique:roles,name',
+            'name' => ['required', 'string', Rule::unique('roles', 'name')->where('tenant_id', $tenantId)],
             'description' => 'nullable|string',
             'permissions' => 'array',
-            'permissions.*' => 'exists:permissions,id',
+            'permissions.*' => [Rule::exists('permissions', 'id')->where('tenant_id', $tenantId)],
         ]);
 
         $role = Role::create([
+            'tenant_id' => $tenantId,
             'name' => $validated['name'],
             'description' => $validated['description'] ?? null,
         ]);
@@ -55,11 +60,17 @@ class RoleController extends Controller
 
     public function update(Request $request, Role $role)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
-            'name' => 'required|string|unique:roles,name,' . $role->id,
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('roles', 'name')->where('tenant_id', $tenantId)->ignore($role->id),
+            ],
             'description' => 'nullable|string',
             'permissions' => 'array',
-            'permissions.*' => 'exists:permissions,id',
+            'permissions.*' => [Rule::exists('permissions', 'id')->where('tenant_id', $tenantId)],
         ]);
 
         $role->update([

@@ -1,0 +1,572 @@
+{
+	"info": {
+		"_postman_id": "crm-api-collection",
+		"name": "CRM API - Colección Completa",
+		"description": "Colección completa de la API del CRM con endpoints para Empresas, Leads, Cotizaciones y Calendario",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{api_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "api_token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Companies",
+			"item": [
+				{
+					"name": "Listar Empresas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/companies?page=1&per_page=15&search=",
+							"host": ["{{base_url}}"],
+							"path": ["companies"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Número de página"
+								},
+								{
+									"key": "per_page",
+									"value": "15",
+									"description": "Registros por página"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Búsqueda por nombre o RUT"
+								}
+							]
+						},
+						"description": "Obtiene un listado paginado de todas las empresas"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"business_name\": \"Empresa Demo SpA\",\n  \"rut\": \"76123456-7\",\n  \"fantasy_name\": \"Demo\",\n  \"giro\": \"Servicios de tecnología\",\n  \"email\": \"contacto@demo.cl\",\n  \"phone\": \"+56912345678\",\n  \"website\": \"https://demo.cl\",\n  \"address\": \"Av. Principal 123\",\n  \"commune\": \"Santiago\",\n  \"city\": \"Santiago\",\n  \"region\": \"Metropolitana\",\n  \"notes\": \"Cliente importante\",\n  \"size\": \"medium\",\n  \"industry\": \"Tecnología\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/companies",
+							"host": ["{{base_url}}"],
+							"path": ["companies"]
+						},
+						"description": "Crea una nueva empresa en el sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Empresa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/companies/:id",
+							"host": ["{{base_url}}"],
+							"path": ["companies", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID de la empresa"
+								}
+							]
+						},
+						"description": "Obtiene los detalles de una empresa específica"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Empresa",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"business_name\": \"Empresa Demo SpA\",\n  \"fantasy_name\": \"Demo Actualizado\",\n  \"email\": \"nuevo@demo.cl\",\n  \"phone\": \"+56987654321\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/companies/:id",
+							"host": ["{{base_url}}"],
+							"path": ["companies", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID de la empresa"
+								}
+							]
+						},
+						"description": "Actualiza los datos de una empresa existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Empresa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/companies/:id",
+							"host": ["{{base_url}}"],
+							"path": ["companies", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID de la empresa"
+								}
+							]
+						},
+						"description": "Elimina una empresa del sistema"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para gestión de empresas"
+		},
+		{
+			"name": "Leads",
+			"item": [
+				{
+					"name": "Listar Leads",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/leads?page=1&per_page=15&search=&status=",
+							"host": ["{{base_url}}"],
+							"path": ["leads"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Número de página"
+								},
+								{
+									"key": "per_page",
+									"value": "15",
+									"description": "Registros por página"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Búsqueda por nombre, email o teléfono"
+								},
+								{
+									"key": "status",
+									"value": "",
+									"description": "Filtrar por ID de estado"
+								}
+							]
+						},
+						"description": "Obtiene un listado paginado de todos los leads"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Lead",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Juan Pérez\",\n  \"email\": \"juan@example.com\",\n  \"phone\": \"+56912345678\",\n  \"contact_company\": \"Empresa ABC\",\n  \"company_id\": 1,\n  \"notes\": \"Cliente interesado en producto X\",\n  \"lead_status_id\": 1,\n  \"assigned_to\": 1,\n  \"source\": \"Website\",\n  \"utm_source\": \"google\",\n  \"utm_medium\": \"cpc\",\n  \"utm_campaign\": \"summer_sale\",\n  \"budget\": 5000.00,\n  \"scheduled_at\": \"2024-12-25 10:00:00\",\n  \"meeting_notes\": \"Reunión para presentar propuesta\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/leads",
+							"host": ["{{base_url}}"],
+							"path": ["leads"]
+						},
+						"description": "Crea un nuevo lead en el sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Lead",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/leads/:id",
+							"host": ["{{base_url}}"],
+							"path": ["leads", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID del lead"
+								}
+							]
+						},
+						"description": "Obtiene los detalles de un lead específico"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Lead",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Juan Pérez Actualizado\",\n  \"email\": \"juan.nuevo@example.com\",\n  \"lead_status_id\": 2,\n  \"budget\": 7500.00\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/leads/:id",
+							"host": ["{{base_url}}"],
+							"path": ["leads", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID del lead"
+								}
+							]
+						},
+						"description": "Actualiza los datos de un lead existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Lead",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/leads/:id",
+							"host": ["{{base_url}}"],
+							"path": ["leads", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID del lead"
+								}
+							]
+						},
+						"description": "Elimina un lead del sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Estados de Leads",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/lead-statuses",
+							"host": ["{{base_url}}"],
+							"path": ["lead-statuses"]
+						},
+						"description": "Obtiene todos los estados disponibles para los leads"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para gestión de leads"
+		},
+		{
+			"name": "Quotations",
+			"item": [
+				{
+					"name": "Listar Cotizaciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotations?page=1&per_page=15&search=&status=",
+							"host": ["{{base_url}}"],
+							"path": ["quotations"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Número de página"
+								},
+								{
+									"key": "per_page",
+									"value": "15",
+									"description": "Registros por página"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Búsqueda por número, nombre o RUT"
+								},
+								{
+									"key": "status",
+									"value": "",
+									"description": "Filtrar por estado (draft, sent, accepted, rejected, expired)"
+								}
+							]
+						},
+						"description": "Obtiene un listado paginado de todas las cotizaciones"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Cotización",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"quotation_number\": \"COT-2024-001\",\n  \"lead_id\": 1,\n  \"company_id\": 1,\n  \"client_name\": \"Juan Pérez\",\n  \"client_rut\": \"12345678-9\",\n  \"client_email\": \"juan@example.com\",\n  \"client_phone\": \"+56912345678\",\n  \"client_address\": \"Av. Principal 123\",\n  \"issue_date\": \"2024-01-15\",\n  \"valid_until\": \"2024-02-15\",\n  \"items\": [\n    {\n      \"description\": \"Servicio de consultoría\",\n      \"quantity\": 10,\n      \"unit_price\": 50000,\n      \"subtotal\": 500000\n    },\n    {\n      \"description\": \"Licencia de software\",\n      \"quantity\": 5,\n      \"unit_price\": 100000,\n      \"subtotal\": 500000\n    }\n  ],\n  \"tax_rate\": 19,\n  \"notes\": \"Notas adicionales sobre la cotización\",\n  \"terms\": \"Pago 50% al inicio, 50% al finalizar\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/quotations",
+							"host": ["{{base_url}}"],
+							"path": ["quotations"]
+						},
+						"description": "Crea una nueva cotización en el sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Cotización",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotations/:id",
+							"host": ["{{base_url}}"],
+							"path": ["quotations", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID de la cotización"
+								}
+							]
+						},
+						"description": "Obtiene los detalles de una cotización específica"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Cotización",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"client_name\": \"Juan Pérez Actualizado\",\n  \"client_email\": \"juan.nuevo@example.com\",\n  \"valid_until\": \"2024-03-15\",\n  \"status\": \"sent\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/quotations/:id",
+							"host": ["{{base_url}}"],
+							"path": ["quotations", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID de la cotización"
+								}
+							]
+						},
+						"description": "Actualiza los datos de una cotización existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Cotización",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotations/:id",
+							"host": ["{{base_url}}"],
+							"path": ["quotations", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID de la cotización"
+								}
+							]
+						},
+						"description": "Elimina una cotización del sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Estado de Cotización",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"sent\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/quotations/:id/status",
+							"host": ["{{base_url}}"],
+							"path": ["quotations", ":id", "status"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID de la cotización"
+								}
+							]
+						},
+						"description": "Actualiza únicamente el estado de una cotización (draft, sent, accepted, rejected, expired)"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Siguiente Número de Cotización",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotations/next-number",
+							"host": ["{{base_url}}"],
+							"path": ["quotations", "next-number"]
+						},
+						"description": "Genera el siguiente número de cotización disponible"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para gestión de cotizaciones"
+		},
+		{
+			"name": "Calendar",
+			"item": [
+				{
+					"name": "Listar Reuniones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/calendar/meetings?start_date=2024-01-01&end_date=2024-12-31",
+							"host": ["{{base_url}}"],
+							"path": ["calendar", "meetings"],
+							"query": [
+								{
+									"key": "start_date",
+									"value": "2024-01-01",
+									"description": "Fecha de inicio (Y-m-d)"
+								},
+								{
+									"key": "end_date",
+									"value": "2024-12-31",
+									"description": "Fecha de fin (Y-m-d)"
+								}
+							]
+						},
+						"description": "Obtiene todas las reuniones agendadas del usuario autenticado"
+					},
+					"response": []
+				},
+				{
+					"name": "Agendar Reunión",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"lead_id\": 1,\n  \"scheduled_at\": \"2024-12-25 10:00:00\",\n  \"meeting_notes\": \"Reunión para presentar propuesta comercial\",\n  \"meeting_link\": \"https://meet.google.com/abc-defg-hij\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/calendar/meetings",
+							"host": ["{{base_url}}"],
+							"path": ["calendar", "meetings"]
+						},
+						"description": "Crea o actualiza una reunión para un lead existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Reunión",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/calendar/meetings/:lead_id",
+							"host": ["{{base_url}}"],
+							"path": ["calendar", "meetings", ":lead_id"],
+							"variable": [
+								{
+									"key": "lead_id",
+									"value": "1",
+									"description": "ID del lead"
+								}
+							]
+						},
+						"description": "Cancela una reunión agendada eliminando la fecha programada del lead"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para gestión de calendario y reuniones"
+		}
+	]
+}

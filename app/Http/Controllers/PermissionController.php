@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class PermissionController extends Controller
@@ -31,20 +32,31 @@ class PermissionController extends Controller
 
     public function store(Request $request)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
-            'name' => 'required|string|unique:permissions,name',
+            'name' => ['required', 'string', Rule::unique('permissions', 'name')->where('tenant_id', $tenantId)],
             'description' => 'nullable|string',
         ]);
 
-        Permission::create($validated);
+        Permission::create([
+            'tenant_id' => $tenantId,
+            ...$validated,
+        ]);
 
         return redirect()->back()->with('success', 'Permiso creado exitosamente');
     }
 
     public function update(Request $request, Permission $permission)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
-            'name' => 'required|string|unique:permissions,name,' . $permission->id,
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('permissions', 'name')->where('tenant_id', $tenantId)->ignore($permission->id),
+            ],
             'description' => 'nullable|string',
         ]);
 

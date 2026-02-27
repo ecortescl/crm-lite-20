@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\QuotationController::index
-* @see app/Http/Controllers/QuotationController.php:15
+* @see app/Http/Controllers/QuotationController.php:16
 * @route '/quotations'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\QuotationController::index
-* @see app/Http/Controllers/QuotationController.php:15
+* @see app/Http/Controllers/QuotationController.php:16
 * @route '/quotations'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\QuotationController::index
-* @see app/Http/Controllers/QuotationController.php:15
+* @see app/Http/Controllers/QuotationController.php:16
 * @route '/quotations'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\QuotationController::index
-* @see app/Http/Controllers/QuotationController.php:15
+* @see app/Http/Controllers/QuotationController.php:16
 * @route '/quotations'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\QuotationController::index
-* @see app/Http/Controllers/QuotationController.php:15
+* @see app/Http/Controllers/QuotationController.php:16
 * @route '/quotations'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\QuotationController::index
-* @see app/Http/Controllers/QuotationController.php:15
+* @see app/Http/Controllers/QuotationController.php:16
 * @route '/quotations'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\QuotationController::index
-* @see app/Http/Controllers/QuotationController.php:15
+* @see app/Http/Controllers/QuotationController.php:16
 * @route '/quotations'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\QuotationController::create
-* @see app/Http/Controllers/QuotationController.php:40
+* @see app/Http/Controllers/QuotationController.php:41
 * @route '/quotations/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +97,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\QuotationController::create
-* @see app/Http/Controllers/QuotationController.php:40
+* @see app/Http/Controllers/QuotationController.php:41
 * @route '/quotations/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\QuotationController::create
-* @see app/Http/Controllers/QuotationController.php:40
+* @see app/Http/Controllers/QuotationController.php:41
 * @route '/quotations/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -116,7 +116,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\QuotationController::create
-* @see app/Http/Controllers/QuotationController.php:40
+* @see app/Http/Controllers/QuotationController.php:41
 * @route '/quotations/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -126,7 +126,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\QuotationController::create
-* @see app/Http/Controllers/QuotationController.php:40
+* @see app/Http/Controllers/QuotationController.php:41
 * @route '/quotations/create'
 */
 const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -136,7 +136,7 @@ const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\QuotationController::create
-* @see app/Http/Controllers/QuotationController.php:40
+* @see app/Http/Controllers/QuotationController.php:41
 * @route '/quotations/create'
 */
 createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -146,7 +146,7 @@ createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\QuotationController::create
-* @see app/Http/Controllers/QuotationController.php:40
+* @see app/Http/Controllers/QuotationController.php:41
 * @route '/quotations/create'
 */
 createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -163,7 +163,7 @@ create.form = createForm
 
 /**
 * @see \App\Http\Controllers\QuotationController::store
-* @see app/Http/Controllers/QuotationController.php:66
+* @see app/Http/Controllers/QuotationController.php:67
 * @route '/quotations'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -178,7 +178,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\QuotationController::store
-* @see app/Http/Controllers/QuotationController.php:66
+* @see app/Http/Controllers/QuotationController.php:67
 * @route '/quotations'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -187,7 +187,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\QuotationController::store
-* @see app/Http/Controllers/QuotationController.php:66
+* @see app/Http/Controllers/QuotationController.php:67
 * @route '/quotations'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -197,7 +197,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\QuotationController::store
-* @see app/Http/Controllers/QuotationController.php:66
+* @see app/Http/Controllers/QuotationController.php:67
 * @route '/quotations'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -207,7 +207,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\QuotationController::store
-* @see app/Http/Controllers/QuotationController.php:66
+* @see app/Http/Controllers/QuotationController.php:67
 * @route '/quotations'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -219,7 +219,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\QuotationController::show
-* @see app/Http/Controllers/QuotationController.php:103
+* @see app/Http/Controllers/QuotationController.php:110
 * @route '/quotations/{quotation}'
 */
 export const show = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -234,7 +234,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\QuotationController::show
-* @see app/Http/Controllers/QuotationController.php:103
+* @see app/Http/Controllers/QuotationController.php:110
 * @route '/quotations/{quotation}'
 */
 show.url = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -267,7 +267,7 @@ show.url = (args: { quotation: number | { id: number } } | [quotation: number | 
 
 /**
 * @see \App\Http\Controllers\QuotationController::show
-* @see app/Http/Controllers/QuotationController.php:103
+* @see app/Http/Controllers/QuotationController.php:110
 * @route '/quotations/{quotation}'
 */
 show.get = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -277,7 +277,7 @@ show.get = (args: { quotation: number | { id: number } } | [quotation: number | 
 
 /**
 * @see \App\Http\Controllers\QuotationController::show
-* @see app/Http/Controllers/QuotationController.php:103
+* @see app/Http/Controllers/QuotationController.php:110
 * @route '/quotations/{quotation}'
 */
 show.head = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -287,7 +287,7 @@ show.head = (args: { quotation: number | { id: number } } | [quotation: number |
 
 /**
 * @see \App\Http\Controllers\QuotationController::show
-* @see app/Http/Controllers/QuotationController.php:103
+* @see app/Http/Controllers/QuotationController.php:110
 * @route '/quotations/{quotation}'
 */
 const showForm = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -297,7 +297,7 @@ const showForm = (args: { quotation: number | { id: number } } | [quotation: num
 
 /**
 * @see \App\Http\Controllers\QuotationController::show
-* @see app/Http/Controllers/QuotationController.php:103
+* @see app/Http/Controllers/QuotationController.php:110
 * @route '/quotations/{quotation}'
 */
 showForm.get = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -307,7 +307,7 @@ showForm.get = (args: { quotation: number | { id: number } } | [quotation: numbe
 
 /**
 * @see \App\Http\Controllers\QuotationController::show
-* @see app/Http/Controllers/QuotationController.php:103
+* @see app/Http/Controllers/QuotationController.php:110
 * @route '/quotations/{quotation}'
 */
 showForm.head = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -324,7 +324,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\QuotationController::edit
-* @see app/Http/Controllers/QuotationController.php:123
+* @see app/Http/Controllers/QuotationController.php:130
 * @route '/quotations/{quotation}/edit'
 */
 export const edit = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -339,7 +339,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\QuotationController::edit
-* @see app/Http/Controllers/QuotationController.php:123
+* @see app/Http/Controllers/QuotationController.php:130
 * @route '/quotations/{quotation}/edit'
 */
 edit.url = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -372,7 +372,7 @@ edit.url = (args: { quotation: number | { id: number } } | [quotation: number | 
 
 /**
 * @see \App\Http\Controllers\QuotationController::edit
-* @see app/Http/Controllers/QuotationController.php:123
+* @see app/Http/Controllers/QuotationController.php:130
 * @route '/quotations/{quotation}/edit'
 */
 edit.get = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -382,7 +382,7 @@ edit.get = (args: { quotation: number | { id: number } } | [quotation: number | 
 
 /**
 * @see \App\Http\Controllers\QuotationController::edit
-* @see app/Http/Controllers/QuotationController.php:123
+* @see app/Http/Controllers/QuotationController.php:130
 * @route '/quotations/{quotation}/edit'
 */
 edit.head = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -392,7 +392,7 @@ edit.head = (args: { quotation: number | { id: number } } | [quotation: number |
 
 /**
 * @see \App\Http\Controllers\QuotationController::edit
-* @see app/Http/Controllers/QuotationController.php:123
+* @see app/Http/Controllers/QuotationController.php:130
 * @route '/quotations/{quotation}/edit'
 */
 const editForm = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -402,7 +402,7 @@ const editForm = (args: { quotation: number | { id: number } } | [quotation: num
 
 /**
 * @see \App\Http\Controllers\QuotationController::edit
-* @see app/Http/Controllers/QuotationController.php:123
+* @see app/Http/Controllers/QuotationController.php:130
 * @route '/quotations/{quotation}/edit'
 */
 editForm.get = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -412,7 +412,7 @@ editForm.get = (args: { quotation: number | { id: number } } | [quotation: numbe
 
 /**
 * @see \App\Http\Controllers\QuotationController::edit
-* @see app/Http/Controllers/QuotationController.php:123
+* @see app/Http/Controllers/QuotationController.php:130
 * @route '/quotations/{quotation}/edit'
 */
 editForm.head = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -429,7 +429,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\QuotationController::update
-* @see app/Http/Controllers/QuotationController.php:137
+* @see app/Http/Controllers/QuotationController.php:144
 * @route '/quotations/{quotation}'
 */
 export const update = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -444,7 +444,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\QuotationController::update
-* @see app/Http/Controllers/QuotationController.php:137
+* @see app/Http/Controllers/QuotationController.php:144
 * @route '/quotations/{quotation}'
 */
 update.url = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -477,7 +477,7 @@ update.url = (args: { quotation: number | { id: number } } | [quotation: number 
 
 /**
 * @see \App\Http\Controllers\QuotationController::update
-* @see app/Http/Controllers/QuotationController.php:137
+* @see app/Http/Controllers/QuotationController.php:144
 * @route '/quotations/{quotation}'
 */
 update.put = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -487,7 +487,7 @@ update.put = (args: { quotation: number | { id: number } } | [quotation: number 
 
 /**
 * @see \App\Http\Controllers\QuotationController::update
-* @see app/Http/Controllers/QuotationController.php:137
+* @see app/Http/Controllers/QuotationController.php:144
 * @route '/quotations/{quotation}'
 */
 update.patch = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -497,7 +497,7 @@ update.patch = (args: { quotation: number | { id: number } } | [quotation: numbe
 
 /**
 * @see \App\Http\Controllers\QuotationController::update
-* @see app/Http/Controllers/QuotationController.php:137
+* @see app/Http/Controllers/QuotationController.php:144
 * @route '/quotations/{quotation}'
 */
 const updateForm = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -512,7 +512,7 @@ const updateForm = (args: { quotation: number | { id: number } } | [quotation: n
 
 /**
 * @see \App\Http\Controllers\QuotationController::update
-* @see app/Http/Controllers/QuotationController.php:137
+* @see app/Http/Controllers/QuotationController.php:144
 * @route '/quotations/{quotation}'
 */
 updateForm.put = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -527,7 +527,7 @@ updateForm.put = (args: { quotation: number | { id: number } } | [quotation: num
 
 /**
 * @see \App\Http\Controllers\QuotationController::update
-* @see app/Http/Controllers/QuotationController.php:137
+* @see app/Http/Controllers/QuotationController.php:144
 * @route '/quotations/{quotation}'
 */
 updateForm.patch = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -544,7 +544,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\QuotationController::destroy
-* @see app/Http/Controllers/QuotationController.php:168
+* @see app/Http/Controllers/QuotationController.php:183
 * @route '/quotations/{quotation}'
 */
 export const destroy = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -559,7 +559,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\QuotationController::destroy
-* @see app/Http/Controllers/QuotationController.php:168
+* @see app/Http/Controllers/QuotationController.php:183
 * @route '/quotations/{quotation}'
 */
 destroy.url = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -592,7 +592,7 @@ destroy.url = (args: { quotation: number | { id: number } } | [quotation: number
 
 /**
 * @see \App\Http\Controllers\QuotationController::destroy
-* @see app/Http/Controllers/QuotationController.php:168
+* @see app/Http/Controllers/QuotationController.php:183
 * @route '/quotations/{quotation}'
 */
 destroy.delete = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -602,7 +602,7 @@ destroy.delete = (args: { quotation: number | { id: number } } | [quotation: num
 
 /**
 * @see \App\Http\Controllers\QuotationController::destroy
-* @see app/Http/Controllers/QuotationController.php:168
+* @see app/Http/Controllers/QuotationController.php:183
 * @route '/quotations/{quotation}'
 */
 const destroyForm = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -617,7 +617,7 @@ const destroyForm = (args: { quotation: number | { id: number } } | [quotation: 
 
 /**
 * @see \App\Http\Controllers\QuotationController::destroy
-* @see app/Http/Controllers/QuotationController.php:168
+* @see app/Http/Controllers/QuotationController.php:183
 * @route '/quotations/{quotation}'
 */
 destroyForm.delete = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -634,7 +634,7 @@ destroy.form = destroyForm
 
 /**
 * @see \App\Http\Controllers\QuotationController::pdf
-* @see app/Http/Controllers/QuotationController.php:189
+* @see app/Http/Controllers/QuotationController.php:204
 * @route '/quotations/{quotation}/pdf'
 */
 export const pdf = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -649,7 +649,7 @@ pdf.definition = {
 
 /**
 * @see \App\Http\Controllers\QuotationController::pdf
-* @see app/Http/Controllers/QuotationController.php:189
+* @see app/Http/Controllers/QuotationController.php:204
 * @route '/quotations/{quotation}/pdf'
 */
 pdf.url = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -682,7 +682,7 @@ pdf.url = (args: { quotation: number | { id: number } } | [quotation: number | {
 
 /**
 * @see \App\Http\Controllers\QuotationController::pdf
-* @see app/Http/Controllers/QuotationController.php:189
+* @see app/Http/Controllers/QuotationController.php:204
 * @route '/quotations/{quotation}/pdf'
 */
 pdf.get = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -692,7 +692,7 @@ pdf.get = (args: { quotation: number | { id: number } } | [quotation: number | {
 
 /**
 * @see \App\Http\Controllers\QuotationController::pdf
-* @see app/Http/Controllers/QuotationController.php:189
+* @see app/Http/Controllers/QuotationController.php:204
 * @route '/quotations/{quotation}/pdf'
 */
 pdf.head = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -702,7 +702,7 @@ pdf.head = (args: { quotation: number | { id: number } } | [quotation: number | 
 
 /**
 * @see \App\Http\Controllers\QuotationController::pdf
-* @see app/Http/Controllers/QuotationController.php:189
+* @see app/Http/Controllers/QuotationController.php:204
 * @route '/quotations/{quotation}/pdf'
 */
 const pdfForm = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -712,7 +712,7 @@ const pdfForm = (args: { quotation: number | { id: number } } | [quotation: numb
 
 /**
 * @see \App\Http\Controllers\QuotationController::pdf
-* @see app/Http/Controllers/QuotationController.php:189
+* @see app/Http/Controllers/QuotationController.php:204
 * @route '/quotations/{quotation}/pdf'
 */
 pdfForm.get = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -722,7 +722,7 @@ pdfForm.get = (args: { quotation: number | { id: number } } | [quotation: number
 
 /**
 * @see \App\Http\Controllers\QuotationController::pdf
-* @see app/Http/Controllers/QuotationController.php:189
+* @see app/Http/Controllers/QuotationController.php:204
 * @route '/quotations/{quotation}/pdf'
 */
 pdfForm.head = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -739,7 +739,7 @@ pdf.form = pdfForm
 
 /**
 * @see \App\Http\Controllers\QuotationController::updateStatus
-* @see app/Http/Controllers/QuotationController.php:178
+* @see app/Http/Controllers/QuotationController.php:193
 * @route '/quotations/{quotation}/status'
 */
 export const updateStatus = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -754,7 +754,7 @@ updateStatus.definition = {
 
 /**
 * @see \App\Http\Controllers\QuotationController::updateStatus
-* @see app/Http/Controllers/QuotationController.php:178
+* @see app/Http/Controllers/QuotationController.php:193
 * @route '/quotations/{quotation}/status'
 */
 updateStatus.url = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -787,7 +787,7 @@ updateStatus.url = (args: { quotation: number | { id: number } } | [quotation: n
 
 /**
 * @see \App\Http\Controllers\QuotationController::updateStatus
-* @see app/Http/Controllers/QuotationController.php:178
+* @see app/Http/Controllers/QuotationController.php:193
 * @route '/quotations/{quotation}/status'
 */
 updateStatus.patch = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -797,7 +797,7 @@ updateStatus.patch = (args: { quotation: number | { id: number } } | [quotation:
 
 /**
 * @see \App\Http\Controllers\QuotationController::updateStatus
-* @see app/Http/Controllers/QuotationController.php:178
+* @see app/Http/Controllers/QuotationController.php:193
 * @route '/quotations/{quotation}/status'
 */
 const updateStatusForm = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -812,7 +812,7 @@ const updateStatusForm = (args: { quotation: number | { id: number } } | [quotat
 
 /**
 * @see \App\Http\Controllers\QuotationController::updateStatus
-* @see app/Http/Controllers/QuotationController.php:178
+* @see app/Http/Controllers/QuotationController.php:193
 * @route '/quotations/{quotation}/status'
 */
 updateStatusForm.patch = (args: { quotation: number | { id: number } } | [quotation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

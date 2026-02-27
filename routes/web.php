@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\Admin\PlatformDashboardController;
 use App\Http\Controllers\ApiDocumentationController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DashboardController;
@@ -14,11 +15,34 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
-Route::get('/', function () {
-    return redirect()->route('login');
+Route::get('/', function (\Illuminate\Http\Request $request) {
+    if ($request->user()) {
+        $user = $request->user();
+        $allowedPlatformEmails = collect(explode(',', (string) env('PLATFORM_ADMIN_EMAILS', '')))
+            ->map(fn (string $email) => trim($email))
+            ->filter()
+            ->values();
+        $isPlatformAdmin = $user->isPlatformAdmin()
+            || $allowedPlatformEmails->contains(fn (string $email) => strcasecmp($email, (string) $user->email) === 0);
+
+        return $isPlatformAdmin
+            ? redirect()->route('platform-admin.dashboard')
+            : redirect()->route('dashboard');
+    }
+
+    return Inertia::render('Landing', [
+        'canRegister' => Features::enabled(Features::registration()),
+        'canLogin' => true,
+    ]);
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('platform-admin', [PlatformDashboardController::class, 'index'])
+        ->middleware('platform.admin')
+        ->name('platform-admin.dashboard');
+});
+
+Route::middleware(['auth', 'verified', 'crm.access'])->group(function () {
     Route::get('/api/documentation', [ApiDocumentationController::class, 'show'])
         ->middleware('can:manage_api_tokens')
         ->name('api.documentation');

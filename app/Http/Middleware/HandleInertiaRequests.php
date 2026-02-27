@@ -42,6 +42,13 @@ class HandleInertiaRequests extends Middleware
         $logoUrl = $logoPath ? asset('storage/' . $logoPath) : '';
         $user = $request->user();
         $isAdmin = $user?->isJefatura() ?? false;
+        $allowedPlatformEmails = collect(explode(',', (string) env('PLATFORM_ADMIN_EMAILS', '')))
+            ->map(fn (string $email) => trim($email))
+            ->filter()
+            ->values();
+        $isPlatformAdmin = $user
+            ? ($user->isPlatformAdmin() || $allowedPlatformEmails->contains(fn (string $email) => strcasecmp($email, (string) $user->email) === 0))
+            : false;
         $permissionNames = $user
             ? Permission::query()
                 ->whereHas('roles.users', function ($query) use ($user) {
@@ -54,7 +61,7 @@ class HandleInertiaRequests extends Middleware
             : [];
 
         $upcomingMeetings = [];
-        if ($user) {
+        if ($user && ! $isPlatformAdmin) {
             $meetingStatusId = LeadStatus::whereRaw('LOWER(name) like ?', ['%reuni%'])
                 ->orderBy('order')
                 ->value('id');
@@ -85,6 +92,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $user,
                 'isAdmin' => $isAdmin,
+                'isPlatformAdmin' => $isPlatformAdmin,
                 'permissions' => $permissionNames,
             ],
             'upcomingMeetings' => $upcomingMeetings,

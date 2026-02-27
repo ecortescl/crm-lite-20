@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Lead;
 use App\Models\LeadStatus;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 /**
  * @OA\Tag(
@@ -136,15 +137,17 @@ class LeadApiController extends Controller
      */
     public function store(Request $request)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:255',
             'contact_company' => 'nullable|string|max:255',
-            'company_id' => 'nullable|exists:companies,id',
+            'company_id' => ['nullable', Rule::exists('companies', 'id')->where('tenant_id', $tenantId)],
             'notes' => 'nullable|string',
-            'lead_status_id' => 'required|exists:lead_statuses,id',
-            'assigned_to' => 'nullable|exists:users,id',
+            'lead_status_id' => ['required', Rule::exists('lead_statuses', 'id')->where('tenant_id', $tenantId)],
+            'assigned_to' => ['nullable', Rule::exists('users', 'id')->where('tenant_id', $tenantId)],
             'source' => 'nullable|string|max:255',
             'utm_source' => 'nullable|string|max:255',
             'utm_medium' => 'nullable|string|max:255',
@@ -250,15 +253,17 @@ class LeadApiController extends Controller
      */
     public function update(Request $request, Lead $lead)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:255',
             'contact_company' => 'nullable|string|max:255',
-            'company_id' => 'nullable|exists:companies,id',
+            'company_id' => ['nullable', Rule::exists('companies', 'id')->where('tenant_id', $tenantId)],
             'notes' => 'nullable|string',
-            'lead_status_id' => 'sometimes|required|exists:lead_statuses,id',
-            'assigned_to' => 'nullable|exists:users,id',
+            'lead_status_id' => ['sometimes', 'required', Rule::exists('lead_statuses', 'id')->where('tenant_id', $tenantId)],
+            'assigned_to' => ['nullable', Rule::exists('users', 'id')->where('tenant_id', $tenantId)],
             'source' => 'nullable|string|max:255',
             'utm_source' => 'nullable|string|max:255',
             'utm_medium' => 'nullable|string|max:255',

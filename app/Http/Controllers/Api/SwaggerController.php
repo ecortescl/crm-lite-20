@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
  * @OA\Info(
  *     title="CRM API",
  *     version="1.0.0",
- *     description="API para gestión de CRM - Empresas y Leads",
+ *     description="API para gestión de CRM - Empresas, Leads, Cotizaciones y Calendario",
  *     @OA\Contact(
  *         email="soporte@crm.com"
  *     )
@@ -104,6 +104,87 @@ use App\Http\Controllers\Controller;
  *         nullable=true,
  *         ref="#/components/schemas/Company"
  *     )
+ * )
+ * 
+ * @OA\Schema(
+ *     schema="Quotation",
+ *     type="object",
+ *     title="Quotation",
+ *     description="Modelo de Cotización",
+ *     @OA\Property(property="id", type="integer", example=1),
+ *     @OA\Property(property="quotation_number", type="string", example="COT-2024-001"),
+ *     @OA\Property(property="user_id", type="integer", example=1),
+ *     @OA\Property(property="lead_id", type="integer", example=1, nullable=true),
+ *     @OA\Property(property="company_id", type="integer", example=1, nullable=true),
+ *     @OA\Property(property="client_name", type="string", example="Juan Pérez"),
+ *     @OA\Property(property="client_rut", type="string", example="12345678-9", nullable=true),
+ *     @OA\Property(property="client_email", type="string", example="juan@example.com", nullable=true),
+ *     @OA\Property(property="client_phone", type="string", example="+56912345678", nullable=true),
+ *     @OA\Property(property="client_address", type="string", example="Av. Principal 123", nullable=true),
+ *     @OA\Property(property="issue_date", type="string", format="date", example="2024-01-15"),
+ *     @OA\Property(property="valid_until", type="string", format="date", example="2024-02-15"),
+ *     @OA\Property(
+ *         property="items",
+ *         type="array",
+ *         @OA\Items(
+ *             @OA\Property(property="description", type="string", example="Servicio de consultoría"),
+ *             @OA\Property(property="quantity", type="number", example=10),
+ *             @OA\Property(property="unit_price", type="number", example=50000),
+ *             @OA\Property(property="subtotal", type="number", example=500000)
+ *         )
+ *     ),
+ *     @OA\Property(property="subtotal", type="number", format="float", example=500000.00),
+ *     @OA\Property(property="tax_rate", type="number", format="float", example=19.00),
+ *     @OA\Property(property="tax_amount", type="number", format="float", example=95000.00),
+ *     @OA\Property(property="total", type="number", format="float", example=595000.00),
+ *     @OA\Property(property="notes", type="string", example="Notas adicionales", nullable=true),
+ *     @OA\Property(property="terms", type="string", example="Términos y condiciones", nullable=true),
+ *     @OA\Property(property="status", type="string", enum={"draft", "sent", "accepted", "rejected", "expired"}, example="draft"),
+ *     @OA\Property(property="created_at", type="string", format="date-time", example="2024-01-15T10:30:00.000000Z"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time", example="2024-01-15T10:30:00.000000Z"),
+ *     @OA\Property(
+ *         property="user",
+ *         type="object",
+ *         @OA\Property(property="id", type="integer", example=1),
+ *         @OA\Property(property="name", type="string", example="Admin User"),
+ *         @OA\Property(property="email", type="string", example="admin@crm.com")
+ *     ),
+ *     @OA\Property(property="lead", type="object", ref="#/components/schemas/Lead", nullable=true),
+ *     @OA\Property(property="company", type="object", ref="#/components/schemas/Company", nullable=true)
+ * )
+ * 
+ * @OA\Schema(
+ *     schema="QuotationRequest",
+ *     type="object",
+ *     title="QuotationRequest",
+ *     description="Datos para crear o actualizar una cotización",
+ *     required={"quotation_number", "client_name", "issue_date", "valid_until", "items", "tax_rate"},
+ *     @OA\Property(property="quotation_number", type="string", example="COT-2024-001", description="Número único de cotización"),
+ *     @OA\Property(property="lead_id", type="integer", example=1, nullable=true, description="ID del lead asociado"),
+ *     @OA\Property(property="company_id", type="integer", example=1, nullable=true, description="ID de la empresa asociada"),
+ *     @OA\Property(property="client_name", type="string", example="Juan Pérez", description="Nombre del cliente"),
+ *     @OA\Property(property="client_rut", type="string", example="12345678-9", nullable=true, description="RUT del cliente"),
+ *     @OA\Property(property="client_email", type="string", format="email", example="juan@example.com", nullable=true),
+ *     @OA\Property(property="client_phone", type="string", example="+56912345678", nullable=true),
+ *     @OA\Property(property="client_address", type="string", example="Av. Principal 123", nullable=true),
+ *     @OA\Property(property="issue_date", type="string", format="date", example="2024-01-15", description="Fecha de emisión"),
+ *     @OA\Property(property="valid_until", type="string", format="date", example="2024-02-15", description="Fecha de vencimiento"),
+ *     @OA\Property(
+ *         property="items",
+ *         type="array",
+ *         description="Items de la cotización",
+ *         @OA\Items(
+ *             required={"description", "quantity", "unit_price", "subtotal"},
+ *             @OA\Property(property="description", type="string", example="Servicio de consultoría"),
+ *             @OA\Property(property="quantity", type="number", example=10),
+ *             @OA\Property(property="unit_price", type="number", example=50000),
+ *             @OA\Property(property="subtotal", type="number", example=500000)
+ *         )
+ *     ),
+ *     @OA\Property(property="tax_rate", type="number", format="float", example=19.00, description="Tasa de impuesto (%)"),
+ *     @OA\Property(property="notes", type="string", example="Notas adicionales", nullable=true),
+ *     @OA\Property(property="terms", type="string", example="Términos y condiciones", nullable=true),
+ *     @OA\Property(property="status", type="string", enum={"draft", "sent", "accepted", "rejected", "expired"}, example="draft", nullable=true)
  * )
  */
 class SwaggerController extends Controller

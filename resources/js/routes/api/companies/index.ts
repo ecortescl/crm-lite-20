@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::index
-* @see app/Http/Controllers/Api/CompanyApiController.php:60
+* @see app/Http/Controllers/Api/CompanyApiController.php:61
 * @route '/api/companies'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::index
-* @see app/Http/Controllers/Api/CompanyApiController.php:60
+* @see app/Http/Controllers/Api/CompanyApiController.php:61
 * @route '/api/companies'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::index
-* @see app/Http/Controllers/Api/CompanyApiController.php:60
+* @see app/Http/Controllers/Api/CompanyApiController.php:61
 * @route '/api/companies'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::index
-* @see app/Http/Controllers/Api/CompanyApiController.php:60
+* @see app/Http/Controllers/Api/CompanyApiController.php:61
 * @route '/api/companies'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::index
-* @see app/Http/Controllers/Api/CompanyApiController.php:60
+* @see app/Http/Controllers/Api/CompanyApiController.php:61
 * @route '/api/companies'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::index
-* @see app/Http/Controllers/Api/CompanyApiController.php:60
+* @see app/Http/Controllers/Api/CompanyApiController.php:61
 * @route '/api/companies'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::index
-* @see app/Http/Controllers/Api/CompanyApiController.php:60
+* @see app/Http/Controllers/Api/CompanyApiController.php:61
 * @route '/api/companies'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::store
-* @see app/Http/Controllers/Api/CompanyApiController.php:119
+* @see app/Http/Controllers/Api/CompanyApiController.php:120
 * @route '/api/companies'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::store
-* @see app/Http/Controllers/Api/CompanyApiController.php:119
+* @see app/Http/Controllers/Api/CompanyApiController.php:120
 * @route '/api/companies'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::store
-* @see app/Http/Controllers/Api/CompanyApiController.php:119
+* @see app/Http/Controllers/Api/CompanyApiController.php:120
 * @route '/api/companies'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::store
-* @see app/Http/Controllers/Api/CompanyApiController.php:119
+* @see app/Http/Controllers/Api/CompanyApiController.php:120
 * @route '/api/companies'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::store
-* @see app/Http/Controllers/Api/CompanyApiController.php:119
+* @see app/Http/Controllers/Api/CompanyApiController.php:120
 * @route '/api/companies'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -138,7 +138,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::show
-* @see app/Http/Controllers/Api/CompanyApiController.php:170
+* @see app/Http/Controllers/Api/CompanyApiController.php:173
 * @route '/api/companies/{company}'
 */
 export const show = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -153,7 +153,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::show
-* @see app/Http/Controllers/Api/CompanyApiController.php:170
+* @see app/Http/Controllers/Api/CompanyApiController.php:173
 * @route '/api/companies/{company}'
 */
 show.url = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -186,7 +186,7 @@ show.url = (args: { company: number | { id: number } } | [company: number | { id
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::show
-* @see app/Http/Controllers/Api/CompanyApiController.php:170
+* @see app/Http/Controllers/Api/CompanyApiController.php:173
 * @route '/api/companies/{company}'
 */
 show.get = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -196,7 +196,7 @@ show.get = (args: { company: number | { id: number } } | [company: number | { id
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::show
-* @see app/Http/Controllers/Api/CompanyApiController.php:170
+* @see app/Http/Controllers/Api/CompanyApiController.php:173
 * @route '/api/companies/{company}'
 */
 show.head = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -206,7 +206,7 @@ show.head = (args: { company: number | { id: number } } | [company: number | { i
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::show
-* @see app/Http/Controllers/Api/CompanyApiController.php:170
+* @see app/Http/Controllers/Api/CompanyApiController.php:173
 * @route '/api/companies/{company}'
 */
 const showForm = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -216,7 +216,7 @@ const showForm = (args: { company: number | { id: number } } | [company: number 
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::show
-* @see app/Http/Controllers/Api/CompanyApiController.php:170
+* @see app/Http/Controllers/Api/CompanyApiController.php:173
 * @route '/api/companies/{company}'
 */
 showForm.get = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -226,7 +226,7 @@ showForm.get = (args: { company: number | { id: number } } | [company: number | 
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::show
-* @see app/Http/Controllers/Api/CompanyApiController.php:170
+* @see app/Http/Controllers/Api/CompanyApiController.php:173
 * @route '/api/companies/{company}'
 */
 showForm.head = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -243,7 +243,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::update
-* @see app/Http/Controllers/Api/CompanyApiController.php:222
+* @see app/Http/Controllers/Api/CompanyApiController.php:225
 * @route '/api/companies/{company}'
 */
 export const update = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -258,7 +258,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::update
-* @see app/Http/Controllers/Api/CompanyApiController.php:222
+* @see app/Http/Controllers/Api/CompanyApiController.php:225
 * @route '/api/companies/{company}'
 */
 update.url = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -291,7 +291,7 @@ update.url = (args: { company: number | { id: number } } | [company: number | { 
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::update
-* @see app/Http/Controllers/Api/CompanyApiController.php:222
+* @see app/Http/Controllers/Api/CompanyApiController.php:225
 * @route '/api/companies/{company}'
 */
 update.put = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -301,7 +301,7 @@ update.put = (args: { company: number | { id: number } } | [company: number | { 
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::update
-* @see app/Http/Controllers/Api/CompanyApiController.php:222
+* @see app/Http/Controllers/Api/CompanyApiController.php:225
 * @route '/api/companies/{company}'
 */
 update.patch = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -311,7 +311,7 @@ update.patch = (args: { company: number | { id: number } } | [company: number | 
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::update
-* @see app/Http/Controllers/Api/CompanyApiController.php:222
+* @see app/Http/Controllers/Api/CompanyApiController.php:225
 * @route '/api/companies/{company}'
 */
 const updateForm = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -326,7 +326,7 @@ const updateForm = (args: { company: number | { id: number } } | [company: numbe
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::update
-* @see app/Http/Controllers/Api/CompanyApiController.php:222
+* @see app/Http/Controllers/Api/CompanyApiController.php:225
 * @route '/api/companies/{company}'
 */
 updateForm.put = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -341,7 +341,7 @@ updateForm.put = (args: { company: number | { id: number } } | [company: number 
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::update
-* @see app/Http/Controllers/Api/CompanyApiController.php:222
+* @see app/Http/Controllers/Api/CompanyApiController.php:225
 * @route '/api/companies/{company}'
 */
 updateForm.patch = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -358,7 +358,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::destroy
-* @see app/Http/Controllers/Api/CompanyApiController.php:275
+* @see app/Http/Controllers/Api/CompanyApiController.php:286
 * @route '/api/companies/{company}'
 */
 export const destroy = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -373,7 +373,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::destroy
-* @see app/Http/Controllers/Api/CompanyApiController.php:275
+* @see app/Http/Controllers/Api/CompanyApiController.php:286
 * @route '/api/companies/{company}'
 */
 destroy.url = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -406,7 +406,7 @@ destroy.url = (args: { company: number | { id: number } } | [company: number | {
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::destroy
-* @see app/Http/Controllers/Api/CompanyApiController.php:275
+* @see app/Http/Controllers/Api/CompanyApiController.php:286
 * @route '/api/companies/{company}'
 */
 destroy.delete = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -416,7 +416,7 @@ destroy.delete = (args: { company: number | { id: number } } | [company: number 
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::destroy
-* @see app/Http/Controllers/Api/CompanyApiController.php:275
+* @see app/Http/Controllers/Api/CompanyApiController.php:286
 * @route '/api/companies/{company}'
 */
 const destroyForm = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -431,7 +431,7 @@ const destroyForm = (args: { company: number | { id: number } } | [company: numb
 
 /**
 * @see \App\Http\Controllers\Api\CompanyApiController::destroy
-* @see app/Http/Controllers/Api/CompanyApiController.php:275
+* @see app/Http/Controllers/Api/CompanyApiController.php:286
 * @route '/api/companies/{company}'
 */
 destroyForm.delete = (args: { company: number | { id: number } } | [company: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

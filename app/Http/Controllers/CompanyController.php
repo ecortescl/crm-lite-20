@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class CompanyController extends Controller
@@ -43,9 +44,16 @@ class CompanyController extends Controller
 
     public function store(Request $request)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
             'business_name' => 'required|string|max:255',
-            'rut' => 'required|string|max:20|unique:companies,rut',
+            'rut' => [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique('companies', 'rut')->where('tenant_id', $tenantId),
+            ],
             'fantasy_name' => 'nullable|string|max:255',
             'giro' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
@@ -72,9 +80,18 @@ class CompanyController extends Controller
 
     public function update(Request $request, Company $company)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
             'business_name' => 'required|string|max:255',
-            'rut' => 'required|string|max:20|unique:companies,rut,' . $company->id,
+            'rut' => [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique('companies', 'rut')
+                    ->where('tenant_id', $tenantId)
+                    ->ignore($company->id),
+            ],
             'fantasy_name' => 'nullable|string|max:255',
             'giro' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\LeadController::kanban
-* @see app/Http/Controllers/LeadController.php:69
+* @see app/Http/Controllers/LeadController.php:70
 * @route '/leads/kanban'
 */
 export const kanban = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ kanban.definition = {
 
 /**
 * @see \App\Http\Controllers\LeadController::kanban
-* @see app/Http/Controllers/LeadController.php:69
+* @see app/Http/Controllers/LeadController.php:70
 * @route '/leads/kanban'
 */
 kanban.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ kanban.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\LeadController::kanban
-* @see app/Http/Controllers/LeadController.php:69
+* @see app/Http/Controllers/LeadController.php:70
 * @route '/leads/kanban'
 */
 kanban.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ kanban.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\LeadController::kanban
-* @see app/Http/Controllers/LeadController.php:69
+* @see app/Http/Controllers/LeadController.php:70
 * @route '/leads/kanban'
 */
 kanban.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ kanban.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\LeadController::kanban
-* @see app/Http/Controllers/LeadController.php:69
+* @see app/Http/Controllers/LeadController.php:70
 * @route '/leads/kanban'
 */
 const kanbanForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const kanbanForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\LeadController::kanban
-* @see app/Http/Controllers/LeadController.php:69
+* @see app/Http/Controllers/LeadController.php:70
 * @route '/leads/kanban'
 */
 kanbanForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ kanbanForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\LeadController::kanban
-* @see app/Http/Controllers/LeadController.php:69
+* @see app/Http/Controllers/LeadController.php:70
 * @route '/leads/kanban'
 */
 kanbanForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ kanban.form = kanbanForm
 
 /**
 * @see \App\Http\Controllers\LeadController::updateStatus
-* @see app/Http/Controllers/LeadController.php:237
+* @see app/Http/Controllers/LeadController.php:241
 * @route '/leads/{lead}/status'
 */
 export const updateStatus = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -97,7 +97,7 @@ updateStatus.definition = {
 
 /**
 * @see \App\Http\Controllers\LeadController::updateStatus
-* @see app/Http/Controllers/LeadController.php:237
+* @see app/Http/Controllers/LeadController.php:241
 * @route '/leads/{lead}/status'
 */
 updateStatus.url = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -130,7 +130,7 @@ updateStatus.url = (args: { lead: number | { id: number } } | [lead: number | { 
 
 /**
 * @see \App\Http\Controllers\LeadController::updateStatus
-* @see app/Http/Controllers/LeadController.php:237
+* @see app/Http/Controllers/LeadController.php:241
 * @route '/leads/{lead}/status'
 */
 updateStatus.patch = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -140,7 +140,7 @@ updateStatus.patch = (args: { lead: number | { id: number } } | [lead: number | 
 
 /**
 * @see \App\Http\Controllers\LeadController::updateStatus
-* @see app/Http/Controllers/LeadController.php:237
+* @see app/Http/Controllers/LeadController.php:241
 * @route '/leads/{lead}/status'
 */
 const updateStatusForm = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -155,7 +155,7 @@ const updateStatusForm = (args: { lead: number | { id: number } } | [lead: numbe
 
 /**
 * @see \App\Http\Controllers\LeadController::updateStatus
-* @see app/Http/Controllers/LeadController.php:237
+* @see app/Http/Controllers/LeadController.php:241
 * @route '/leads/{lead}/status'
 */
 updateStatusForm.patch = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -172,7 +172,7 @@ updateStatus.form = updateStatusForm
 
 /**
 * @see \App\Http\Controllers\LeadController::index
-* @see app/Http/Controllers/LeadController.php:14
+* @see app/Http/Controllers/LeadController.php:15
 * @route '/leads'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -187,7 +187,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\LeadController::index
-* @see app/Http/Controllers/LeadController.php:14
+* @see app/Http/Controllers/LeadController.php:15
 * @route '/leads'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -196,7 +196,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\LeadController::index
-* @see app/Http/Controllers/LeadController.php:14
+* @see app/Http/Controllers/LeadController.php:15
 * @route '/leads'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -206,7 +206,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\LeadController::index
-* @see app/Http/Controllers/LeadController.php:14
+* @see app/Http/Controllers/LeadController.php:15
 * @route '/leads'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -216,7 +216,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\LeadController::index
-* @see app/Http/Controllers/LeadController.php:14
+* @see app/Http/Controllers/LeadController.php:15
 * @route '/leads'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -226,7 +226,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\LeadController::index
-* @see app/Http/Controllers/LeadController.php:14
+* @see app/Http/Controllers/LeadController.php:15
 * @route '/leads'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -236,7 +236,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\LeadController::index
-* @see app/Http/Controllers/LeadController.php:14
+* @see app/Http/Controllers/LeadController.php:15
 * @route '/leads'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -253,7 +253,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\LeadController::store
-* @see app/Http/Controllers/LeadController.php:133
+* @see app/Http/Controllers/LeadController.php:134
 * @route '/leads'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -268,7 +268,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\LeadController::store
-* @see app/Http/Controllers/LeadController.php:133
+* @see app/Http/Controllers/LeadController.php:134
 * @route '/leads'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -277,7 +277,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\LeadController::store
-* @see app/Http/Controllers/LeadController.php:133
+* @see app/Http/Controllers/LeadController.php:134
 * @route '/leads'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -287,7 +287,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\LeadController::store
-* @see app/Http/Controllers/LeadController.php:133
+* @see app/Http/Controllers/LeadController.php:134
 * @route '/leads'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -297,7 +297,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\LeadController::store
-* @see app/Http/Controllers/LeadController.php:133
+* @see app/Http/Controllers/LeadController.php:134
 * @route '/leads'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -309,7 +309,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\LeadController::update
-* @see app/Http/Controllers/LeadController.php:170
+* @see app/Http/Controllers/LeadController.php:173
 * @route '/leads/{lead}'
 */
 export const update = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -324,7 +324,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\LeadController::update
-* @see app/Http/Controllers/LeadController.php:170
+* @see app/Http/Controllers/LeadController.php:173
 * @route '/leads/{lead}'
 */
 update.url = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -357,7 +357,7 @@ update.url = (args: { lead: number | { id: number } } | [lead: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\LeadController::update
-* @see app/Http/Controllers/LeadController.php:170
+* @see app/Http/Controllers/LeadController.php:173
 * @route '/leads/{lead}'
 */
 update.put = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -367,7 +367,7 @@ update.put = (args: { lead: number | { id: number } } | [lead: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\LeadController::update
-* @see app/Http/Controllers/LeadController.php:170
+* @see app/Http/Controllers/LeadController.php:173
 * @route '/leads/{lead}'
 */
 update.patch = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -377,7 +377,7 @@ update.patch = (args: { lead: number | { id: number } } | [lead: number | { id: 
 
 /**
 * @see \App\Http\Controllers\LeadController::update
-* @see app/Http/Controllers/LeadController.php:170
+* @see app/Http/Controllers/LeadController.php:173
 * @route '/leads/{lead}'
 */
 const updateForm = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -392,7 +392,7 @@ const updateForm = (args: { lead: number | { id: number } } | [lead: number | { 
 
 /**
 * @see \App\Http\Controllers\LeadController::update
-* @see app/Http/Controllers/LeadController.php:170
+* @see app/Http/Controllers/LeadController.php:173
 * @route '/leads/{lead}'
 */
 updateForm.put = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -407,7 +407,7 @@ updateForm.put = (args: { lead: number | { id: number } } | [lead: number | { id
 
 /**
 * @see \App\Http\Controllers\LeadController::update
-* @see app/Http/Controllers/LeadController.php:170
+* @see app/Http/Controllers/LeadController.php:173
 * @route '/leads/{lead}'
 */
 updateForm.patch = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -424,7 +424,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\LeadController::destroy
-* @see app/Http/Controllers/LeadController.php:253
+* @see app/Http/Controllers/LeadController.php:258
 * @route '/leads/{lead}'
 */
 export const destroy = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -439,7 +439,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\LeadController::destroy
-* @see app/Http/Controllers/LeadController.php:253
+* @see app/Http/Controllers/LeadController.php:258
 * @route '/leads/{lead}'
 */
 destroy.url = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -472,7 +472,7 @@ destroy.url = (args: { lead: number | { id: number } } | [lead: number | { id: n
 
 /**
 * @see \App\Http\Controllers\LeadController::destroy
-* @see app/Http/Controllers/LeadController.php:253
+* @see app/Http/Controllers/LeadController.php:258
 * @route '/leads/{lead}'
 */
 destroy.delete = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -482,7 +482,7 @@ destroy.delete = (args: { lead: number | { id: number } } | [lead: number | { id
 
 /**
 * @see \App\Http\Controllers\LeadController::destroy
-* @see app/Http/Controllers/LeadController.php:253
+* @see app/Http/Controllers/LeadController.php:258
 * @route '/leads/{lead}'
 */
 const destroyForm = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -497,7 +497,7 @@ const destroyForm = (args: { lead: number | { id: number } } | [lead: number | {
 
 /**
 * @see \App\Http\Controllers\LeadController::destroy
-* @see app/Http/Controllers/LeadController.php:253
+* @see app/Http/Controllers/LeadController.php:258
 * @route '/leads/{lead}'
 */
 destroyForm.delete = (args: { lead: number | { id: number } } | [lead: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

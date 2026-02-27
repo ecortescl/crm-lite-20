@@ -17,6 +17,8 @@ class AuthServiceProvider extends ServiceProvider
 
         try {
             Permission::query()
+                ->select('name')
+                ->distinct()
                 ->pluck('name')
                 ->each(function ($permission) {
                     Gate::define($permission, function ($user) use ($permission) {

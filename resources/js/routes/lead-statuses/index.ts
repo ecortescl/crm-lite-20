@@ -318,7 +318,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:59
+* @see app/Http/Controllers/LeadStatusController.php:62
 * @route '/lead-statuses/{lead_status}'
 */
 export const update = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -333,7 +333,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:59
+* @see app/Http/Controllers/LeadStatusController.php:62
 * @route '/lead-statuses/{lead_status}'
 */
 update.url = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -360,7 +360,7 @@ update.url = (args: { lead_status: string | number } | [lead_status: string | nu
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:59
+* @see app/Http/Controllers/LeadStatusController.php:62
 * @route '/lead-statuses/{lead_status}'
 */
 update.put = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -370,7 +370,7 @@ update.put = (args: { lead_status: string | number } | [lead_status: string | nu
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:59
+* @see app/Http/Controllers/LeadStatusController.php:62
 * @route '/lead-statuses/{lead_status}'
 */
 update.patch = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -380,7 +380,7 @@ update.patch = (args: { lead_status: string | number } | [lead_status: string | 
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:59
+* @see app/Http/Controllers/LeadStatusController.php:62
 * @route '/lead-statuses/{lead_status}'
 */
 const updateForm = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -395,7 +395,7 @@ const updateForm = (args: { lead_status: string | number } | [lead_status: strin
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:59
+* @see app/Http/Controllers/LeadStatusController.php:62
 * @route '/lead-statuses/{lead_status}'
 */
 updateForm.put = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -410,7 +410,7 @@ updateForm.put = (args: { lead_status: string | number } | [lead_status: string 
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::update
-* @see app/Http/Controllers/LeadStatusController.php:59
+* @see app/Http/Controllers/LeadStatusController.php:62
 * @route '/lead-statuses/{lead_status}'
 */
 updateForm.patch = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -427,7 +427,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::destroy
-* @see app/Http/Controllers/LeadStatusController.php:74
+* @see app/Http/Controllers/LeadStatusController.php:77
 * @route '/lead-statuses/{lead_status}'
 */
 export const destroy = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -442,7 +442,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::destroy
-* @see app/Http/Controllers/LeadStatusController.php:74
+* @see app/Http/Controllers/LeadStatusController.php:77
 * @route '/lead-statuses/{lead_status}'
 */
 destroy.url = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -469,7 +469,7 @@ destroy.url = (args: { lead_status: string | number } | [lead_status: string | n
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::destroy
-* @see app/Http/Controllers/LeadStatusController.php:74
+* @see app/Http/Controllers/LeadStatusController.php:77
 * @route '/lead-statuses/{lead_status}'
 */
 destroy.delete = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -479,7 +479,7 @@ destroy.delete = (args: { lead_status: string | number } | [lead_status: string 
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::destroy
-* @see app/Http/Controllers/LeadStatusController.php:74
+* @see app/Http/Controllers/LeadStatusController.php:77
 * @route '/lead-statuses/{lead_status}'
 */
 const destroyForm = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -494,7 +494,7 @@ const destroyForm = (args: { lead_status: string | number } | [lead_status: stri
 
 /**
 * @see \App\Http\Controllers\LeadStatusController::destroy
-* @see app/Http/Controllers/LeadStatusController.php:74
+* @see app/Http/Controllers/LeadStatusController.php:77
 * @route '/lead-statuses/{lead_status}'
 */
 destroyForm.delete = (args: { lead_status: string | number } | [lead_status: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

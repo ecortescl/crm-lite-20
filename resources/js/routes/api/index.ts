@@ -1,10 +1,12 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 import companies from './companies'
 import leads from './leads'
+import quotations from './quotations'
+import calendar from './calendar'
 import documentation6f9654 from './documentation'
 /**
 * @see \App\Http\Controllers\Api\LeadApiController::leadStatuses
-* @see app/Http/Controllers/Api/LeadApiController.php:346
+* @see app/Http/Controllers/Api/LeadApiController.php:351
 * @route '/api/lead-statuses'
 */
 export const leadStatuses = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -19,7 +21,7 @@ leadStatuses.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\LeadApiController::leadStatuses
-* @see app/Http/Controllers/Api/LeadApiController.php:346
+* @see app/Http/Controllers/Api/LeadApiController.php:351
 * @route '/api/lead-statuses'
 */
 leadStatuses.url = (options?: RouteQueryOptions) => {
@@ -28,7 +30,7 @@ leadStatuses.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\LeadApiController::leadStatuses
-* @see app/Http/Controllers/Api/LeadApiController.php:346
+* @see app/Http/Controllers/Api/LeadApiController.php:351
 * @route '/api/lead-statuses'
 */
 leadStatuses.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -38,7 +40,7 @@ leadStatuses.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\LeadApiController::leadStatuses
-* @see app/Http/Controllers/Api/LeadApiController.php:346
+* @see app/Http/Controllers/Api/LeadApiController.php:351
 * @route '/api/lead-statuses'
 */
 leadStatuses.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -48,7 +50,7 @@ leadStatuses.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\LeadApiController::leadStatuses
-* @see app/Http/Controllers/Api/LeadApiController.php:346
+* @see app/Http/Controllers/Api/LeadApiController.php:351
 * @route '/api/lead-statuses'
 */
 const leadStatusesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -58,7 +60,7 @@ const leadStatusesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get
 
 /**
 * @see \App\Http\Controllers\Api\LeadApiController::leadStatuses
-* @see app/Http/Controllers/Api/LeadApiController.php:346
+* @see app/Http/Controllers/Api/LeadApiController.php:351
 * @route '/api/lead-statuses'
 */
 leadStatusesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -68,7 +70,7 @@ leadStatusesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'>
 
 /**
 * @see \App\Http\Controllers\Api\LeadApiController::leadStatuses
-* @see app/Http/Controllers/Api/LeadApiController.php:346
+* @see app/Http/Controllers/Api/LeadApiController.php:351
 * @route '/api/lead-statuses'
 */
 leadStatusesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -168,6 +170,8 @@ const api = {
     companies: Object.assign(companies, companies),
     leads: Object.assign(leads, leads),
     leadStatuses: Object.assign(leadStatuses, leadStatuses),
+    quotations: Object.assign(quotations, quotations),
+    calendar: Object.assign(calendar, calendar),
     documentation: Object.assign(documentation, documentation6f9654),
 }
 

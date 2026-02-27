@@ -43,6 +43,8 @@ class LeadStatusController extends Controller
 
     public function store(Request $request)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'color' => 'required|string|max:7',
@@ -51,6 +53,7 @@ class LeadStatusController extends Controller
         ]);
 
         $validated['icon'] = $validated['icon'] ?? null;
+        $validated['tenant_id'] = $tenantId;
         LeadStatus::create($validated);
 
         return redirect()->back()->with('success', 'Estado creado exitosamente');

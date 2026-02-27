@@ -7,6 +7,7 @@ use App\Models\Lead;
 use App\Models\Company;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -65,10 +66,16 @@ class QuotationController extends Controller
 
     public function store(Request $request)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
-            'quotation_number' => 'required|string|unique:quotations,quotation_number',
-            'lead_id' => 'nullable|exists:leads,id',
-            'company_id' => 'nullable|exists:companies,id',
+            'quotation_number' => [
+                'required',
+                'string',
+                Rule::unique('quotations', 'quotation_number')->where('tenant_id', $tenantId),
+            ],
+            'lead_id' => ['nullable', Rule::exists('leads', 'id')->where('tenant_id', $tenantId)],
+            'company_id' => ['nullable', Rule::exists('companies', 'id')->where('tenant_id', $tenantId)],
             'client_name' => 'required|string|max:255',
             'client_rut' => 'nullable|string|max:20',
             'client_email' => 'nullable|email|max:255',
@@ -136,10 +143,18 @@ class QuotationController extends Controller
 
     public function update(Request $request, Quotation $quotation)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
-            'quotation_number' => 'required|string|unique:quotations,quotation_number,' . $quotation->id,
-            'lead_id' => 'nullable|exists:leads,id',
-            'company_id' => 'nullable|exists:companies,id',
+            'quotation_number' => [
+                'required',
+                'string',
+                Rule::unique('quotations', 'quotation_number')
+                    ->where('tenant_id', $tenantId)
+                    ->ignore($quotation->id),
+            ],
+            'lead_id' => ['nullable', Rule::exists('leads', 'id')->where('tenant_id', $tenantId)],
+            'company_id' => ['nullable', Rule::exists('companies', 'id')->where('tenant_id', $tenantId)],
             'client_name' => 'required|string|max:255',
             'client_rut' => 'nullable|string|max:20',
             'client_email' => 'nullable|email|max:255',

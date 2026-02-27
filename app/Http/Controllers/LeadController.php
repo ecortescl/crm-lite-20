@@ -7,6 +7,7 @@ use App\Models\LeadStatus;
 use App\Models\User;
 use App\Models\Quotation;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class LeadController extends Controller
@@ -132,15 +133,17 @@ class LeadController extends Controller
 
     public function store(Request $request)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:255',
             'contact_company' => 'nullable|string|max:255',
-            'company_id' => 'nullable|exists:companies,id',
+            'company_id' => ['nullable', Rule::exists('companies', 'id')->where('tenant_id', $tenantId)],
             'notes' => 'nullable|string',
-            'lead_status_id' => 'required|exists:lead_statuses,id',
-            'assigned_to' => 'nullable|exists:users,id',
+            'lead_status_id' => ['required', Rule::exists('lead_statuses', 'id')->where('tenant_id', $tenantId)],
+            'assigned_to' => ['nullable', Rule::exists('users', 'id')->where('tenant_id', $tenantId)],
             'source' => 'nullable|string|max:255',
             'utm_source' => 'nullable|string|max:255',
             'utm_medium' => 'nullable|string|max:255',
@@ -169,6 +172,7 @@ class LeadController extends Controller
 
     public function update(Request $request, Lead $lead)
     {
+        $tenantId = $request->user()?->tenant_id;
         $user = $request->user();
         if (! $user?->isJefatura() && $lead->assigned_to !== $user?->id) {
             abort(403);
@@ -179,10 +183,10 @@ class LeadController extends Controller
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:255',
             'contact_company' => 'nullable|string|max:255',
-            'company_id' => 'nullable|exists:companies,id',
+            'company_id' => ['nullable', Rule::exists('companies', 'id')->where('tenant_id', $tenantId)],
             'notes' => 'nullable|string',
-            'lead_status_id' => 'sometimes|required|exists:lead_statuses,id',
-            'assigned_to' => 'nullable|exists:users,id',
+            'lead_status_id' => ['sometimes', 'required', Rule::exists('lead_statuses', 'id')->where('tenant_id', $tenantId)],
+            'assigned_to' => ['nullable', Rule::exists('users', 'id')->where('tenant_id', $tenantId)],
             'source' => 'nullable|string|max:255',
             'utm_source' => 'nullable|string|max:255',
             'utm_medium' => 'nullable|string|max:255',
@@ -194,7 +198,7 @@ class LeadController extends Controller
             'meeting_link' => 'nullable|string|max:2048',
             'budget' => 'nullable|numeric|min:0',
             'quote_items' => 'nullable',
-            'quotation_id' => 'nullable|exists:quotations,id',
+            'quotation_id' => ['nullable', Rule::exists('quotations', 'id')->where('tenant_id', $tenantId)],
             'invoice_number' => 'nullable|string|max:255',
             'final_amount' => 'nullable|numeric|min:0',
             'closed_at' => 'nullable|date',
@@ -236,13 +240,14 @@ class LeadController extends Controller
 
     public function updateStatus(Request $request, Lead $lead)
     {
+        $tenantId = $request->user()?->tenant_id;
         $user = $request->user();
         if (! $user?->isJefatura() && $lead->assigned_to !== $user?->id) {
             abort(403);
         }
 
         $validated = $request->validate([
-            'lead_status_id' => 'required|exists:lead_statuses,id',
+            'lead_status_id' => ['required', Rule::exists('lead_statuses', 'id')->where('tenant_id', $tenantId)],
         ]);
 
         $lead->update($validated);

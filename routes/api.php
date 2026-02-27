@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\CalendarApiController;
 use App\Http\Controllers\Api\CompanyApiController;
 use App\Http\Controllers\Api\LeadApiController;
+use App\Http\Controllers\Api\QuotationApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,5 +38,21 @@ Route::middleware('auth:sanctum')->group(function () {
         'destroy' => 'api.leads.destroy',
     ]);
     Route::get('lead-statuses', [LeadApiController::class, 'statuses'])->name('api.lead-statuses');
+    
+    // Cotizaciones
+    Route::get('quotations/next-number', [QuotationApiController::class, 'nextNumber'])->name('api.quotations.next-number');
+    Route::apiResource('quotations', QuotationApiController::class)->names([
+        'index' => 'api.quotations.index',
+        'store' => 'api.quotations.store',
+        'show' => 'api.quotations.show',
+        'update' => 'api.quotations.update',
+        'destroy' => 'api.quotations.destroy',
+    ]);
+    Route::patch('quotations/{quotation}/status', [QuotationApiController::class, 'updateStatus'])->name('api.quotations.update-status');
+    
+    // Calendario
+    Route::get('calendar/meetings', [CalendarApiController::class, 'meetings'])->name('api.calendar.meetings');
+    Route::post('calendar/meetings', [CalendarApiController::class, 'scheduleMeeting'])->name('api.calendar.schedule');
+    Route::delete('calendar/meetings/{lead_id}', [CalendarApiController::class, 'cancelMeeting'])->name('api.calendar.cancel');
     
 });

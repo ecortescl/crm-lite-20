@@ -6,13 +6,17 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $query = User::query()->with('roles');
+        $tenantId = $request->user()?->tenant_id;
+        $query = User::query()
+            ->where('tenant_id', $tenantId)
+            ->with(['roles' => fn ($q) => $q->where('tenant_id', $tenantId)]);
 
         // Búsqueda
         if ($request->filled('search')) {
@@ -31,7 +35,7 @@ class UserController extends Controller
         }
 
         $users = $query->latest()->paginate(15)->withQueryString();
-        $roles = Role::all();
+        $roles = Role::query()->where('tenant_id', $tenantId)->get();
 
         return Inertia::render('Users/Index', [
             'users' => $users,
@@ -42,15 +46,18 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $tenantId = $request->user()?->tenant_id;
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
             'roles' => 'array',
-            'roles.*' => 'exists:roles,id',
+            'roles.*' => [Rule::exists('roles', 'id')->where('tenant_id', $tenantId)],
         ]);
 
         $user = User::create([
+            'tenant_id' => $tenantId,
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
@@ -65,12 +72,15 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $tenantId = $request->user()?->tenant_id;
+        abort_unless($user->tenant_id === $tenantId, 404);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8',
             'roles' => 'array',
-            'roles.*' => 'exists:roles,id',
+            'roles.*' => [Rule::exists('roles', 'id')->where('tenant_id', $tenantId)],
         ]);
 
         $user->update([
@@ -88,6 +98,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        abort_unless($user->tenant_id === auth()->user()?->tenant_id, 404);
         $user->delete();
 
         return redirect()->back()->with('success', 'Usuario eliminado exitosamente');

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Lead;
 use App\Models\LeadStatus;
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -11,9 +12,14 @@ class LeadSeeder extends Seeder
 {
     public function run(): void
     {
-        $statuses = LeadStatus::all();
-        $users = User::all();
-        $companies = \App\Models\Company::all();
+        $tenant = Tenant::where('slug', 'demo-workspace')->first();
+        if (! $tenant) {
+            return;
+        }
+
+        $statuses = LeadStatus::withoutGlobalScope('tenant')->where('tenant_id', $tenant->id)->get();
+        $users = User::where('tenant_id', $tenant->id)->get();
+        $companies = \App\Models\Company::withoutGlobalScope('tenant')->where('tenant_id', $tenant->id)->get();
 
         $leads = [
             ['name' => 'Juan Pérez', 'email' => 'juan@example.com', 'phone' => '+56912345678', 'company_id' => $companies->first()?->id, 'contact_company' => null],
@@ -28,6 +34,7 @@ class LeadSeeder extends Seeder
 
         foreach ($leads as $leadData) {
             Lead::create([
+                'tenant_id' => $tenant->id,
                 'name' => $leadData['name'],
                 'email' => $leadData['email'],
                 'phone' => $leadData['phone'],

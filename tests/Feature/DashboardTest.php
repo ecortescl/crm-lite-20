@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Role;
+use App\Models\Tenant;
 use App\Models\User;
 
 test('guests are redirected to the login page', function () {
@@ -8,7 +10,22 @@ test('guests are redirected to the login page', function () {
 });
 
 test('authenticated users can visit the dashboard', function () {
-    $user = User::factory()->create();
+    $tenant = Tenant::create([
+        'name' => 'Tenant Test',
+        'slug' => 'tenant-test-dashboard',
+    ]);
+
+    $role = Role::create([
+        'tenant_id' => $tenant->id,
+        'name' => 'jefatura',
+        'description' => 'Jefatura',
+    ]);
+
+    $user = User::factory()->create([
+        'tenant_id' => $tenant->id,
+    ]);
+    $user->roles()->attach($role->id);
+
     $this->actingAs($user);
 
     $response = $this->get(route('dashboard'));

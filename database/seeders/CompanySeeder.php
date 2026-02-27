@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Company;
+use App\Models\Tenant;
 use Illuminate\Database\Seeder;
 
 class CompanySeeder extends Seeder
@@ -12,6 +13,11 @@ class CompanySeeder extends Seeder
      */
     public function run(): void
     {
+        $tenant = Tenant::where('slug', 'demo-workspace')->first();
+        if (! $tenant) {
+            return;
+        }
+
         $companies = [
             [
                 'business_name' => 'Tecnología Innovadora SpA',
@@ -91,7 +97,10 @@ class CompanySeeder extends Seeder
         ];
 
         foreach ($companies as $company) {
-            Company::create($company);
+            Company::create([
+                'tenant_id' => $tenant->id,
+                ...$company,
+            ]);
         }
     }
 }
