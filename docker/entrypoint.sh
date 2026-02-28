@@ -12,6 +12,8 @@ fi
 DB_HOST="${DB_HOST:-db}"
 DB_PORT="${DB_PORT:-5432}"
 DB_USER="${DB_USERNAME:-laravel}"
+DB_NAME="${DB_DATABASE:-laravel}"
+DB_PASS="${DB_PASSWORD:-}"
 
 # Esperar a que la base de datos esté lista
 echo "⏳ Esperando PostgreSQL..."
@@ -19,6 +21,21 @@ until pg_isready -h "${DB_HOST}" -p "${DB_PORT}" -U "${DB_USER}" > /dev/null 2>&
     sleep 1
 done
 echo "✅ PostgreSQL está listo"
+
+# Limpiar cache de Laravel antes de cualquier comando que use DB
+# (evita usar credenciales antiguas cacheadas en bootstrap/cache/config.php)
+echo "🧹 Limpiando cache de configuración..."
+php artisan config:clear
+php artisan cache:clear || true
+
+# Validar credenciales reales antes de correr migraciones
+echo "🔐 Verificando credenciales de PostgreSQL..."
+if ! PGPASSWORD="${DB_PASS}" psql -h "${DB_HOST}" -p "${DB_PORT}" -U "${DB_USER}" -d "${DB_NAME}" -c "select 1;" > /dev/null 2>&1; then
+    echo "❌ No fue posible autenticar en PostgreSQL con DB_HOST/DB_PORT/DB_DATABASE/DB_USERNAME/DB_PASSWORD."
+    echo "   Revisa que DB_PASSWORD (app) coincida con POSTGRES_PASSWORD (db) y que el usuario '${DB_USER}' tenga esa clave."
+    exit 1
+fi
+echo "✅ Credenciales PostgreSQL válidas"
 
 # Crear directorios necesarios para uploads
 echo "📁 Creando directorios de storage..."
@@ -42,7 +59,6 @@ php artisan wayfinder:generate || echo "⚠️  Wayfinder generation skipped"
 
 # Limpiar y optimizar cache
 echo "🧹 Optimizando aplicación..."
-php artisan config:clear
 php artisan route:clear
 php artisan view:clear
 php artisan config:cache
