@@ -49,7 +49,6 @@ const funnelSteps = [
                 <nav class="hidden items-center gap-6 text-sm font-medium text-slate-700 md:flex">
                     <a href="#beneficios" class="hover:text-slate-950">Beneficios</a>
                     <a href="#embudo" class="hover:text-slate-950">Embudo</a>
-                    <a href="#servicios" class="hover:text-slate-950">Servicios Pro</a>
                     <a href="#faq" class="hover:text-slate-950">FAQ</a>
                 </nav>
                 <div class="flex items-center gap-2">
@@ -132,51 +131,8 @@ const funnelSteps = [
             </section>
         </main>
 
-        <section id="servicios" class="border-y border-slate-200 bg-slate-950">
-            <div class="mx-auto grid w-full max-w-7xl gap-8 px-6 py-14 md:grid-cols-[1.2fr_0.8fr] md:py-16">
-                <div class="space-y-4">
-                    <p class="inline-flex rounded-full border border-blue-300/30 bg-blue-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-200">
-                        Servicios de pago para crecer
-                    </p>
-                    <h3 class="text-4xl font-black leading-tight text-white">Activa tu crecimiento con servicios pro</h3>
-                    <p class="max-w-2xl text-base text-slate-300">
-                        Si ya ordenaste tu embudo de venta con el CRM, el siguiente paso es potenciar captación y marca.
-                        Te apoyamos con servicios especializados.
-                    </p>
-                    <div class="grid gap-3 md:grid-cols-2">
-                        <article class="rounded-xl border border-blue-300/20 bg-white/5 p-4">
-                            <p class="text-sm font-bold text-white">landings.cl</p>
-                            <p class="mt-1 text-xs text-slate-300">
-                                Landing pages enfocadas en conversión, integradas a tus campañas y embudo.
-                            </p>
-                        </article>
-                        <article class="rounded-xl border border-indigo-300/20 bg-white/5 p-4">
-                            <p class="text-sm font-bold text-white">brandings.cl</p>
-                            <p class="mt-1 text-xs text-slate-300">
-                                Diseño de marca, logo, identidad, brandbook y piezas listas para múltiples formatos.
-                            </p>
-                        </article>
-                    </div>
-                </div>
-                <div class="flex flex-col justify-center gap-3">
-                    <a href="https://landings.cl" target="_blank" rel="noopener noreferrer">
-                        <Button size="lg" class="w-full bg-blue-600 text-white hover:bg-blue-500">Quiero mi landing en landings.cl</Button>
-                    </a>
-                    <a href="https://landings.cl" target="_blank" rel="noopener noreferrer">
-                        <Button size="lg" class="w-full border border-slate-400 bg-white text-slate-900 hover:bg-slate-100">Ver planes de landings.cl</Button>
-                    </a>
-                    <a href="https://brandings.cl" target="_blank" rel="noopener noreferrer">
-                        <Button size="lg" class="w-full bg-indigo-600 text-white hover:bg-indigo-500">Quiero mi marca en brandings.cl</Button>
-                    </a>
-                    <a href="https://brandings.cl" target="_blank" rel="noopener noreferrer">
-                        <Button size="lg" class="w-full border border-indigo-300 bg-white text-indigo-700 hover:bg-indigo-50">Ver servicio de brandings.cl</Button>
-                    </a>
-                </div>
-            </div>
-        </section>
-
         <footer id="faq" class="border-t border-slate-200 bg-white/90">
-            <div class="mx-auto grid w-full max-w-7xl gap-8 px-6 py-10 md:grid-cols-3">
+            <div class="mx-auto grid w-full max-w-7xl gap-8 px-6 py-10 md:grid-cols-2">
                 <div>
                     <p class="text-lg font-black">CRM Lite</p>
                     <p class="mt-2 text-sm text-slate-600">
@@ -190,22 +146,6 @@ const funnelSteps = [
                         <li>¿Puedo invitar a mi equipo? Sí, con roles y permisos.</li>
                         <li>¿Puedo emitir cotizaciones? Sí, dentro del flujo de venta.</li>
                     </ul>
-                </div>
-                <div>
-                    <p class="text-sm font-bold text-slate-900">Servicios complementarios</p>
-                    <p class="mt-3 text-sm text-slate-600">
-                        Si quieres más captación, visita
-                        <a href="https://landings.cl" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-700 hover:underline">
-                            landings.cl
-                        </a>
-                        .
-                        <br />
-                        Si necesitas construir tu identidad de marca, visita
-                        <a href="https://brandings.cl" target="_blank" rel="noopener noreferrer" class="font-semibold text-indigo-700 hover:underline">
-                            brandings.cl
-                        </a>
-                        para diseño de marca, logo, brandbook y piezas gráficas.
-                    </p>
                 </div>
             </div>
         </footer>

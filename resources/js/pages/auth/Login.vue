@@ -110,7 +110,7 @@ const highlights = [
         </div>
 
         <p class="mt-5 text-center text-xs text-slate-500">
-          © {{ new Date().getFullYear() }} CRM landings.cl. Todos los derechos reservados.
+          © {{ new Date().getFullYear() }} CRM Lite. Todos los derechos reservados.
         </p>
       </section>
 
