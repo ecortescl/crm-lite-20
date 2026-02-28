@@ -344,6 +344,8 @@ Este proyecto incluye `dokploy.json` con configuración automática para Dokploy
 1. Crear un nuevo proyecto en [Dokploy](https://dokploy.com).
 2. Conectar el repositorio Git.
 3. Configurar las variables de entorno (usar los valores de producción de la sección anterior).
+   - Asegura que `DB_PASSWORD` (app) y `POSTGRES_PASSWORD` (servicio `db`) sean el mismo valor.
+   - Si ya existe volumen `db-data`, cambiar `POSTGRES_PASSWORD` no actualiza la contraseña interna automáticamente.
 4. Hacer clic en **Deploy**.
 
 Dokploy ejecutará automáticamente:
